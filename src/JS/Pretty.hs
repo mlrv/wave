@@ -3,9 +3,16 @@
 module JS.Pretty where
 
 import qualified Data.Map as M
+import qualified Data.Text as T
 import Data.Text.Prettyprint.Doc
 import Data.Text.Prettyprint.Doc.Render.Text
 import JS.Ast
+
+pp :: (a -> Doc a) -> a -> T.Text
+pp f = render . f
+
+render :: Doc a -> T.Text
+render = renderStrict . layoutPretty defaultLayoutOptions
 
 ppRecord :: Pretty a => Record a -> Doc a
 ppRecord r =
