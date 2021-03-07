@@ -1,0 +1,61 @@
+name:                wave
+version:             0.1.0.0
+-- synopsis:
+-- description:
+homepage:            https://github.com/mlrv/wave#readme
+license:             BSD3
+license-file:        LICENSE
+author:              mlrv
+maintainer:          marco.levrero@gmail.com
+copyright:           2021 mlrv
+category:            Languages
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Wave.Ast
+                       JS.Ast
+                       CodeGen
+
+  build-depends:       base >= 4.7 && < 5
+                     , containers
+                     , text
+                     , pretty-simple
+                     , mtl
+                     , prettyprinter
+                     , megaparsec
+  default-extensions:
+    LambdaCase
+    TypeApplications
+    DeriveGeneric
+    DeriveFunctor
+    DeriveFoldable
+    DeriveTraversable
+    DeriveDataTypeable
+  default-language:    Haskell2010
+  ghc-options:         -Wall
+
+executable wave
+  hs-source-dirs:      app
+  main-is:             Main.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  build-depends:       base
+                     , wave
+  default-language:    Haskell2010
+
+test-suite wave-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  build-depends:       base
+                     , wave
+                     , hspec
+                     , QuickCheck
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/mlrv/wave
