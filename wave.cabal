@@ -17,6 +17,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Wave.Ast
                        JS.Ast
+                       JS.Pretty
                        CodeGen
 
   build-depends:       base >= 4.7 && < 5
@@ -49,8 +50,11 @@ test-suite wave-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
+  other-modules:       Tests.Pretty
   build-depends:       base
                      , wave
+                     , text
+                     , containers
                      , hspec
                      , QuickCheck
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N

@@ -4,9 +4,9 @@ module JS.Pretty where
 
 import qualified Data.Map as M
 import qualified Data.Text as T
-import Data.Text.Prettyprint.Doc
-import Data.Text.Prettyprint.Doc.Render.Text
 import JS.Ast
+import Prettyprinter
+import Prettyprinter.Render.Text
 
 pp :: (a -> Doc a) -> a -> T.Text
 pp f = render . f

@@ -21,6 +21,7 @@ lit :: Spec
 lit = do
   describe "Literals" $ do
     int
+    float
 
 int :: Spec
 int = do
@@ -29,6 +30,44 @@ int = do
       shouldBe
         (ppLit' $ LInt 7)
         "7"
+
+    it "int longer" $
+      shouldBe
+        (ppLit' $ LInt 123456)
+        "123456"
+
+    it "int negative" $
+      shouldBe
+        (ppLit' $ LInt $ -123456)
+        "-123456"
+
+    it "int zero" $
+      shouldBe
+        (ppLit' $ LInt 0)
+        "0"
+
+float :: Spec
+float = do
+  describe "float" $ do
+    it "float simple" $
+      shouldBe
+        (ppLit' $ LFloat 7.12)
+        "7.12"
+
+    it "float longer" $
+      shouldBe
+        (ppLit' $ LFloat 1234.123)
+        "1234.123"
+
+    it "float negative" $
+      shouldBe
+        (ppLit' $ LFloat $ -1234.123)
+        "-1234.123"
+
+    it "float zero" $
+      shouldBe
+        (ppLit' $ LFloat 0.19)
+        "0.19"
 
 ppLit' :: Lit -> T.Text
 ppLit' = pp ppLit
