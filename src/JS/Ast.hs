@@ -13,7 +13,7 @@ type Record a =
 --
 data Lit
   = LInt Int
-  | LBoool Bool
+  | LBool Bool
   | LFloat Float
   | LString T.Text
   deriving (Show)
