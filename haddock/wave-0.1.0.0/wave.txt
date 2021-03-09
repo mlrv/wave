@@ -15,6 +15,7 @@ LFloat :: Float -> Lit
 LString :: Text -> Lit
 data Statement
 SExpr :: Expr -> Statement
+SRet :: Expr -> Statement
 SDef :: Definition -> Statement
 type Sub = [Statement]
 data Expr
@@ -35,10 +36,15 @@ instance GHC.Show.Show JS.Ast.Definition
 instance GHC.Show.Show JS.Ast.File
 
 module JS.Pretty
-pp :: (a -> Doc a) -> a -> Text
+pp :: (a -> Doc ann) -> a -> Text
 render :: Doc a -> Text
-ppRecord :: Pretty a => Record a -> Doc a
+ppRecord :: (a -> Doc ann) -> Record a -> Doc ann
 ppLit :: Lit -> Doc a
+ppSub :: Sub -> Doc a
+ppDef :: Definition -> Doc a
+ppStatement :: Statement -> Doc a
+ppExpr :: Expr -> Doc a
+isSimpleExpr :: Expr -> Bool
 
 module Wave.Ast
 type Var = Text
