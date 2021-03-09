@@ -22,6 +22,8 @@ lit = do
   describe "Literals" $ do
     int
     float
+    string
+    bool
 
 int :: Spec
 int = do
@@ -68,6 +70,37 @@ float = do
       shouldBe
         (ppLit' $ LFloat 0.19)
         "0.19"
+
+string :: Spec
+string = do
+  describe "string" $ do
+    it "string simple" $
+      shouldBe
+        (ppLit' $ LString "wave")
+        "wave"
+
+    it "string with spaces" $
+      shouldBe
+        (ppLit' $ LString "wave wave   wave")
+        "wave wave   wave"
+
+    it "string escpaed" $
+      shouldBe
+        (ppLit' $ LString "\"hello world\"")
+        "\"hello world\""
+
+bool :: Spec
+bool = do
+  describe "bool" $ do
+    it "true" $
+      shouldBe
+        (ppLit' $ LBool True)
+        "true"
+
+    it "false" $
+      shouldBe
+        (ppLit' $ LBool False)
+        "false"
 
 ppLit' :: Lit -> T.Text
 ppLit' = pp ppLit
