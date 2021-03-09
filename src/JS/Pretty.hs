@@ -8,18 +8,18 @@ import JS.Ast
 import Prettyprinter
 import Prettyprinter.Render.Text
 
-pp :: (a -> Doc a) -> a -> T.Text
+pp :: (a -> Doc ann) -> a -> T.Text
 pp f = render . f
 
 render :: Doc a -> T.Text
 render = renderStrict . layoutPretty defaultLayoutOptions
 
-ppRecord :: Pretty a => Record a -> Doc a
-ppRecord r =
+ppRecord :: (a -> Doc ann) -> Record a -> Doc ann
+ppRecord p r =
   encloseSep "{" "}" ", " $
     fmap
       (\(k, v) -> surround ": " (pretty $ show k) v)
-      (M.toList (fmap pretty r))
+      (M.toList (fmap p r))
 
 ppLit :: Lit -> Doc a
 ppLit = \case
@@ -28,3 +28,48 @@ ppLit = \case
   LString str -> pretty str
   LBool True -> "true"
   LBool False -> "false"
+
+ppSub :: Sub -> Doc a
+ppSub sub = vsep (ppStatement <$> sub)
+
+ppDef :: Definition -> Doc a
+ppDef = \case
+  Variable name expr -> "const" <> pretty name <+> "=" <+> ppExpr expr
+  Function name args body ->
+    let arguments = concatWith (surround ", ") (pretty <$> args)
+     in "var" <> pretty name <> "="
+          <> vsep
+            [ "function" <> "(" <> arguments <> ")" <+> "{",
+              indent 2 "return" <+> ppSub body <> ";",
+              "}"
+            ]
+
+ppStatement :: Statement -> Doc a
+ppStatement = \case
+  SExpr expr -> ppExpr expr
+  SRet expr -> ppExpr expr
+  SDef def -> ppDef def
+
+ppExpr :: Expr -> Doc a
+ppExpr = \case
+  ELit lit -> ppLit lit
+  EVar var -> pretty var
+  EFun args body ->
+    let arguments = concatWith (surround ", ") (pretty <$> args)
+     in vsep
+          [ "function" <> "(" <> arguments <> ")" <+> "{",
+            indent 2 "return" <+> ppSub body <> ";",
+            "}"
+          ]
+  EFunCall fun args ->
+    let encloseIfNotSimple = if isSimpleExpr fun then id else parens
+        arguments = concatWith (surround ", ") (ppExpr <$> args)
+     in encloseIfNotSimple (ppExpr fun) <> "(" <> arguments <> ")"
+  ERecord record -> ppRecord ppExpr record
+
+-- need surrounding parens?
+isSimpleExpr :: Expr -> Bool
+isSimpleExpr = \case
+  ERecord {} -> False
+  EFun {} -> False
+  _ -> True

@@ -21,6 +21,7 @@ data Lit
 --
 data Statement
   = SExpr Expr
+  | SRet Expr
   | SDef Definition
   deriving (Show)
 

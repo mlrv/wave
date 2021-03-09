@@ -16,6 +16,7 @@ spec :: Spec
 spec = do
   describe "pretty" $ do
     lit
+    expr
 
 lit :: Spec
 lit = do
@@ -102,5 +103,46 @@ bool = do
         (ppLit' $ LBool False)
         "false"
 
+expr :: Spec
+expr = do
+  describe "Expressions" $ do
+    it "lit" $
+      shouldBe
+        (ppExpr' $ ELit $ LInt 1)
+        "1"
+
+    it "var" $
+      shouldBe
+        (ppExpr' $ EVar "a")
+        "a"
+
+    it "function" $
+      shouldBe
+        (ppExpr' $ EFun ["a", "b"] [SRet (EVar "a")])
+        "function(a, b) {\n  return a;\n}"
+
+    it "function call with no arguments" $
+      shouldBe
+        (ppExpr' $ EFunCall (EVar "f") [])
+        "f()"
+
+    it "function call with one arguments" $
+      shouldBe
+        (ppExpr' $ EFunCall (EVar "f") [EVar "a"])
+        "f(a)"
+
+    it "function call with multiple arguments" $
+      shouldBe
+        (ppExpr' $ EFunCall (EVar "f") [EVar "a", EVar "b", EVar "c", EVar "d"])
+        "f(a, b, c, d)"
+
+    it "lamba function call" $
+      shouldBe
+        (ppExpr' $ EFunCall (EFun ["a", "b"] [SRet (EVar "a")]) [ELit $ LInt 1, ELit $ LInt 2])
+        "(function(a, b) {\n  return a;\n})(1, 2)"
+
 ppLit' :: Lit -> T.Text
 ppLit' = pp ppLit
+
+ppExpr' :: Expr -> T.Text
+ppExpr' = pp ppExpr
