@@ -1,0 +1,71 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+span.lineno { color: white; background: #aaaaaa; border-right: solid white 12px }
+span.nottickedoff { background: yellow}
+span.istickedoff { background: white }
+span.tickonlyfalse { margin: -1px; border: 1px solid #f20913; background: #f20913 }
+span.tickonlytrue  { margin: -1px; border: 1px solid #60de51; background: #60de51 }
+span.funcount { font-size: small; color: orange; z-index: 2; position: absolute; right: 20 }
+span.decl { font-weight: bold }
+span.spaces    { background: white }
+</style>
+</head>
+<body>
+<pre>
+<span class="decl"><span class="nottickedoff">never executed</span> <span class="tickonlytrue">always true</span> <span class="tickonlyfalse">always false</span></span>
+</pre>
+<pre>
+<span class="lineno">    1 </span>module JS.Ast where
+<span class="lineno">    2 </span>
+<span class="lineno">    3 </span>import qualified Data.Map as M
+<span class="lineno">    4 </span>import qualified Data.Text as T
+<span class="lineno">    5 </span>
+<span class="lineno">    6 </span>--
+<span class="lineno">    7 </span>type Var = T.Text
+<span class="lineno">    8 </span>
+<span class="lineno">    9 </span>--
+<span class="lineno">   10 </span>type Record a =
+<span class="lineno">   11 </span>  M.Map Var a
+<span class="lineno">   12 </span>
+<span class="lineno">   13 </span>--
+<span class="lineno">   14 </span>data Lit
+<span class="lineno">   15 </span>  = LInt Int
+<span class="lineno">   16 </span>  | LBool Bool
+<span class="lineno">   17 </span>  | LFloat Float
+<span class="lineno">   18 </span>  | LString T.Text
+<span class="lineno">   19 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>)
+<span class="lineno">   20 </span>
+<span class="lineno">   21 </span>--
+<span class="lineno">   22 </span>data Statement
+<span class="lineno">   23 </span>  = SExpr Expr
+<span class="lineno">   24 </span>  | SDef Definition
+<span class="lineno">   25 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>)
+<span class="lineno">   26 </span>
+<span class="lineno">   27 </span>--
+<span class="lineno">   28 </span>type Sub = [Statement]
+<span class="lineno">   29 </span>
+<span class="lineno">   30 </span>--
+<span class="lineno">   31 </span>data Expr
+<span class="lineno">   32 </span>  = ELit Lit
+<span class="lineno">   33 </span>  | EVar Var
+<span class="lineno">   34 </span>  | EFun [Var] Sub
+<span class="lineno">   35 </span>  | EFunCall Expr [Expr]
+<span class="lineno">   36 </span>  | ERecord (Record Expr)
+<span class="lineno">   37 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>)
+<span class="lineno">   38 </span>
+<span class="lineno">   39 </span>--
+<span class="lineno">   40 </span>data Definition
+<span class="lineno">   41 </span>  = Variable Var Expr
+<span class="lineno">   42 </span>  | Function Var [Var] Sub
+<span class="lineno">   43 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>)
+<span class="lineno">   44 </span>
+<span class="lineno">   45 </span>--
+<span class="lineno">   46 </span>data File
+<span class="lineno">   47 </span>  = File [Statement]
+<span class="lineno">   48 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>)
+
+</pre>
+</body>
+</html>

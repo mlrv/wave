@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE OverloadedStrings #-}</span><span>
+</span><span id="line-2"></span><span>
+</span><span id="line-3"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">JS.Pretty</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-4"></span><span>
+</span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Map</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">M</span></span><span>
+</span><span id="line-6"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">T</span></span><span>
+</span><span id="line-7"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="JS.Ast.html"><span class="hs-identifier">JS.Ast</span></a></span><span>
+</span><span id="line-8"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Prettyprinter</span></span><span>
+</span><span id="line-9"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Prettyprinter.Render.Text</span></span><span>
+</span><span id="line-10"></span><span>
+</span><span id="line-11"></span><span id="local-6989586621679038765"><span class="annot"><a href="JS.Pretty.html#pp"><span class="hs-identifier hs-type">pp</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679038765"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038765"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679038765"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span></span><span>
+</span><span id="line-12"></span><span id="pp"><span class="annot"><span class="annottext">pp :: (a -&gt; Doc a) -&gt; a -&gt; Text
+</span><a href="JS.Pretty.html#pp"><span class="hs-identifier hs-var hs-var">pp</span></a></span></span><span> </span><span id="local-6989586621679038763"><span class="annot"><span class="annottext">a -&gt; Doc a
+</span><a href="#local-6989586621679038763"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Text
+forall a. Doc a -&gt; Text
+</span><a href="JS.Pretty.html#render"><span class="hs-identifier hs-var">render</span></a></span><span> </span><span class="annot"><span class="annottext">(Doc a -&gt; Text) -&gt; (a -&gt; Doc a) -&gt; a -&gt; Text
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">a -&gt; Doc a
+</span><a href="#local-6989586621679038763"><span class="hs-identifier hs-var">f</span></a></span><span>
+</span><span id="line-13"></span><span>
+</span><span id="line-14"></span><span id="local-6989586621679038794"><span class="annot"><a href="JS.Pretty.html#render"><span class="hs-identifier hs-type">render</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038794"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span></span><span>
+</span><span id="line-15"></span><span id="render"><span class="annot"><span class="annottext">render :: Doc a -&gt; Text
+</span><a href="JS.Pretty.html#render"><span class="hs-identifier hs-var hs-var">render</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">SimpleDocStream a -&gt; Text
+forall ann. SimpleDocStream ann -&gt; Text
+</span><span class="hs-identifier hs-var">renderStrict</span></span><span> </span><span class="annot"><span class="annottext">(SimpleDocStream a -&gt; Text)
+-&gt; (Doc a -&gt; SimpleDocStream a) -&gt; Doc a -&gt; Text
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">LayoutOptions -&gt; Doc a -&gt; SimpleDocStream a
+forall ann. LayoutOptions -&gt; Doc ann -&gt; SimpleDocStream ann
+</span><span class="hs-identifier hs-var">layoutPretty</span></span><span> </span><span class="annot"><span class="annottext">LayoutOptions
+</span><span class="hs-identifier hs-var">defaultLayoutOptions</span></span><span>
+</span><span id="line-16"></span><span>
+</span><span id="line-17"></span><span id="local-6989586621679038757"><span class="annot"><a href="JS.Pretty.html#ppRecord"><span class="hs-identifier hs-type">ppRecord</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Pretty</span></span><span> </span><span class="annot"><a href="#local-6989586621679038757"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="JS.Ast.html#Record"><span class="hs-identifier hs-type">Record</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679038757"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038757"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-18"></span><span id="ppRecord"><span class="annot"><span class="annottext">ppRecord :: Record a -&gt; Doc a
+</span><a href="JS.Pretty.html#ppRecord"><span class="hs-identifier hs-var hs-var">ppRecord</span></a></span></span><span> </span><span id="local-6989586621679038755"><span class="annot"><span class="annottext">Record a
+</span><a href="#local-6989586621679038755"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-19"></span><span>  </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a -&gt; [Doc a] -&gt; Doc a
+forall ann. Doc ann -&gt; Doc ann -&gt; Doc ann -&gt; [Doc ann] -&gt; Doc ann
+</span><span class="hs-identifier hs-var">encloseSep</span></span><span> </span><span class="annot"><span class="annottext">Doc a
+</span><span class="hs-string">&quot;{&quot;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
+</span><span class="hs-string">&quot;}&quot;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
+</span><span class="hs-string">&quot;, &quot;</span></span><span> </span><span class="annot"><span class="annottext">([Doc a] -&gt; Doc a) -&gt; [Doc a] -&gt; Doc a
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span>
+</span><span id="line-20"></span><span>    </span><span class="annot"><span class="annottext">((Text, Doc a) -&gt; Doc a) -&gt; [(Text, Doc a)] -&gt; [Doc a]
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span>
+</span><span id="line-21"></span><span>      </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span class="hs-special">(</span><span id="local-6989586621679038753"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679038753"><span class="hs-identifier hs-var">k</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679038752"><span class="annot"><span class="annottext">Doc a
+</span><a href="#local-6989586621679038752"><span class="hs-identifier hs-var">v</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a -&gt; Doc a
+forall ann. Doc ann -&gt; Doc ann -&gt; Doc ann -&gt; Doc ann
+</span><span class="hs-identifier hs-var">surround</span></span><span> </span><span class="annot"><span class="annottext">Doc a
+</span><span class="hs-string">&quot;: &quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Doc a
+forall a ann. Pretty a =&gt; a -&gt; Doc ann
+</span><span class="hs-identifier hs-var">pretty</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Doc a) -&gt; String -&gt; Doc a
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; String
+forall a. Show a =&gt; a -&gt; String
+</span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679038753"><span class="hs-identifier hs-var">k</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Doc a
+</span><a href="#local-6989586621679038752"><span class="hs-identifier hs-var">v</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-22"></span><span>      </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Map Text (Doc a) -&gt; [(Text, Doc a)]
+forall k a. Map k a -&gt; [(k, a)]
+</span><span class="hs-identifier hs-var">M.toList</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(a -&gt; Doc a) -&gt; Record a -&gt; Map Text (Doc a)
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">a -&gt; Doc a
+forall a ann. Pretty a =&gt; a -&gt; Doc ann
+</span><span class="hs-identifier hs-var">pretty</span></span><span> </span><span class="annot"><span class="annottext">Record a
+</span><a href="#local-6989586621679038755"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-23"></span><span>
+</span><span id="line-24"></span><span id="local-6989586621679038747"><span class="annot"><a href="JS.Pretty.html#ppLit"><span class="hs-identifier hs-type">ppLit</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="JS.Ast.html#Lit"><span class="hs-identifier hs-type">Lit</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038747"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-25"></span><span id="ppLit"><span class="annot"><span class="annottext">ppLit :: Lit -&gt; Doc a
+</span><a href="JS.Pretty.html#ppLit"><span class="hs-identifier hs-var hs-var">ppLit</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
+</span><span id="line-26"></span><span>  </span><span class="annot"><a href="JS.Ast.html#LInt"><span class="hs-identifier hs-type">LInt</span></a></span><span> </span><span id="local-6989586621679038744"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679038744"><span class="hs-identifier hs-var">int</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Int -&gt; Doc a
+forall a ann. Pretty a =&gt; a -&gt; Doc ann
+</span><span class="hs-identifier hs-var">pretty</span></span><span> </span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679038744"><span class="hs-identifier hs-var">int</span></a></span><span>
+</span><span id="line-27"></span><span>  </span><span class="annot"><a href="JS.Ast.html#LFloat"><span class="hs-identifier hs-type">LFloat</span></a></span><span> </span><span id="local-6989586621679038742"><span class="annot"><span class="annottext">Float
+</span><a href="#local-6989586621679038742"><span class="hs-identifier hs-var">float</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Float -&gt; Doc a
+forall a ann. Pretty a =&gt; a -&gt; Doc ann
+</span><span class="hs-identifier hs-var">pretty</span></span><span> </span><span class="annot"><span class="annottext">Float
+</span><a href="#local-6989586621679038742"><span class="hs-identifier hs-var">float</span></a></span><span>
+</span><span id="line-28"></span><span>  </span><span class="annot"><a href="JS.Ast.html#LString"><span class="hs-identifier hs-type">LString</span></a></span><span> </span><span id="local-6989586621679038740"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679038740"><span class="hs-identifier hs-var">str</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Doc a
+forall a ann. Pretty a =&gt; a -&gt; Doc ann
+</span><span class="hs-identifier hs-var">pretty</span></span><span> </span><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679038740"><span class="hs-identifier hs-var">str</span></a></span><span>
+</span><span id="line-29"></span><span>  </span><span class="annot"><a href="JS.Ast.html#LBool"><span class="hs-identifier hs-type">LBool</span></a></span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">True</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Doc a
+</span><span class="hs-string">&quot;true&quot;</span></span><span>
+</span><span id="line-30"></span><span>  </span><span class="annot"><a href="JS.Ast.html#LBool"><span class="hs-identifier hs-type">LBool</span></a></span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">False</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Doc a
+</span><span class="hs-string">&quot;false&quot;</span></span><span>
+</span><span id="line-31"></span></pre></body></html>
