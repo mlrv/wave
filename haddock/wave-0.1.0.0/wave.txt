@@ -27,7 +27,7 @@ ERecord :: Record Expr -> Expr
 data Definition
 Variable :: Var -> Expr -> Definition
 Function :: Var -> [Var] -> Sub -> Definition
-data File
+newtype File
 File :: [Statement] -> File
 instance GHC.Show.Show JS.Ast.Lit
 instance GHC.Show.Show JS.Ast.Statement
@@ -38,6 +38,7 @@ instance GHC.Show.Show JS.Ast.File
 module JS.Pretty
 pp :: (a -> Doc ann) -> a -> Text
 render :: Doc a -> Text
+ppFile :: File -> Doc a
 ppRecord :: (a -> Doc ann) -> Record a -> Doc ann
 ppLit :: Lit -> Doc a
 ppSub :: Sub -> Doc a
@@ -67,7 +68,7 @@ Effi :: Text -> [Expr] -> Expr
 data Definition
 Variable :: Var -> Expr -> Definition
 Function :: Var -> [Var] -> Sub -> Definition
-data File
+newtype File
 File :: [Definition] -> File
 instance GHC.Show.Show Wave.Ast.Lit
 instance GHC.Show.Show Wave.Ast.Statement
@@ -82,3 +83,6 @@ translateExpr :: Expr -> Expr
 translateLit :: Lit -> Lit
 translateStatement :: Statement -> Statement
 translateSub :: Sub -> Sub
+
+module Compile
+compile :: File -> Text

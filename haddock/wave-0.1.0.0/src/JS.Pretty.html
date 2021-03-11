@@ -8,17 +8,17 @@
 </span><span id="line-8"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Prettyprinter</span></span><span>
 </span><span id="line-9"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Prettyprinter.Render.Text</span></span><span>
 </span><span id="line-10"></span><span>
-</span><span id="line-11"></span><span id="local-6989586621679038716"><span id="local-6989586621679038717"><span class="annot"><a href="JS.Pretty.html#pp"><span class="hs-identifier hs-type">pp</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679038717"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038716"><span class="hs-identifier hs-type">ann</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679038717"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span></span></span><span>
+</span><span id="line-11"></span><span id="local-6989586621679038768"><span id="local-6989586621679038769"><span class="annot"><a href="JS.Pretty.html#pp"><span class="hs-identifier hs-type">pp</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679038769"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038768"><span class="hs-identifier hs-type">ann</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679038769"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span></span></span><span>
 </span><span id="line-12"></span><span id="pp"><span class="annot"><span class="annottext">pp :: (a -&gt; Doc ann) -&gt; a -&gt; Text
-</span><a href="JS.Pretty.html#pp"><span class="hs-identifier hs-var hs-var">pp</span></a></span></span><span> </span><span id="local-6989586621679038714"><span class="annot"><span class="annottext">a -&gt; Doc ann
-</span><a href="#local-6989586621679038714"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Doc ann -&gt; Text
+</span><a href="JS.Pretty.html#pp"><span class="hs-identifier hs-var hs-var">pp</span></a></span></span><span> </span><span id="local-6989586621679038766"><span class="annot"><span class="annottext">a -&gt; Doc ann
+</span><a href="#local-6989586621679038766"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Doc ann -&gt; Text
 forall a. Doc a -&gt; Text
 </span><a href="JS.Pretty.html#render"><span class="hs-identifier hs-var">render</span></a></span><span> </span><span class="annot"><span class="annottext">(Doc ann -&gt; Text) -&gt; (a -&gt; Doc ann) -&gt; a -&gt; Text
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">a -&gt; Doc ann
-</span><a href="#local-6989586621679038714"><span class="hs-identifier hs-var">f</span></a></span><span>
+</span><a href="#local-6989586621679038766"><span class="hs-identifier hs-var">f</span></a></span><span>
 </span><span id="line-13"></span><span>
-</span><span id="line-14"></span><span id="local-6989586621679038777"><span class="annot"><a href="JS.Pretty.html#render"><span class="hs-identifier hs-type">render</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038777"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span></span><span>
+</span><span id="line-14"></span><span id="local-6989586621679038830"><span class="annot"><a href="JS.Pretty.html#render"><span class="hs-identifier hs-type">render</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038830"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span></span><span>
 </span><span id="line-15"></span><span id="render"><span class="annot"><span class="annottext">render :: Doc a -&gt; Text
 </span><a href="JS.Pretty.html#render"><span class="hs-identifier hs-var hs-var">render</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">SimpleDocStream a -&gt; Text
 forall ann. SimpleDocStream ann -&gt; Text
@@ -30,12 +30,26 @@ forall ann. LayoutOptions -&gt; Doc ann -&gt; SimpleDocStream ann
 </span><span class="hs-identifier hs-var">layoutPretty</span></span><span> </span><span class="annot"><span class="annottext">LayoutOptions
 </span><span class="hs-identifier hs-var">defaultLayoutOptions</span></span><span>
 </span><span id="line-16"></span><span>
-</span><span id="line-17"></span><span id="local-6989586621679038718"><span id="local-6989586621679038719"><span class="annot"><a href="JS.Pretty.html#ppRecord"><span class="hs-identifier hs-type">ppRecord</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679038719"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038718"><span class="hs-identifier hs-type">ann</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="JS.Ast.html#Record"><span class="hs-identifier hs-type">Record</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679038719"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038718"><span class="hs-identifier hs-type">ann</span></a></span></span></span><span>
-</span><span id="line-18"></span><span id="ppRecord"><span class="annot"><span class="annottext">ppRecord :: (a -&gt; Doc ann) -&gt; Record a -&gt; Doc ann
-</span><a href="JS.Pretty.html#ppRecord"><span class="hs-identifier hs-var hs-var">ppRecord</span></a></span></span><span> </span><span id="local-6989586621679038707"><span class="annot"><span class="annottext">a -&gt; Doc ann
-</span><a href="#local-6989586621679038707"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span id="local-6989586621679038706"><span class="annot"><span class="annottext">Record a
-</span><a href="#local-6989586621679038706"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-19"></span><span>  </span><span class="annot"><span class="annottext">Doc ann -&gt; Doc ann -&gt; Doc ann -&gt; [Doc ann] -&gt; Doc ann
+</span><span id="line-17"></span><span id="local-6989586621679038760"><span class="annot"><a href="JS.Pretty.html#ppFile"><span class="hs-identifier hs-type">ppFile</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="JS.Ast.html#File"><span class="hs-identifier hs-type">File</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038760"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-18"></span><span id="ppFile"><span class="annot"><span class="annottext">ppFile :: File -&gt; Doc a
+</span><a href="JS.Pretty.html#ppFile"><span class="hs-identifier hs-var hs-var">ppFile</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="JS.Ast.html#File"><span class="hs-identifier hs-type">File</span></a></span><span> </span><span id="local-6989586621679038757"><span class="annot"><span class="annottext">[Statement]
+</span><a href="#local-6989586621679038757"><span class="hs-identifier hs-var">file</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Doc a] -&gt; Doc a
+forall ann. [Doc ann] -&gt; Doc ann
+</span><span class="hs-identifier hs-var">vsep</span></span><span> </span><span class="annot"><span class="annottext">([Doc a] -&gt; Doc a) -&gt; [Doc a] -&gt; Doc a
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Statement -&gt; Doc a
+forall a. Statement -&gt; Doc a
+</span><a href="JS.Pretty.html#ppStatement"><span class="hs-identifier hs-var">ppStatement</span></a></span><span> </span><span class="annot"><span class="annottext">(Statement -&gt; Doc a) -&gt; [Statement] -&gt; [Doc a]
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">[Statement]
+</span><a href="#local-6989586621679038757"><span class="hs-identifier hs-var">file</span></a></span><span>
+</span><span id="line-19"></span><span>
+</span><span id="line-20"></span><span id="local-6989586621679038770"><span id="local-6989586621679038771"><span class="annot"><a href="JS.Pretty.html#ppRecord"><span class="hs-identifier hs-type">ppRecord</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679038771"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038770"><span class="hs-identifier hs-type">ann</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="JS.Ast.html#Record"><span class="hs-identifier hs-type">Record</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679038771"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038770"><span class="hs-identifier hs-type">ann</span></a></span></span></span><span>
+</span><span id="line-21"></span><span id="ppRecord"><span class="annot"><span class="annottext">ppRecord :: (a -&gt; Doc ann) -&gt; Record a -&gt; Doc ann
+</span><a href="JS.Pretty.html#ppRecord"><span class="hs-identifier hs-var hs-var">ppRecord</span></a></span></span><span> </span><span id="local-6989586621679038752"><span class="annot"><span class="annottext">a -&gt; Doc ann
+</span><a href="#local-6989586621679038752"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span id="local-6989586621679038751"><span class="annot"><span class="annottext">Record a
+</span><a href="#local-6989586621679038751"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-22"></span><span>  </span><span class="annot"><span class="annottext">Doc ann -&gt; Doc ann -&gt; Doc ann -&gt; [Doc ann] -&gt; Doc ann
 forall ann. Doc ann -&gt; Doc ann -&gt; Doc ann -&gt; [Doc ann] -&gt; Doc ann
 </span><span class="hs-identifier hs-var">encloseSep</span></span><span> </span><span class="annot"><span class="annottext">Doc ann
 </span><span class="hs-string">&quot;{&quot;</span></span><span> </span><span class="annot"><span class="annottext">Doc ann
@@ -43,12 +57,12 @@ forall ann. Doc ann -&gt; Doc ann -&gt; Doc ann -&gt; [Doc ann] -&gt; Doc ann
 </span><span class="hs-string">&quot;, &quot;</span></span><span> </span><span class="annot"><span class="annottext">([Doc ann] -&gt; Doc ann) -&gt; [Doc ann] -&gt; Doc ann
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span>
-</span><span id="line-20"></span><span>    </span><span class="annot"><span class="annottext">((Text, Doc ann) -&gt; Doc ann) -&gt; [(Text, Doc ann)] -&gt; [Doc ann]
+</span><span id="line-23"></span><span>    </span><span class="annot"><span class="annottext">((Text, Doc ann) -&gt; Doc ann) -&gt; [(Text, Doc ann)] -&gt; [Doc ann]
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-identifier hs-var">fmap</span></span><span>
-</span><span id="line-21"></span><span>      </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span class="hs-special">(</span><span id="local-6989586621679038704"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679038704"><span class="hs-identifier hs-var">k</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679038703"><span class="annot"><span class="annottext">Doc ann
-</span><a href="#local-6989586621679038703"><span class="hs-identifier hs-var">v</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Doc ann -&gt; Doc ann -&gt; Doc ann -&gt; Doc ann
+</span><span id="line-24"></span><span>      </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span class="hs-special">(</span><span id="local-6989586621679038749"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679038749"><span class="hs-identifier hs-var">k</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679038748"><span class="annot"><span class="annottext">Doc ann
+</span><a href="#local-6989586621679038748"><span class="hs-identifier hs-var">v</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Doc ann -&gt; Doc ann -&gt; Doc ann -&gt; Doc ann
 forall ann. Doc ann -&gt; Doc ann -&gt; Doc ann -&gt; Doc ann
 </span><span class="hs-identifier hs-var">surround</span></span><span> </span><span class="annot"><span class="annottext">Doc ann
 </span><span class="hs-string">&quot;: &quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Doc ann
@@ -58,65 +72,65 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; String
 forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679038704"><span class="hs-identifier hs-var">k</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Doc ann
-</span><a href="#local-6989586621679038703"><span class="hs-identifier hs-var">v</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-22"></span><span>      </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Map Text (Doc ann) -&gt; [(Text, Doc ann)]
+</span><a href="#local-6989586621679038749"><span class="hs-identifier hs-var">k</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Doc ann
+</span><a href="#local-6989586621679038748"><span class="hs-identifier hs-var">v</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-25"></span><span>      </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Map Text (Doc ann) -&gt; [(Text, Doc ann)]
 forall k a. Map k a -&gt; [(k, a)]
 </span><span class="hs-identifier hs-var">M.toList</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(a -&gt; Doc ann) -&gt; Record a -&gt; Map Text (Doc ann)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">a -&gt; Doc ann
-</span><a href="#local-6989586621679038707"><span class="hs-identifier hs-var">p</span></a></span><span> </span><span class="annot"><span class="annottext">Record a
-</span><a href="#local-6989586621679038706"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-23"></span><span>
-</span><span id="line-24"></span><span id="local-6989586621679038725"><span class="annot"><a href="JS.Pretty.html#ppLit"><span class="hs-identifier hs-type">ppLit</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="JS.Ast.html#Lit"><span class="hs-identifier hs-type">Lit</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038725"><span class="hs-identifier hs-type">a</span></a></span></span><span>
-</span><span id="line-25"></span><span id="ppLit"><span class="annot"><span class="annottext">ppLit :: Lit -&gt; Doc a
+</span><a href="#local-6989586621679038752"><span class="hs-identifier hs-var">p</span></a></span><span> </span><span class="annot"><span class="annottext">Record a
+</span><a href="#local-6989586621679038751"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-26"></span><span>
+</span><span id="line-27"></span><span id="local-6989586621679038777"><span class="annot"><a href="JS.Pretty.html#ppLit"><span class="hs-identifier hs-type">ppLit</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="JS.Ast.html#Lit"><span class="hs-identifier hs-type">Lit</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038777"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-28"></span><span id="ppLit"><span class="annot"><span class="annottext">ppLit :: Lit -&gt; Doc a
 </span><a href="JS.Pretty.html#ppLit"><span class="hs-identifier hs-var hs-var">ppLit</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-26"></span><span>  </span><span class="annot"><a href="JS.Ast.html#LInt"><span class="hs-identifier hs-type">LInt</span></a></span><span> </span><span id="local-6989586621679038696"><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679038696"><span class="hs-identifier hs-var">int</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Int -&gt; Doc a
+</span><span id="line-29"></span><span>  </span><span class="annot"><a href="JS.Ast.html#LInt"><span class="hs-identifier hs-type">LInt</span></a></span><span> </span><span id="local-6989586621679038741"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679038741"><span class="hs-identifier hs-var">int</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Int -&gt; Doc a
 forall a ann. Pretty a =&gt; a -&gt; Doc ann
 </span><span class="hs-identifier hs-var">pretty</span></span><span> </span><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679038696"><span class="hs-identifier hs-var">int</span></a></span><span>
-</span><span id="line-27"></span><span>  </span><span class="annot"><a href="JS.Ast.html#LFloat"><span class="hs-identifier hs-type">LFloat</span></a></span><span> </span><span id="local-6989586621679038694"><span class="annot"><span class="annottext">Float
-</span><a href="#local-6989586621679038694"><span class="hs-identifier hs-var">float</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Float -&gt; Doc a
+</span><a href="#local-6989586621679038741"><span class="hs-identifier hs-var">int</span></a></span><span>
+</span><span id="line-30"></span><span>  </span><span class="annot"><a href="JS.Ast.html#LFloat"><span class="hs-identifier hs-type">LFloat</span></a></span><span> </span><span id="local-6989586621679038739"><span class="annot"><span class="annottext">Float
+</span><a href="#local-6989586621679038739"><span class="hs-identifier hs-var">float</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Float -&gt; Doc a
 forall a ann. Pretty a =&gt; a -&gt; Doc ann
 </span><span class="hs-identifier hs-var">pretty</span></span><span> </span><span class="annot"><span class="annottext">Float
-</span><a href="#local-6989586621679038694"><span class="hs-identifier hs-var">float</span></a></span><span>
-</span><span id="line-28"></span><span>  </span><span class="annot"><a href="JS.Ast.html#LString"><span class="hs-identifier hs-type">LString</span></a></span><span> </span><span id="local-6989586621679038692"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679038692"><span class="hs-identifier hs-var">str</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Doc a
+</span><a href="#local-6989586621679038739"><span class="hs-identifier hs-var">float</span></a></span><span>
+</span><span id="line-31"></span><span>  </span><span class="annot"><a href="JS.Ast.html#LString"><span class="hs-identifier hs-type">LString</span></a></span><span> </span><span id="local-6989586621679038737"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679038737"><span class="hs-identifier hs-var">str</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Doc a
 forall a ann. Pretty a =&gt; a -&gt; Doc ann
 </span><span class="hs-identifier hs-var">pretty</span></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679038692"><span class="hs-identifier hs-var">str</span></a></span><span>
-</span><span id="line-29"></span><span>  </span><span class="annot"><a href="JS.Ast.html#LBool"><span class="hs-identifier hs-type">LBool</span></a></span><span> </span><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621679038737"><span class="hs-identifier hs-var">str</span></a></span><span>
+</span><span id="line-32"></span><span>  </span><span class="annot"><a href="JS.Ast.html#LBool"><span class="hs-identifier hs-type">LBool</span></a></span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">True</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;true&quot;</span></span><span>
-</span><span id="line-30"></span><span>  </span><span class="annot"><a href="JS.Ast.html#LBool"><span class="hs-identifier hs-type">LBool</span></a></span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span id="line-33"></span><span>  </span><span class="annot"><a href="JS.Ast.html#LBool"><span class="hs-identifier hs-type">LBool</span></a></span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">False</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;false&quot;</span></span><span>
-</span><span id="line-31"></span><span>
-</span><span id="line-32"></span><span id="local-6989586621679038729"><span class="annot"><a href="JS.Pretty.html#ppSub"><span class="hs-identifier hs-type">ppSub</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="JS.Ast.html#Sub"><span class="hs-identifier hs-type">Sub</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038729"><span class="hs-identifier hs-type">a</span></a></span></span><span>
-</span><span id="line-33"></span><span id="ppSub"><span class="annot"><span class="annottext">ppSub :: Sub -&gt; Doc a
-</span><a href="JS.Pretty.html#ppSub"><span class="hs-identifier hs-var hs-var">ppSub</span></a></span></span><span> </span><span id="local-6989586621679038689"><span class="annot"><span class="annottext">Sub
-</span><a href="#local-6989586621679038689"><span class="hs-identifier hs-var">sub</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Doc a] -&gt; Doc a
+</span><span id="line-34"></span><span>
+</span><span id="line-35"></span><span id="local-6989586621679038781"><span class="annot"><a href="JS.Pretty.html#ppSub"><span class="hs-identifier hs-type">ppSub</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="JS.Ast.html#Sub"><span class="hs-identifier hs-type">Sub</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038781"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-36"></span><span id="ppSub"><span class="annot"><span class="annottext">ppSub :: [Statement] -&gt; Doc a
+</span><a href="JS.Pretty.html#ppSub"><span class="hs-identifier hs-var hs-var">ppSub</span></a></span></span><span> </span><span id="local-6989586621679038733"><span class="annot"><span class="annottext">[Statement]
+</span><a href="#local-6989586621679038733"><span class="hs-identifier hs-var">sub</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Doc a] -&gt; Doc a
 forall ann. [Doc ann] -&gt; Doc ann
 </span><span class="hs-identifier hs-var">vsep</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Statement -&gt; Doc a
 forall a. Statement -&gt; Doc a
-</span><a href="JS.Pretty.html#ppStatement"><span class="hs-identifier hs-var">ppStatement</span></a></span><span> </span><span class="annot"><span class="annottext">(Statement -&gt; Doc a) -&gt; Sub -&gt; [Doc a]
+</span><a href="JS.Pretty.html#ppStatement"><span class="hs-identifier hs-var">ppStatement</span></a></span><span> </span><span class="annot"><span class="annottext">(Statement -&gt; Doc a) -&gt; [Statement] -&gt; [Doc a]
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
-</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Sub
-</span><a href="#local-6989586621679038689"><span class="hs-identifier hs-var">sub</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-34"></span><span>
-</span><span id="line-35"></span><span id="local-6989586621679038727"><span class="annot"><a href="JS.Pretty.html#ppDef"><span class="hs-identifier hs-type">ppDef</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="JS.Ast.html#Definition"><span class="hs-identifier hs-type">Definition</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038727"><span class="hs-identifier hs-type">a</span></a></span></span><span>
-</span><span id="line-36"></span><span id="ppDef"><span class="annot"><span class="annottext">ppDef :: Definition -&gt; Doc a
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">[Statement]
+</span><a href="#local-6989586621679038733"><span class="hs-identifier hs-var">sub</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-37"></span><span>
+</span><span id="line-38"></span><span id="local-6989586621679038779"><span class="annot"><a href="JS.Pretty.html#ppDef"><span class="hs-identifier hs-type">ppDef</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="JS.Ast.html#Definition"><span class="hs-identifier hs-type">Definition</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038779"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-39"></span><span id="ppDef"><span class="annot"><span class="annottext">ppDef :: Definition -&gt; Doc a
 </span><a href="JS.Pretty.html#ppDef"><span class="hs-identifier hs-var hs-var">ppDef</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-37"></span><span>  </span><span class="annot"><a href="JS.Ast.html#Variable"><span class="hs-identifier hs-type">Variable</span></a></span><span> </span><span id="local-6989586621679038683"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679038683"><span class="hs-identifier hs-var">name</span></a></span></span><span> </span><span id="local-6989586621679038682"><span class="annot"><span class="annottext">Expr
-</span><a href="#local-6989586621679038682"><span class="hs-identifier hs-var">expr</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Doc a
+</span><span id="line-40"></span><span>  </span><span class="annot"><a href="JS.Ast.html#Variable"><span class="hs-identifier hs-type">Variable</span></a></span><span> </span><span id="local-6989586621679038730"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679038730"><span class="hs-identifier hs-var">name</span></a></span></span><span> </span><span id="local-6989586621679038729"><span class="annot"><span class="annottext">Expr
+</span><a href="#local-6989586621679038729"><span class="hs-identifier hs-var">expr</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;const&quot;</span></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
-forall a. Semigroup a =&gt; a -&gt; a -&gt; a
-</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Doc a
+forall ann. Doc ann -&gt; Doc ann -&gt; Doc ann
+</span><span class="hs-operator hs-var">&lt;+&gt;</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Doc a
 forall a ann. Pretty a =&gt; a -&gt; Doc ann
 </span><span class="hs-identifier hs-var">pretty</span></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679038683"><span class="hs-identifier hs-var">name</span></a></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
+</span><a href="#local-6989586621679038730"><span class="hs-identifier hs-var">name</span></a></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
 forall ann. Doc ann -&gt; Doc ann -&gt; Doc ann
 </span><span class="hs-operator hs-var">&lt;+&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;=&quot;</span></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
@@ -124,13 +138,16 @@ forall ann. Doc ann -&gt; Doc ann -&gt; Doc ann
 </span><span class="hs-operator hs-var">&lt;+&gt;</span></span><span> </span><span class="annot"><span class="annottext">Expr -&gt; Doc a
 forall a. Expr -&gt; Doc a
 </span><a href="JS.Pretty.html#ppExpr"><span class="hs-identifier hs-var">ppExpr</span></a></span><span> </span><span class="annot"><span class="annottext">Expr
-</span><a href="#local-6989586621679038682"><span class="hs-identifier hs-var">expr</span></a></span><span>
-</span><span id="line-38"></span><span>  </span><span class="annot"><a href="JS.Ast.html#Function"><span class="hs-identifier hs-type">Function</span></a></span><span> </span><span id="local-6989586621679038678"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679038678"><span class="hs-identifier hs-var">name</span></a></span></span><span> </span><span id="local-6989586621679038677"><span class="annot"><span class="annottext">[Text]
-</span><a href="#local-6989586621679038677"><span class="hs-identifier hs-var">args</span></a></span></span><span> </span><span id="local-6989586621679038676"><span class="annot"><span class="annottext">Sub
-</span><a href="#local-6989586621679038676"><span class="hs-identifier hs-var">body</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
-</span><span id="line-39"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679038675"><span class="annot"><span class="annottext">arguments :: Doc ann
-</span><a href="#local-6989586621679038675"><span class="hs-identifier hs-var hs-var">arguments</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Doc ann -&gt; Doc ann -&gt; Doc ann) -&gt; [Doc ann] -&gt; Doc ann
+</span><a href="#local-6989586621679038729"><span class="hs-identifier hs-var">expr</span></a></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
+</span><span class="hs-string">&quot;;&quot;</span></span><span>
+</span><span id="line-41"></span><span>  </span><span class="annot"><a href="JS.Ast.html#Function"><span class="hs-identifier hs-type">Function</span></a></span><span> </span><span id="local-6989586621679038725"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679038725"><span class="hs-identifier hs-var">name</span></a></span></span><span> </span><span id="local-6989586621679038724"><span class="annot"><span class="annottext">[Text]
+</span><a href="#local-6989586621679038724"><span class="hs-identifier hs-var">args</span></a></span></span><span> </span><span id="local-6989586621679038723"><span class="annot"><span class="annottext">[Statement]
+</span><a href="#local-6989586621679038723"><span class="hs-identifier hs-var">body</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span id="line-42"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679038722"><span class="annot"><span class="annottext">arguments :: Doc ann
+</span><a href="#local-6989586621679038722"><span class="hs-identifier hs-var hs-var">arguments</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Doc ann -&gt; Doc ann -&gt; Doc ann) -&gt; [Doc ann] -&gt; Doc ann
 forall (t :: * -&gt; *) ann.
 Foldable t =&gt;
 (Doc ann -&gt; Doc ann -&gt; Doc ann) -&gt; t (Doc ann) -&gt; Doc ann
@@ -142,23 +159,23 @@ forall a ann. Pretty a =&gt; a -&gt; Doc ann
 </span><span class="hs-identifier hs-var">pretty</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Doc ann) -&gt; [Text] -&gt; [Doc ann]
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">[Text]
-</span><a href="#local-6989586621679038677"><span class="hs-identifier hs-var">args</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-40"></span><span>     </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">Doc a
-</span><span class="hs-string">&quot;var&quot;</span></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
-forall a. Semigroup a =&gt; a -&gt; a -&gt; a
-</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Doc a
+</span><a href="#local-6989586621679038724"><span class="hs-identifier hs-var">args</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-43"></span><span>     </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">Doc a
+</span><span class="hs-string">&quot;const&quot;</span></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
+forall ann. Doc ann -&gt; Doc ann -&gt; Doc ann
+</span><span class="hs-operator hs-var">&lt;+&gt;</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Doc a
 forall a ann. Pretty a =&gt; a -&gt; Doc ann
 </span><span class="hs-identifier hs-var">pretty</span></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679038678"><span class="hs-identifier hs-var">name</span></a></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
-forall a. Semigroup a =&gt; a -&gt; a -&gt; a
-</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
+</span><a href="#local-6989586621679038725"><span class="hs-identifier hs-var">name</span></a></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
+forall ann. Doc ann -&gt; Doc ann -&gt; Doc ann
+</span><span class="hs-operator hs-var">&lt;+&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;=&quot;</span></span><span>
-</span><span id="line-41"></span><span>          </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
-forall a. Semigroup a =&gt; a -&gt; a -&gt; a
-</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">[Doc a] -&gt; Doc a
+</span><span id="line-44"></span><span>          </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
+forall ann. Doc ann -&gt; Doc ann -&gt; Doc ann
+</span><span class="hs-operator hs-var">&lt;+&gt;</span></span><span> </span><span class="annot"><span class="annottext">[Doc a] -&gt; Doc a
 forall ann. [Doc ann] -&gt; Doc ann
 </span><span class="hs-identifier hs-var">vsep</span></span><span>
-</span><span id="line-42"></span><span>            </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Doc a
+</span><span id="line-45"></span><span>            </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;function&quot;</span></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
@@ -166,67 +183,67 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
 forall ann. Doc ann
-</span><a href="#local-6989586621679038675"><span class="hs-identifier hs-var">arguments</span></a></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
+</span><a href="#local-6989586621679038722"><span class="hs-identifier hs-var">arguments</span></a></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;)&quot;</span></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
 forall ann. Doc ann -&gt; Doc ann -&gt; Doc ann
 </span><span class="hs-operator hs-var">&lt;+&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;{&quot;</span></span><span class="hs-special">,</span><span>
-</span><span id="line-43"></span><span>              </span><span class="annot"><span class="annottext">Int -&gt; Doc a -&gt; Doc a
+</span><span id="line-46"></span><span>              </span><span class="annot"><span class="annottext">Int -&gt; Doc a -&gt; Doc a
 forall ann. Int -&gt; Doc ann -&gt; Doc ann
 </span><span class="hs-identifier hs-var">indent</span></span><span> </span><span class="annot"><span class="annottext">Int
 </span><span class="hs-number">2</span></span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;return&quot;</span></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
 forall ann. Doc ann -&gt; Doc ann -&gt; Doc ann
-</span><span class="hs-operator hs-var">&lt;+&gt;</span></span><span> </span><span class="annot"><span class="annottext">Sub -&gt; Doc a
-forall a. Sub -&gt; Doc a
-</span><a href="JS.Pretty.html#ppSub"><span class="hs-identifier hs-var">ppSub</span></a></span><span> </span><span class="annot"><span class="annottext">Sub
-</span><a href="#local-6989586621679038676"><span class="hs-identifier hs-var">body</span></a></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
+</span><span class="hs-operator hs-var">&lt;+&gt;</span></span><span> </span><span class="annot"><span class="annottext">[Statement] -&gt; Doc a
+forall a. [Statement] -&gt; Doc a
+</span><a href="JS.Pretty.html#ppSub"><span class="hs-identifier hs-var">ppSub</span></a></span><span> </span><span class="annot"><span class="annottext">[Statement]
+</span><a href="#local-6989586621679038723"><span class="hs-identifier hs-var">body</span></a></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;;&quot;</span></span><span class="hs-special">,</span><span>
-</span><span id="line-44"></span><span>              </span><span class="annot"><span class="annottext">Doc a
+</span><span id="line-47"></span><span>              </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;}&quot;</span></span><span>
-</span><span id="line-45"></span><span>            </span><span class="hs-special">]</span><span>
-</span><span id="line-46"></span><span>
-</span><span id="line-47"></span><span id="local-6989586621679038743"><span class="annot"><a href="JS.Pretty.html#ppStatement"><span class="hs-identifier hs-type">ppStatement</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="JS.Ast.html#Statement"><span class="hs-identifier hs-type">Statement</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038743"><span class="hs-identifier hs-type">a</span></a></span></span><span>
-</span><span id="line-48"></span><span id="ppStatement"><span class="annot"><span class="annottext">ppStatement :: Statement -&gt; Doc a
+</span><span id="line-48"></span><span>            </span><span class="hs-special">]</span><span>
+</span><span id="line-49"></span><span>
+</span><span id="line-50"></span><span id="local-6989586621679038814"><span class="annot"><a href="JS.Pretty.html#ppStatement"><span class="hs-identifier hs-type">ppStatement</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="JS.Ast.html#Statement"><span class="hs-identifier hs-type">Statement</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038814"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-51"></span><span id="ppStatement"><span class="annot"><span class="annottext">ppStatement :: Statement -&gt; Doc a
 </span><a href="JS.Pretty.html#ppStatement"><span class="hs-identifier hs-var hs-var">ppStatement</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-49"></span><span>  </span><span class="annot"><a href="JS.Ast.html#SExpr"><span class="hs-identifier hs-type">SExpr</span></a></span><span> </span><span id="local-6989586621679038671"><span class="annot"><span class="annottext">Expr
-</span><a href="#local-6989586621679038671"><span class="hs-identifier hs-var">expr</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Expr -&gt; Doc a
+</span><span id="line-52"></span><span>  </span><span class="annot"><a href="JS.Ast.html#SExpr"><span class="hs-identifier hs-type">SExpr</span></a></span><span> </span><span id="local-6989586621679038718"><span class="annot"><span class="annottext">Expr
+</span><a href="#local-6989586621679038718"><span class="hs-identifier hs-var">expr</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Expr -&gt; Doc a
 forall a. Expr -&gt; Doc a
 </span><a href="JS.Pretty.html#ppExpr"><span class="hs-identifier hs-var">ppExpr</span></a></span><span> </span><span class="annot"><span class="annottext">Expr
-</span><a href="#local-6989586621679038671"><span class="hs-identifier hs-var">expr</span></a></span><span>
-</span><span id="line-50"></span><span>  </span><span class="annot"><a href="JS.Ast.html#SRet"><span class="hs-identifier hs-type">SRet</span></a></span><span> </span><span id="local-6989586621679038669"><span class="annot"><span class="annottext">Expr
-</span><a href="#local-6989586621679038669"><span class="hs-identifier hs-var">expr</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Expr -&gt; Doc a
+</span><a href="#local-6989586621679038718"><span class="hs-identifier hs-var">expr</span></a></span><span>
+</span><span id="line-53"></span><span>  </span><span class="annot"><a href="JS.Ast.html#SRet"><span class="hs-identifier hs-type">SRet</span></a></span><span> </span><span id="local-6989586621679038716"><span class="annot"><span class="annottext">Expr
+</span><a href="#local-6989586621679038716"><span class="hs-identifier hs-var">expr</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Expr -&gt; Doc a
 forall a. Expr -&gt; Doc a
 </span><a href="JS.Pretty.html#ppExpr"><span class="hs-identifier hs-var">ppExpr</span></a></span><span> </span><span class="annot"><span class="annottext">Expr
-</span><a href="#local-6989586621679038669"><span class="hs-identifier hs-var">expr</span></a></span><span>
-</span><span id="line-51"></span><span>  </span><span class="annot"><a href="JS.Ast.html#SDef"><span class="hs-identifier hs-type">SDef</span></a></span><span> </span><span id="local-6989586621679038667"><span class="annot"><span class="annottext">Definition
-</span><a href="#local-6989586621679038667"><span class="hs-identifier hs-var">def</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Definition -&gt; Doc a
+</span><a href="#local-6989586621679038716"><span class="hs-identifier hs-var">expr</span></a></span><span>
+</span><span id="line-54"></span><span>  </span><span class="annot"><a href="JS.Ast.html#SDef"><span class="hs-identifier hs-type">SDef</span></a></span><span> </span><span id="local-6989586621679038714"><span class="annot"><span class="annottext">Definition
+</span><a href="#local-6989586621679038714"><span class="hs-identifier hs-var">def</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Definition -&gt; Doc a
 forall a. Definition -&gt; Doc a
 </span><a href="JS.Pretty.html#ppDef"><span class="hs-identifier hs-var">ppDef</span></a></span><span> </span><span class="annot"><span class="annottext">Definition
-</span><a href="#local-6989586621679038667"><span class="hs-identifier hs-var">def</span></a></span><span>
-</span><span id="line-52"></span><span>
-</span><span id="line-53"></span><span id="local-6989586621679038734"><span class="annot"><a href="JS.Pretty.html#ppExpr"><span class="hs-identifier hs-type">ppExpr</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038734"><span class="hs-identifier hs-type">a</span></a></span></span><span>
-</span><span id="line-54"></span><span id="ppExpr"><span class="annot"><span class="annottext">ppExpr :: Expr -&gt; Doc a
+</span><a href="#local-6989586621679038714"><span class="hs-identifier hs-var">def</span></a></span><span>
+</span><span id="line-55"></span><span>
+</span><span id="line-56"></span><span id="local-6989586621679038787"><span class="annot"><a href="JS.Pretty.html#ppExpr"><span class="hs-identifier hs-type">ppExpr</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Doc</span></span><span> </span><span class="annot"><a href="#local-6989586621679038787"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-57"></span><span id="ppExpr"><span class="annot"><span class="annottext">ppExpr :: Expr -&gt; Doc a
 </span><a href="JS.Pretty.html#ppExpr"><span class="hs-identifier hs-var hs-var">ppExpr</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-55"></span><span>  </span><span class="annot"><a href="JS.Ast.html#ELit"><span class="hs-identifier hs-type">ELit</span></a></span><span> </span><span id="local-6989586621679038665"><span class="annot"><span class="annottext">Lit
-</span><a href="#local-6989586621679038665"><span class="hs-identifier hs-var">lit</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Lit -&gt; Doc a
+</span><span id="line-58"></span><span>  </span><span class="annot"><a href="JS.Ast.html#ELit"><span class="hs-identifier hs-type">ELit</span></a></span><span> </span><span id="local-6989586621679038712"><span class="annot"><span class="annottext">Lit
+</span><a href="#local-6989586621679038712"><span class="hs-identifier hs-var">lit</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Lit -&gt; Doc a
 forall a. Lit -&gt; Doc a
 </span><a href="JS.Pretty.html#ppLit"><span class="hs-identifier hs-var">ppLit</span></a></span><span> </span><span class="annot"><span class="annottext">Lit
-</span><a href="#local-6989586621679038665"><span class="hs-identifier hs-var">lit</span></a></span><span>
-</span><span id="line-56"></span><span>  </span><span class="annot"><a href="JS.Ast.html#EVar"><span class="hs-identifier hs-type">EVar</span></a></span><span> </span><span id="local-6989586621679038663"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679038663"><span class="hs-identifier hs-var">var</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Doc a
+</span><a href="#local-6989586621679038712"><span class="hs-identifier hs-var">lit</span></a></span><span>
+</span><span id="line-59"></span><span>  </span><span class="annot"><a href="JS.Ast.html#EVar"><span class="hs-identifier hs-type">EVar</span></a></span><span> </span><span id="local-6989586621679038710"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679038710"><span class="hs-identifier hs-var">var</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Doc a
 forall a ann. Pretty a =&gt; a -&gt; Doc ann
 </span><span class="hs-identifier hs-var">pretty</span></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679038663"><span class="hs-identifier hs-var">var</span></a></span><span>
-</span><span id="line-57"></span><span>  </span><span class="annot"><a href="JS.Ast.html#EFun"><span class="hs-identifier hs-type">EFun</span></a></span><span> </span><span id="local-6989586621679038661"><span class="annot"><span class="annottext">[Text]
-</span><a href="#local-6989586621679038661"><span class="hs-identifier hs-var">args</span></a></span></span><span> </span><span id="local-6989586621679038660"><span class="annot"><span class="annottext">Sub
-</span><a href="#local-6989586621679038660"><span class="hs-identifier hs-var">body</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
-</span><span id="line-58"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679038659"><span class="annot"><span class="annottext">arguments :: Doc ann
-</span><a href="#local-6989586621679038659"><span class="hs-identifier hs-var hs-var">arguments</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Doc ann -&gt; Doc ann -&gt; Doc ann) -&gt; [Doc ann] -&gt; Doc ann
+</span><a href="#local-6989586621679038710"><span class="hs-identifier hs-var">var</span></a></span><span>
+</span><span id="line-60"></span><span>  </span><span class="annot"><a href="JS.Ast.html#EFun"><span class="hs-identifier hs-type">EFun</span></a></span><span> </span><span id="local-6989586621679038708"><span class="annot"><span class="annottext">[Text]
+</span><a href="#local-6989586621679038708"><span class="hs-identifier hs-var">args</span></a></span></span><span> </span><span id="local-6989586621679038707"><span class="annot"><span class="annottext">[Statement]
+</span><a href="#local-6989586621679038707"><span class="hs-identifier hs-var">body</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span id="line-61"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679038706"><span class="annot"><span class="annottext">arguments :: Doc ann
+</span><a href="#local-6989586621679038706"><span class="hs-identifier hs-var hs-var">arguments</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Doc ann -&gt; Doc ann -&gt; Doc ann) -&gt; [Doc ann] -&gt; Doc ann
 forall (t :: * -&gt; *) ann.
 Foldable t =&gt;
 (Doc ann -&gt; Doc ann -&gt; Doc ann) -&gt; t (Doc ann) -&gt; Doc ann
@@ -238,11 +255,11 @@ forall a ann. Pretty a =&gt; a -&gt; Doc ann
 </span><span class="hs-identifier hs-var">pretty</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Doc ann) -&gt; [Text] -&gt; [Doc ann]
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">[Text]
-</span><a href="#local-6989586621679038661"><span class="hs-identifier hs-var">args</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-59"></span><span>     </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">[Doc a] -&gt; Doc a
+</span><a href="#local-6989586621679038708"><span class="hs-identifier hs-var">args</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-62"></span><span>     </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">[Doc a] -&gt; Doc a
 forall ann. [Doc ann] -&gt; Doc ann
 </span><span class="hs-identifier hs-var">vsep</span></span><span>
-</span><span id="line-60"></span><span>          </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Doc a
+</span><span id="line-63"></span><span>          </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;function&quot;</span></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
@@ -250,42 +267,42 @@ forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
 forall ann. Doc ann
-</span><a href="#local-6989586621679038659"><span class="hs-identifier hs-var">arguments</span></a></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
+</span><a href="#local-6989586621679038706"><span class="hs-identifier hs-var">arguments</span></a></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;)&quot;</span></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
 forall ann. Doc ann -&gt; Doc ann -&gt; Doc ann
 </span><span class="hs-operator hs-var">&lt;+&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;{&quot;</span></span><span class="hs-special">,</span><span>
-</span><span id="line-61"></span><span>            </span><span class="annot"><span class="annottext">Int -&gt; Doc a -&gt; Doc a
+</span><span id="line-64"></span><span>            </span><span class="annot"><span class="annottext">Int -&gt; Doc a -&gt; Doc a
 forall ann. Int -&gt; Doc ann -&gt; Doc ann
 </span><span class="hs-identifier hs-var">indent</span></span><span> </span><span class="annot"><span class="annottext">Int
 </span><span class="hs-number">2</span></span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;return&quot;</span></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
 forall ann. Doc ann -&gt; Doc ann -&gt; Doc ann
-</span><span class="hs-operator hs-var">&lt;+&gt;</span></span><span> </span><span class="annot"><span class="annottext">Sub -&gt; Doc a
-forall a. Sub -&gt; Doc a
-</span><a href="JS.Pretty.html#ppSub"><span class="hs-identifier hs-var">ppSub</span></a></span><span> </span><span class="annot"><span class="annottext">Sub
-</span><a href="#local-6989586621679038660"><span class="hs-identifier hs-var">body</span></a></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
+</span><span class="hs-operator hs-var">&lt;+&gt;</span></span><span> </span><span class="annot"><span class="annottext">[Statement] -&gt; Doc a
+forall a. [Statement] -&gt; Doc a
+</span><a href="JS.Pretty.html#ppSub"><span class="hs-identifier hs-var">ppSub</span></a></span><span> </span><span class="annot"><span class="annottext">[Statement]
+</span><a href="#local-6989586621679038707"><span class="hs-identifier hs-var">body</span></a></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;;&quot;</span></span><span class="hs-special">,</span><span>
-</span><span id="line-62"></span><span>            </span><span class="annot"><span class="annottext">Doc a
+</span><span id="line-65"></span><span>            </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;}&quot;</span></span><span>
-</span><span id="line-63"></span><span>          </span><span class="hs-special">]</span><span>
-</span><span id="line-64"></span><span>  </span><span class="annot"><a href="JS.Ast.html#EFunCall"><span class="hs-identifier hs-type">EFunCall</span></a></span><span> </span><span id="local-6989586621679038657"><span class="annot"><span class="annottext">Expr
-</span><a href="#local-6989586621679038657"><span class="hs-identifier hs-var">fun</span></a></span></span><span> </span><span id="local-6989586621679038656"><span class="annot"><span class="annottext">[Expr]
-</span><a href="#local-6989586621679038656"><span class="hs-identifier hs-var">args</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
-</span><span id="line-65"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679038655"><span class="annot"><span class="annottext">encloseIfNotSimple :: Doc ann -&gt; Doc ann
-</span><a href="#local-6989586621679038655"><span class="hs-identifier hs-var hs-var">encloseIfNotSimple</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">if</span><span> </span><span class="annot"><span class="annottext">Expr -&gt; Bool
+</span><span id="line-66"></span><span>          </span><span class="hs-special">]</span><span>
+</span><span id="line-67"></span><span>  </span><span class="annot"><a href="JS.Ast.html#EFunCall"><span class="hs-identifier hs-type">EFunCall</span></a></span><span> </span><span id="local-6989586621679038704"><span class="annot"><span class="annottext">Expr
+</span><a href="#local-6989586621679038704"><span class="hs-identifier hs-var">fun</span></a></span></span><span> </span><span id="local-6989586621679038703"><span class="annot"><span class="annottext">[Expr]
+</span><a href="#local-6989586621679038703"><span class="hs-identifier hs-var">args</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span id="line-68"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679038702"><span class="annot"><span class="annottext">encloseIfNotSimple :: Doc ann -&gt; Doc ann
+</span><a href="#local-6989586621679038702"><span class="hs-identifier hs-var hs-var">encloseIfNotSimple</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">if</span><span> </span><span class="annot"><span class="annottext">Expr -&gt; Bool
 </span><a href="JS.Pretty.html#isSimpleExpr"><span class="hs-identifier hs-var">isSimpleExpr</span></a></span><span> </span><span class="annot"><span class="annottext">Expr
-</span><a href="#local-6989586621679038657"><span class="hs-identifier hs-var">fun</span></a></span><span> </span><span class="hs-keyword">then</span><span> </span><span class="annot"><span class="annottext">Doc ann -&gt; Doc ann
+</span><a href="#local-6989586621679038704"><span class="hs-identifier hs-var">fun</span></a></span><span> </span><span class="hs-keyword">then</span><span> </span><span class="annot"><span class="annottext">Doc ann -&gt; Doc ann
 forall a. a -&gt; a
 </span><span class="hs-identifier hs-var">id</span></span><span> </span><span class="hs-keyword">else</span><span> </span><span class="annot"><span class="annottext">Doc ann -&gt; Doc ann
 forall ann. Doc ann -&gt; Doc ann
 </span><span class="hs-identifier hs-var">parens</span></span><span>
-</span><span id="line-66"></span><span>        </span><span id="local-6989586621679038651"><span class="annot"><span class="annottext">arguments :: Doc ann
-</span><a href="#local-6989586621679038651"><span class="hs-identifier hs-var hs-var">arguments</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Doc ann -&gt; Doc ann -&gt; Doc ann) -&gt; [Doc ann] -&gt; Doc ann
+</span><span id="line-69"></span><span>        </span><span id="local-6989586621679038698"><span class="annot"><span class="annottext">arguments :: Doc ann
+</span><a href="#local-6989586621679038698"><span class="hs-identifier hs-var hs-var">arguments</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Doc ann -&gt; Doc ann -&gt; Doc ann) -&gt; [Doc ann] -&gt; Doc ann
 forall (t :: * -&gt; *) ann.
 Foldable t =&gt;
 (Doc ann -&gt; Doc ann -&gt; Doc ann) -&gt; t (Doc ann) -&gt; Doc ann
@@ -297,39 +314,39 @@ forall a. Expr -&gt; Doc a
 </span><a href="JS.Pretty.html#ppExpr"><span class="hs-identifier hs-var">ppExpr</span></a></span><span> </span><span class="annot"><span class="annottext">(Expr -&gt; Doc ann) -&gt; [Expr] -&gt; [Doc ann]
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">[Expr]
-</span><a href="#local-6989586621679038656"><span class="hs-identifier hs-var">args</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-67"></span><span>     </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a
+</span><a href="#local-6989586621679038703"><span class="hs-identifier hs-var">args</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-70"></span><span>     </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a
 forall ann. Doc ann -&gt; Doc ann
-</span><a href="#local-6989586621679038655"><span class="hs-identifier hs-var">encloseIfNotSimple</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Expr -&gt; Doc a
+</span><a href="#local-6989586621679038702"><span class="hs-identifier hs-var">encloseIfNotSimple</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Expr -&gt; Doc a
 forall a. Expr -&gt; Doc a
 </span><a href="JS.Pretty.html#ppExpr"><span class="hs-identifier hs-var">ppExpr</span></a></span><span> </span><span class="annot"><span class="annottext">Expr
-</span><a href="#local-6989586621679038657"><span class="hs-identifier hs-var">fun</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
+</span><a href="#local-6989586621679038704"><span class="hs-identifier hs-var">fun</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;(&quot;</span></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
 forall ann. Doc ann
-</span><a href="#local-6989586621679038651"><span class="hs-identifier hs-var">arguments</span></a></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
+</span><a href="#local-6989586621679038698"><span class="hs-identifier hs-var">arguments</span></a></span><span> </span><span class="annot"><span class="annottext">Doc a -&gt; Doc a -&gt; Doc a
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Doc a
 </span><span class="hs-string">&quot;)&quot;</span></span><span>
-</span><span id="line-68"></span><span>  </span><span class="annot"><a href="JS.Ast.html#ERecord"><span class="hs-identifier hs-type">ERecord</span></a></span><span> </span><span id="local-6989586621679038649"><span class="annot"><span class="annottext">Record Expr
-</span><a href="#local-6989586621679038649"><span class="hs-identifier hs-var">record</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">(Expr -&gt; Doc a) -&gt; Record Expr -&gt; Doc a
+</span><span id="line-71"></span><span>  </span><span class="annot"><a href="JS.Ast.html#ERecord"><span class="hs-identifier hs-type">ERecord</span></a></span><span> </span><span id="local-6989586621679038696"><span class="annot"><span class="annottext">Record Expr
+</span><a href="#local-6989586621679038696"><span class="hs-identifier hs-var">record</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">(Expr -&gt; Doc a) -&gt; Record Expr -&gt; Doc a
 forall a ann. (a -&gt; Doc ann) -&gt; Record a -&gt; Doc ann
 </span><a href="JS.Pretty.html#ppRecord"><span class="hs-identifier hs-var">ppRecord</span></a></span><span> </span><span class="annot"><span class="annottext">Expr -&gt; Doc a
 forall a. Expr -&gt; Doc a
 </span><a href="JS.Pretty.html#ppExpr"><span class="hs-identifier hs-var">ppExpr</span></a></span><span> </span><span class="annot"><span class="annottext">Record Expr
-</span><a href="#local-6989586621679038649"><span class="hs-identifier hs-var">record</span></a></span><span>
-</span><span id="line-69"></span><span>
-</span><span id="line-70"></span><span class="hs-comment">-- need surrounding parens?</span><span>
-</span><span id="line-71"></span><span class="annot"><a href="JS.Pretty.html#isSimpleExpr"><span class="hs-identifier hs-type">isSimpleExpr</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Bool</span></span><span>
-</span><span id="line-72"></span><span id="isSimpleExpr"><span class="annot"><span class="annottext">isSimpleExpr :: Expr -&gt; Bool
+</span><a href="#local-6989586621679038696"><span class="hs-identifier hs-var">record</span></a></span><span>
+</span><span id="line-72"></span><span>
+</span><span id="line-73"></span><span class="hs-comment">-- need surrounding parens?</span><span>
+</span><span id="line-74"></span><span class="annot"><a href="JS.Pretty.html#isSimpleExpr"><span class="hs-identifier hs-type">isSimpleExpr</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Bool</span></span><span>
+</span><span id="line-75"></span><span id="isSimpleExpr"><span class="annot"><span class="annottext">isSimpleExpr :: Expr -&gt; Bool
 </span><a href="JS.Pretty.html#isSimpleExpr"><span class="hs-identifier hs-var hs-var">isSimpleExpr</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-73"></span><span>  </span><span class="annot"><a href="JS.Ast.html#ERecord"><span class="hs-identifier hs-type">ERecord</span></a></span><span> </span><span class="hs-special">{</span><span class="hs-special">}</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span id="line-76"></span><span>  </span><span class="annot"><a href="JS.Ast.html#ERecord"><span class="hs-identifier hs-type">ERecord</span></a></span><span> </span><span class="hs-special">{</span><span class="hs-special">}</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">False</span></span><span>
-</span><span id="line-74"></span><span>  </span><span class="annot"><a href="JS.Ast.html#EFun"><span class="hs-identifier hs-type">EFun</span></a></span><span> </span><span class="hs-special">{</span><span class="hs-special">}</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span id="line-77"></span><span>  </span><span class="annot"><a href="JS.Ast.html#EFun"><span class="hs-identifier hs-type">EFun</span></a></span><span> </span><span class="hs-special">{</span><span class="hs-special">}</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">False</span></span><span>
-</span><span id="line-75"></span><span>  </span><span class="annot"><span class="annottext">Expr
+</span><span id="line-78"></span><span>  </span><span class="annot"><span class="annottext">Expr
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Bool
 </span><span class="hs-identifier hs-var">True</span></span></pre></body></html>
