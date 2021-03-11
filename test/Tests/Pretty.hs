@@ -17,6 +17,43 @@ spec = do
   describe "pretty" $ do
     lit
     expr
+    record
+
+record :: Spec
+record = do
+  describe "Records" $ do
+    it "empty" $
+      shouldBe
+        (ppRecord' M.empty)
+        "{}"
+    it "one element" $
+      shouldBe
+        (ppRecord' $ M.fromList [("a", ELit $ LInt 1)])
+        "{\"a\": 1}"
+    it "many elements" $
+      shouldBe
+        ( ppRecord' $
+            M.fromList
+              [ ("a", ELit $ LInt 1),
+                ("b", ELit $ LBool True),
+                ("c", ELit $ LString "abc")
+              ]
+        )
+        "{\"a\": 1, \"b\": true, \"c\": abc}" -- this doesn't sound right
+    it "nested" $
+      shouldBe
+        ( ppRecord' $
+            M.fromList
+              [ ("a", ELit $ LInt 1),
+                ( "b",
+                  ERecord $
+                    M.fromList
+                      [ ("c", ELit $ LFloat 2.3)
+                      ]
+                )
+              ]
+        )
+        "{\"a\": 1, \"b\": {\"c\": 2.3}}"
 
 lit :: Spec
 lit = do
@@ -140,6 +177,9 @@ expr = do
       shouldBe
         (ppExpr' $ EFunCall (EFun ["a", "b"] [SRet (EVar "a")]) [ELit $ LInt 1, ELit $ LInt 2])
         "(function(a, b) {\n  return a;\n})(1, 2)"
+
+ppRecord' :: Record Expr -> T.Text
+ppRecord' = pp $ ppRecord ppExpr
 
 ppLit' :: Lit -> T.Text
 ppLit' = pp ppLit
