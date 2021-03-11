@@ -19,6 +19,7 @@ library
                        JS.Ast
                        JS.Pretty
                        CodeGen
+                       Compile
 
   build-depends:       base >= 4.7 && < 5
                      , containers

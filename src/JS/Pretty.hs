@@ -14,6 +14,9 @@ pp f = render . f
 render :: Doc a -> T.Text
 render = renderStrict . layoutPretty defaultLayoutOptions
 
+ppFile :: File -> Doc a
+ppFile (File file) = vsep $ ppStatement <$> file
+
 ppRecord :: (a -> Doc ann) -> Record a -> Doc ann
 ppRecord p r =
   encloseSep "{" "}" ", " $
@@ -34,11 +37,11 @@ ppSub sub = vsep (ppStatement <$> sub)
 
 ppDef :: Definition -> Doc a
 ppDef = \case
-  Variable name expr -> "const" <> pretty name <+> "=" <+> ppExpr expr
+  Variable name expr -> "const" <+> pretty name <+> "=" <+> ppExpr expr <> ";"
   Function name args body ->
     let arguments = concatWith (surround ", ") (pretty <$> args)
-     in "var" <> pretty name <> "="
-          <> vsep
+     in "const" <+> pretty name <+> "="
+          <+> vsep
             [ "function" <> "(" <> arguments <> ")" <+> "{",
               indent 2 "return" <+> ppSub body <> ";",
               "}"

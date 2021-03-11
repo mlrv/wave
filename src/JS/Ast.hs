@@ -44,6 +44,6 @@ data Definition
   deriving (Show)
 
 --
-data File
+newtype File
   = File [Statement]
   deriving (Show)

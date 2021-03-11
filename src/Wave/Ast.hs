@@ -43,6 +43,6 @@ data Definition
   deriving (Show)
 
 --
-data File
+newtype File
   = File [Definition]
   deriving (Show)
