@@ -28,7 +28,7 @@ ppLit :: Lit -> Doc a
 ppLit = \case
   LInt int -> pretty int
   LFloat float -> pretty float
-  LString str -> pretty str
+  LString str -> "\"" <> pretty str <> "\""
   LBool True -> "true"
   LBool False -> "false"
 

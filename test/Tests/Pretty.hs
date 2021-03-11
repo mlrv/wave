@@ -39,7 +39,7 @@ record = do
                 ("c", ELit $ LString "abc")
               ]
         )
-        "{\"a\": 1, \"b\": true, \"c\": abc}" -- this doesn't sound right
+        "{\"a\": 1, \"b\": true, \"c\": \"abc\"}"
     it "nested" $
       shouldBe
         ( ppRecord' $
@@ -48,12 +48,13 @@ record = do
                 ( "b",
                   ERecord $
                     M.fromList
-                      [ ("c", ELit $ LFloat 2.3)
+                      [ ("c", ELit $ LFloat 2.3),
+                        ("d", EVar "foo")
                       ]
                 )
               ]
         )
-        "{\"a\": 1, \"b\": {\"c\": 2.3}}"
+        "{\"a\": 1, \"b\": {\"c\": 2.3, \"d\": foo}}"
 
 lit :: Spec
 lit = do
@@ -115,17 +116,17 @@ string = do
     it "string simple" $
       shouldBe
         (ppLit' $ LString "wave")
-        "wave"
+        "\"wave\""
 
     it "string with spaces" $
       shouldBe
         (ppLit' $ LString "wave wave   wave")
-        "wave wave   wave"
+        "\"wave wave   wave\""
 
     it "string escpaed" $
       shouldBe
         (ppLit' $ LString "\"hello world\"")
-        "\"hello world\""
+        "\"\"hello world\"\""
 
 bool :: Spec
 bool = do
