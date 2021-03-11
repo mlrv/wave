@@ -34,11 +34,11 @@ span.spaces    { background: white }
 <span class="lineno">   15 </span><span class="decl"><span class="istickedoff">render = renderStrict . layoutPretty defaultLayoutOptions</span></span>
 <span class="lineno">   16 </span>
 <span class="lineno">   17 </span>ppRecord :: (a -&gt; Doc ann) -&gt; Record a -&gt; Doc ann
-<span class="lineno">   18 </span><span class="decl"><span class="nottickedoff">ppRecord p r =</span>
-<span class="lineno">   19 </span><span class="spaces">  </span><span class="nottickedoff">encloseSep &quot;{&quot; &quot;}&quot; &quot;, &quot; $</span>
-<span class="lineno">   20 </span><span class="spaces">    </span><span class="nottickedoff">fmap</span>
-<span class="lineno">   21 </span><span class="spaces">      </span><span class="nottickedoff">(\(k, v) -&gt; surround &quot;: &quot; (pretty $ show k) v)</span>
-<span class="lineno">   22 </span><span class="spaces">      </span><span class="nottickedoff">(M.toList (fmap p r))</span></span>
+<span class="lineno">   18 </span><span class="decl"><span class="istickedoff">ppRecord p r =</span>
+<span class="lineno">   19 </span><span class="spaces">  </span><span class="istickedoff">encloseSep &quot;{&quot; &quot;}&quot; &quot;, &quot; $</span>
+<span class="lineno">   20 </span><span class="spaces">    </span><span class="istickedoff">fmap</span>
+<span class="lineno">   21 </span><span class="spaces">      </span><span class="istickedoff">(\(k, v) -&gt; surround &quot;: &quot; (pretty $ show k) v)</span>
+<span class="lineno">   22 </span><span class="spaces">      </span><span class="istickedoff">(M.toList (fmap p r))</span></span>
 <span class="lineno">   23 </span>
 <span class="lineno">   24 </span>ppLit :: Lit -&gt; Doc a
 <span class="lineno">   25 </span><span class="decl"><span class="istickedoff">ppLit = \case</span>
@@ -84,7 +84,7 @@ span.spaces    { background: white }
 <span class="lineno">   65 </span><span class="spaces">    </span><span class="istickedoff">let encloseIfNotSimple = if isSimpleExpr fun then id else parens</span>
 <span class="lineno">   66 </span><span class="spaces">        </span><span class="istickedoff">arguments = concatWith (surround &quot;, &quot;) (ppExpr &lt;$&gt; args)</span>
 <span class="lineno">   67 </span><span class="spaces">     </span><span class="istickedoff">in encloseIfNotSimple (ppExpr fun) &lt;&gt; &quot;(&quot; &lt;&gt; arguments &lt;&gt; &quot;)&quot;</span>
-<span class="lineno">   68 </span><span class="spaces">  </span><span class="istickedoff">ERecord record -&gt; <span class="nottickedoff">ppRecord ppExpr record</span></span></span>
+<span class="lineno">   68 </span><span class="spaces">  </span><span class="istickedoff">ERecord record -&gt; ppRecord ppExpr record</span></span>
 <span class="lineno">   69 </span>
 <span class="lineno">   70 </span>-- need surrounding parens?
 <span class="lineno">   71 </span>isSimpleExpr :: Expr -&gt; Bool
