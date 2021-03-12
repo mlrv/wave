@@ -1,6 +1,6 @@
 module Compile where
 
-import CodeGen
+import Translate
 import qualified Data.Text as T
 import JS.Pretty
 import qualified Wave.Ast as Wave

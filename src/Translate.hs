@@ -1,4 +1,4 @@
-module CodeGen where
+module Translate where
 
 import qualified JS.Ast as JS
 import Wave.Ast
