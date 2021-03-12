@@ -76,7 +76,7 @@ instance GHC.Show.Show Wave.Ast.Expr
 instance GHC.Show.Show Wave.Ast.Definition
 instance GHC.Show.Show Wave.Ast.File
 
-module CodeGen
+module Translate
 translateFile :: File -> File
 translateDef :: Definition -> Definition
 translateExpr :: Expr -> Expr

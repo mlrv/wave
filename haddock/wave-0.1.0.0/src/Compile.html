@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Compile</span><span> </span><span class="hs-keyword">where</span><span>
 </span><span id="line-2"></span><span>
-</span><span id="line-3"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="CodeGen.html"><span class="hs-identifier">CodeGen</span></a></span><span>
+</span><span id="line-3"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Translate.html"><span class="hs-identifier">Translate</span></a></span><span>
 </span><span id="line-4"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">T</span></span><span>
 </span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="JS.Pretty.html"><span class="hs-identifier">JS.Pretty</span></a></span><span>
 </span><span id="line-6"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Wave.Ast.html"><span class="hs-identifier">Wave.Ast</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">Wave</span></span><span>
@@ -16,4 +16,4 @@ forall a. File -&gt; Doc a
 </span><a href="JS.Pretty.html#ppFile"><span class="hs-identifier hs-var">ppFile</span></a></span><span> </span><span class="annot"><span class="annottext">(File -&gt; Doc Any) -&gt; (File -&gt; File) -&gt; File -&gt; Doc Any
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">File -&gt; File
-</span><a href="CodeGen.html#translateFile"><span class="hs-identifier hs-var">translateFile</span></a></span></pre></body></html>
+</span><a href="Translate.html#translateFile"><span class="hs-identifier hs-var">translateFile</span></a></span></pre></body></html>
