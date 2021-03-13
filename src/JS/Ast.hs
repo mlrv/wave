@@ -3,47 +3,39 @@ module JS.Ast where
 import qualified Data.Map as M
 import qualified Data.Text as T
 
---
 type Var = T.Text
 
---
 type Record a =
   M.Map Var a
 
---
 data Lit
   = LInt Int
   | LBool Bool
   | LFloat Float
   | LString T.Text
-  deriving (Show)
+  deriving (Show, Eq)
 
---
 data Statement
   = SExpr Expr
   | SRet Expr
   | SDef Definition
-  deriving (Show)
+  deriving (Show, Eq)
 
---
 type Sub = [Statement]
 
---
 data Expr
   = ELit Lit
   | EVar Var
   | EFun [Var] Sub
   | EFunCall Expr [Expr]
   | ERecord (Record Expr)
-  deriving (Show)
+  deriving (Show, Eq)
 
---
 data Definition
   = Variable Var Expr
   | Function Var [Var] Sub
-  deriving (Show)
+  deriving (Show, Eq)
 
---
 newtype File
   = File [Statement]
-  deriving (Show)
+  deriving (Show, Eq)
