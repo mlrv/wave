@@ -88,14 +88,14 @@ translatePattern expr = \case
   PWildcard ->
     pure
       PatResult
-        { conditions = [JS.ELit $ JS.LBool True],
-          matchers = []
+        { conditions = [JS.ELit $ JS.LBool True], -- always match
+          matchers = [] -- but don't bind anything
         }
   PVar var ->
     pure
       PatResult
-        { conditions = [JS.ELit $ JS.LBool True],
-          matchers = [(var, expr)]
+        { conditions = [JS.ELit $ JS.LBool True], -- always match
+          matchers = [(var, expr)] -- and bind the var to the expression
         }
   PLit lit ->
     pure
