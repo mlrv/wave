@@ -19,57 +19,70 @@ span.spaces    { background: white }
 <pre>
 <span class="lineno">    1 </span>module Wave.Ast where
 <span class="lineno">    2 </span>
-<span class="lineno">    3 </span>import qualified Data.Map as M
-<span class="lineno">    4 </span>import qualified Data.Text as T
-<span class="lineno">    5 </span>
-<span class="lineno">    6 </span>type Var = T.Text
+<span class="lineno">    3 </span>-- wave's AST
+<span class="lineno">    4 </span>
+<span class="lineno">    5 </span>import qualified Data.Map as M
+<span class="lineno">    6 </span>import qualified Data.Text as T
 <span class="lineno">    7 </span>
-<span class="lineno">    8 </span>type Record a =
-<span class="lineno">    9 </span>  M.Map Var a
+<span class="lineno">    8 </span>-- the name of a variable
+<span class="lineno">    9 </span>type Var = T.Text
 <span class="lineno">   10 </span>
-<span class="lineno">   11 </span>data Lit
-<span class="lineno">   12 </span>  = LInt Int
-<span class="lineno">   13 </span>  | LFloat Float
-<span class="lineno">   14 </span>  | LString T.Text
-<span class="lineno">   15 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
-<span class="lineno">   16 </span>
-<span class="lineno">   17 </span>data Statement
-<span class="lineno">   18 </span>  = SExpr Expr
-<span class="lineno">   19 </span>  | SDef Definition
-<span class="lineno">   20 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
-<span class="lineno">   21 </span>
-<span class="lineno">   22 </span>type Sub = [Statement]
-<span class="lineno">   23 </span>
-<span class="lineno">   24 </span>data Pattern
-<span class="lineno">   25 </span>  = PWildcard
-<span class="lineno">   26 </span>  | PVar Var
-<span class="lineno">   27 </span>  | PLit Lit
-<span class="lineno">   28 </span>  | PRecord (Record Pattern)
-<span class="lineno">   29 </span>  | PVariant T.Text Pattern
-<span class="lineno">   30 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
-<span class="lineno">   31 </span>
-<span class="lineno">   32 </span>data Expr
-<span class="lineno">   33 </span>  = ELit Lit
-<span class="lineno">   34 </span>  | EVar Var
-<span class="lineno">   35 </span>  | EFun [Var] Sub
-<span class="lineno">   36 </span>  | EFunCall Expr [Expr]
-<span class="lineno">   37 </span>  | ERecord (Record Expr)
-<span class="lineno">   38 </span>  | EFfi T.Text [Expr]
-<span class="lineno">   39 </span>  | EVariant T.Text Expr
-<span class="lineno">   40 </span>  | ECase Expr [(Pattern, Expr)]
-<span class="lineno">   41 </span>  | ERecordAccess Expr Label
-<span class="lineno">   42 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
-<span class="lineno">   43 </span>
-<span class="lineno">   44 </span>type Label = T.Text
-<span class="lineno">   45 </span>
-<span class="lineno">   46 </span>data Definition
-<span class="lineno">   47 </span>  = Variable Var Expr
-<span class="lineno">   48 </span>  | Function Var [Var] Sub
+<span class="lineno">   11 </span>-- a literal, either an Integer, a Float, or a String
+<span class="lineno">   12 </span>data Lit
+<span class="lineno">   13 </span>  = LInt Int
+<span class="lineno">   14 </span>  | LFloat Float
+<span class="lineno">   15 </span>  | LString T.Text
+<span class="lineno">   16 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
+<span class="lineno">   17 </span>
+<span class="lineno">   18 </span>-- a simple text label
+<span class="lineno">   19 </span>type Label = T.Text
+<span class="lineno">   20 </span>
+<span class="lineno">   21 </span>-- a record with keys of type String and values of type `a`, like
+<span class="lineno">   22 </span>-- { &quot;x&quot;: 1, &quot;y&quot;: 2, &quot;z&quot;: 3 }
+<span class="lineno">   23 </span>type Record a =
+<span class="lineno">   24 </span>  M.Map Label a
+<span class="lineno">   25 </span>
+<span class="lineno">   26 </span>-- an expression that evaluates to a value
+<span class="lineno">   27 </span>data Expr
+<span class="lineno">   28 </span>  = ELit Lit
+<span class="lineno">   29 </span>  | EVar Var
+<span class="lineno">   30 </span>  | EFun [Var] Sub
+<span class="lineno">   31 </span>  | EFunCall Expr [Expr]
+<span class="lineno">   32 </span>  | ERecord (Record Expr)
+<span class="lineno">   33 </span>  | EFfi T.Text [Expr] -- foreign function interface call
+<span class="lineno">   34 </span>  | EVariant T.Text Expr -- equivalent to data constructors
+<span class="lineno">   35 </span>  | ECase Expr [(Pattern, Expr)]
+<span class="lineno">   36 </span>  | ERecordAccess Expr Label
+<span class="lineno">   37 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
+<span class="lineno">   38 </span>
+<span class="lineno">   39 </span>-- a definition, either a variable or a function
+<span class="lineno">   40 </span>data Definition
+<span class="lineno">   41 </span>  = Variable Var Expr
+<span class="lineno">   42 </span>  | Function Var [Var] Sub
+<span class="lineno">   43 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
+<span class="lineno">   44 </span>
+<span class="lineno">   45 </span>-- a statement, either an expression or a definition
+<span class="lineno">   46 </span>data Statement
+<span class="lineno">   47 </span>  = SExpr Expr
+<span class="lineno">   48 </span>  | SDef Definition
 <span class="lineno">   49 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
 <span class="lineno">   50 </span>
-<span class="lineno">   51 </span>newtype File
-<span class="lineno">   52 </span>  = File [Definition]
-<span class="lineno">   53 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff">Eq</span></span></span></span>)
+<span class="lineno">   51 </span>-- a series of statements
+<span class="lineno">   52 </span>type Sub = [Statement]
+<span class="lineno">   53 </span>
+<span class="lineno">   54 </span>-- a pattern
+<span class="lineno">   55 </span>data Pattern
+<span class="lineno">   56 </span>  = PWildcard -- match all
+<span class="lineno">   57 </span>  | PVar Var -- match all and bind the expression to a variable
+<span class="lineno">   58 </span>  | PLit Lit
+<span class="lineno">   59 </span>  | PRecord (Record Pattern)
+<span class="lineno">   60 </span>  | PVariant T.Text Pattern
+<span class="lineno">   61 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
+<span class="lineno">   62 </span>
+<span class="lineno">   63 </span>-- a wave's source file, a collection of definitions
+<span class="lineno">   64 </span>newtype File
+<span class="lineno">   65 </span>  = File [Definition]
+<span class="lineno">   66 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff">Eq</span></span></span></span>)
 
 </pre>
 </body>

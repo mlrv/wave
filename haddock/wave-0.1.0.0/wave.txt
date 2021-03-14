@@ -59,21 +59,12 @@ isSimpleExpr :: Expr -> Bool
 
 module Wave.Ast
 type Var = Text
-type Record a = Map Var a
 data Lit
 LInt :: Int -> Lit
 LFloat :: Float -> Lit
 LString :: Text -> Lit
-data Statement
-SExpr :: Expr -> Statement
-SDef :: Definition -> Statement
-type Sub = [Statement]
-data Pattern
-PWildcard :: Pattern
-PVar :: Var -> Pattern
-PLit :: Lit -> Pattern
-PRecord :: Record Pattern -> Pattern
-PVariant :: Text -> Pattern -> Pattern
+type Label = Text
+type Record a = Map Label a
 data Expr
 ELit :: Lit -> Expr
 EVar :: Var -> Expr
@@ -84,22 +75,31 @@ EFfi :: Text -> [Expr] -> Expr
 EVariant :: Text -> Expr -> Expr
 ECase :: Expr -> [(Pattern, Expr)] -> Expr
 ERecordAccess :: Expr -> Label -> Expr
-type Label = Text
 data Definition
 Variable :: Var -> Expr -> Definition
 Function :: Var -> [Var] -> Sub -> Definition
+data Statement
+SExpr :: Expr -> Statement
+SDef :: Definition -> Statement
+type Sub = [Statement]
+data Pattern
+PWildcard :: Pattern
+PVar :: Var -> Pattern
+PLit :: Lit -> Pattern
+PRecord :: Record Pattern -> Pattern
+PVariant :: Text -> Pattern -> Pattern
 newtype File
 File :: [Definition] -> File
 instance GHC.Classes.Eq Wave.Ast.Lit
 instance GHC.Show.Show Wave.Ast.Lit
 instance GHC.Classes.Eq Wave.Ast.Pattern
 instance GHC.Show.Show Wave.Ast.Pattern
+instance GHC.Classes.Eq Wave.Ast.Definition
+instance GHC.Show.Show Wave.Ast.Definition
 instance GHC.Classes.Eq Wave.Ast.Statement
 instance GHC.Show.Show Wave.Ast.Statement
 instance GHC.Classes.Eq Wave.Ast.Expr
 instance GHC.Show.Show Wave.Ast.Expr
-instance GHC.Classes.Eq Wave.Ast.Definition
-instance GHC.Show.Show Wave.Ast.Definition
 instance GHC.Classes.Eq Wave.Ast.File
 instance GHC.Show.Show Wave.Ast.File
 
