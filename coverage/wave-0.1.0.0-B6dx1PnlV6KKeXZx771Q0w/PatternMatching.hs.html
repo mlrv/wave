@@ -1,0 +1,47 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+span.lineno { color: white; background: #aaaaaa; border-right: solid white 12px }
+span.nottickedoff { background: yellow}
+span.istickedoff { background: white }
+span.tickonlyfalse { margin: -1px; border: 1px solid #f20913; background: #f20913 }
+span.tickonlytrue  { margin: -1px; border: 1px solid #60de51; background: #60de51 }
+span.funcount { font-size: small; color: orange; z-index: 2; position: absolute; right: 20 }
+span.decl { font-weight: bold }
+span.spaces    { background: white }
+</style>
+</head>
+<body>
+<pre>
+<span class="decl"><span class="nottickedoff">never executed</span> <span class="tickonlytrue">always true</span> <span class="tickonlyfalse">always false</span></span>
+</pre>
+<pre>
+<span class="lineno">    1 </span>module PatternMatching where
+<span class="lineno">    2 </span>
+<span class="lineno">    3 </span>import qualified JS.Ast as JS
+<span class="lineno">    4 </span>import Wave.Ast
+<span class="lineno">    5 </span>
+<span class="lineno">    6 </span>-- We want to translate `pattern -&gt; result` to something like
+<span class="lineno">    7 </span>--
+<span class="lineno">    8 </span>-- if (conditions) {
+<span class="lineno">    9 </span>--   return function (matchersVar*) {
+<span class="lineno">   10 </span>--     return result
+<span class="lineno">   11 </span>--   }(matchersExpr*)
+<span class="lineno">   12 </span>-- }
+<span class="lineno">   13 </span>
+<span class="lineno">   14 </span>data PatResult = PatResult
+<span class="lineno">   15 </span>  { <span class="nottickedoff"><span class="decl"><span class="nottickedoff">conditions</span></span></span> :: [JS.Expr],
+<span class="lineno">   16 </span>    <span class="nottickedoff"><span class="decl"><span class="nottickedoff">matchers</span></span></span> :: [(Var, JS.Expr)]
+<span class="lineno">   17 </span>  }
+<span class="lineno">   18 </span>
+<span class="lineno">   19 </span>instance Semigroup PatResult where
+<span class="lineno">   20 </span>  <span class="decl"><span class="nottickedoff">(&lt;&gt;) (PatResult c1 m1) (PatResult c2 m2) =</span>
+<span class="lineno">   21 </span><span class="spaces">    </span><span class="nottickedoff">PatResult (c1 &lt;&gt; c2) (m1 &lt;&gt; m2)</span></span>
+<span class="lineno">   22 </span>
+<span class="lineno">   23 </span>instance Monoid PatResult where
+<span class="lineno">   24 </span>  <span class="decl"><span class="nottickedoff">mempty = PatResult [] []</span></span>
+
+</pre>
+</body>
+</html>

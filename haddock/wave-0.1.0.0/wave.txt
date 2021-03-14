@@ -103,25 +103,26 @@ instance GHC.Show.Show Wave.Ast.Definition
 instance GHC.Classes.Eq Wave.Ast.File
 instance GHC.Show.Show Wave.Ast.File
 
-module Translate
-type TransState = Int
-type Translate a = MonadState TransState a
-translate :: (a -> State TransState b) -> a -> b
-genVar :: Translate m => Text -> m Var
-translateFile :: Translate m => File -> m File
-translateDef :: Translate m => Definition -> m Definition
-translateExpr :: Translate m => Expr -> m Expr
+module PatternMatching
 data PatResult
 PatResult :: [Expr] -> [(Var, Expr)] -> PatResult
 [conditions] :: PatResult -> [Expr]
 [matchers] :: PatResult -> [(Var, Expr)]
+instance GHC.Base.Semigroup PatternMatching.PatResult
+instance GHC.Base.Monoid PatternMatching.PatResult
+
+module Translate
+type Translate a = MonadState Int a
+translate :: (a -> State Int b) -> a -> b
+genVar :: Translate m => Text -> m Var
+translateFile :: Translate m => File -> m File
+translateDef :: Translate m => Definition -> m Definition
+translateExpr :: Translate m => Expr -> m Expr
 translatePatterns :: Translate m => Expr -> [(Pattern, Expr)] -> m Sub
 translatePattern :: Translate m => Expr -> Pattern -> m PatResult
-translateLit :: Lit -> Lit
 translateSub :: Translate m => Sub -> m Sub
 translateStatement :: Translate m => Statement -> m Statement
-instance GHC.Base.Semigroup Translate.PatResult
-instance GHC.Base.Monoid Translate.PatResult
+translateLit :: Lit -> Lit
 
 module Compile
 compile :: File -> Text

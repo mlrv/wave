@@ -15,8 +15,8 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 forall a. File -&gt; Doc a
 </span><a href="JS.Pretty.html#ppFile"><span class="hs-identifier hs-var">ppFile</span></a></span><span> </span><span class="annot"><span class="annottext">(File -&gt; Doc Any) -&gt; (File -&gt; File) -&gt; File -&gt; Doc Any
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
-</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(File -&gt; State TransState File) -&gt; File -&gt; File
-forall a b. (a -&gt; State TransState b) -&gt; a -&gt; b
-</span><a href="Translate.html#translate"><span class="hs-identifier hs-var">translate</span></a></span><span> </span><span class="annot"><span class="annottext">File -&gt; State TransState File
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(File -&gt; State Int File) -&gt; File -&gt; File
+forall a b. (a -&gt; State Int b) -&gt; a -&gt; b
+</span><a href="Translate.html#translate"><span class="hs-identifier hs-var">translate</span></a></span><span> </span><span class="annot"><span class="annottext">File -&gt; State Int File
 forall (m :: * -&gt; *). Translate m =&gt; File -&gt; m File
 </span><a href="Translate.html#translateFile"><span class="hs-identifier hs-var">translateFile</span></a></span></pre></body></html>
