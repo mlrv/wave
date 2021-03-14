@@ -107,14 +107,14 @@ span.spaces    { background: white }
 <span class="lineno">   88 </span><span class="spaces">  </span><span class="istickedoff">PWildcard -&gt;</span>
 <span class="lineno">   89 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">pure</span></span>
 <span class="lineno">   90 </span><span class="spaces">      </span><span class="istickedoff"><span class="nottickedoff">PatResult</span></span>
-<span class="lineno">   91 </span><span class="spaces">        </span><span class="istickedoff"><span class="nottickedoff">{ conditions = [JS.ELit $ JS.LBool True],</span></span>
-<span class="lineno">   92 </span><span class="spaces">          </span><span class="istickedoff"><span class="nottickedoff">matchers = []</span></span>
+<span class="lineno">   91 </span><span class="spaces">        </span><span class="istickedoff"><span class="nottickedoff">{ conditions = [JS.ELit $ JS.LBool True], -- always match</span></span>
+<span class="lineno">   92 </span><span class="spaces">          </span><span class="istickedoff"><span class="nottickedoff">matchers = [] -- but don't bind anything</span></span>
 <span class="lineno">   93 </span><span class="spaces">        </span><span class="istickedoff"><span class="nottickedoff">}</span></span>
 <span class="lineno">   94 </span><span class="spaces">  </span><span class="istickedoff">PVar var -&gt;</span>
 <span class="lineno">   95 </span><span class="spaces">    </span><span class="istickedoff">pure</span>
 <span class="lineno">   96 </span><span class="spaces">      </span><span class="istickedoff">PatResult</span>
-<span class="lineno">   97 </span><span class="spaces">        </span><span class="istickedoff">{ conditions = [JS.ELit $ JS.LBool True],</span>
-<span class="lineno">   98 </span><span class="spaces">          </span><span class="istickedoff">matchers = [(var, expr)]</span>
+<span class="lineno">   97 </span><span class="spaces">        </span><span class="istickedoff">{ conditions = [JS.ELit $ JS.LBool True], -- always match</span>
+<span class="lineno">   98 </span><span class="spaces">          </span><span class="istickedoff">matchers = [(var, expr)] -- and bind the var to the expression</span>
 <span class="lineno">   99 </span><span class="spaces">        </span><span class="istickedoff">}</span>
 <span class="lineno">  100 </span><span class="spaces">  </span><span class="istickedoff">PLit lit -&gt;</span>
 <span class="lineno">  101 </span><span class="spaces">    </span><span class="istickedoff">pure</span>

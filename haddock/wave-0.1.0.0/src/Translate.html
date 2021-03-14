@@ -357,9 +357,9 @@ forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Lit
 </span><a href="JS.Ast.html#LBool"><span class="hs-identifier hs-var">JS.LBool</span></a></span><span> </span><span class="annot"><span class="annottext">Bool
-</span><span class="hs-identifier hs-var">True</span></span><span class="hs-special">]</span><span class="hs-special">,</span><span>
+</span><span class="hs-identifier hs-var">True</span></span><span class="hs-special">]</span><span class="hs-special">,</span><span> </span><span class="hs-comment">-- always match</span><span>
 </span><span id="line-92"></span><span>          </span><span class="annot"><span class="annottext">matchers :: [(Text, Expr)]
-</span><a href="PatternMatching.html#matchers"><span class="hs-identifier hs-var">matchers</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span>
+</span><a href="PatternMatching.html#matchers"><span class="hs-identifier hs-var">matchers</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="hs-comment">-- but don't bind anything</span><span>
 </span><span id="line-93"></span><span>        </span><span class="hs-special">}</span><span>
 </span><span id="line-94"></span><span>  </span><span class="annot"><a href="Wave.Ast.html#PVar"><span class="hs-identifier hs-type">PVar</span></a></span><span> </span><span id="local-6989586621679043397"><span class="annot"><span class="annottext">Text
 </span><a href="#local-6989586621679043397"><span class="hs-identifier hs-var">var</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
@@ -374,11 +374,11 @@ forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Lit
 </span><a href="JS.Ast.html#LBool"><span class="hs-identifier hs-var">JS.LBool</span></a></span><span> </span><span class="annot"><span class="annottext">Bool
-</span><span class="hs-identifier hs-var">True</span></span><span class="hs-special">]</span><span class="hs-special">,</span><span>
+</span><span class="hs-identifier hs-var">True</span></span><span class="hs-special">]</span><span class="hs-special">,</span><span> </span><span class="hs-comment">-- always match</span><span>
 </span><span id="line-98"></span><span>          </span><span class="annot"><span class="annottext">matchers :: [(Text, Expr)]
 </span><a href="PatternMatching.html#matchers"><span class="hs-identifier hs-var">matchers</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><span class="annottext">Text
 </span><a href="#local-6989586621679043397"><span class="hs-identifier hs-var">var</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Expr
-</span><a href="#local-6989586621679043403"><span class="hs-identifier hs-var">expr</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span>
+</span><a href="#local-6989586621679043403"><span class="hs-identifier hs-var">expr</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span> </span><span class="hs-comment">-- and bind the var to the expression</span><span>
 </span><span id="line-99"></span><span>        </span><span class="hs-special">}</span><span>
 </span><span id="line-100"></span><span>  </span><span class="annot"><a href="Wave.Ast.html#PLit"><span class="hs-identifier hs-type">PLit</span></a></span><span> </span><span id="local-6989586621679043395"><span class="annot"><span class="annottext">Lit
 </span><a href="#local-6989586621679043395"><span class="hs-identifier hs-var">lit</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
