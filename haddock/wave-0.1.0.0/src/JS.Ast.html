@@ -5,15 +5,15 @@
 </span><span id="line-5"></span><span>
 </span><span id="line-6"></span><span class="hs-keyword">type</span><span> </span><span id="Var"><span class="annot"><a href="JS.Ast.html#Var"><span class="hs-identifier hs-var">Var</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span>
 </span><span id="line-7"></span><span>
-</span><span id="line-8"></span><span class="hs-keyword">type</span><span> </span><span id="Record"><span class="annot"><a href="JS.Ast.html#Record"><span class="hs-identifier hs-var">Record</span></a></span></span><span> </span><span id="local-6989586621679039581"><span class="annot"><a href="#local-6989586621679039581"><span class="hs-identifier hs-type">a</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-9"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">M.Map</span></span><span> </span><span class="annot"><a href="JS.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679039581"><span class="hs-identifier hs-type">a</span></a></span><span>
+</span><span id="line-8"></span><span class="hs-keyword">type</span><span> </span><span id="Record"><span class="annot"><a href="JS.Ast.html#Record"><span class="hs-identifier hs-var">Record</span></a></span></span><span> </span><span id="local-6989586621679043078"><span class="annot"><a href="#local-6989586621679043078"><span class="hs-identifier hs-type">a</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-9"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">M.Map</span></span><span> </span><span class="annot"><a href="JS.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679043078"><span class="hs-identifier hs-type">a</span></a></span><span>
 </span><span id="line-10"></span><span>
 </span><span id="line-11"></span><span class="hs-keyword">data</span><span> </span><span id="Lit"><span class="annot"><a href="JS.Ast.html#Lit"><span class="hs-identifier hs-var">Lit</span></a></span></span><span>
 </span><span id="line-12"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="LInt"><span class="annot"><a href="JS.Ast.html#LInt"><span class="hs-identifier hs-var">LInt</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span>
 </span><span id="line-13"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="LBool"><span class="annot"><a href="JS.Ast.html#LBool"><span class="hs-identifier hs-var">LBool</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Bool</span></span><span>
 </span><span id="line-14"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="LFloat"><span class="annot"><a href="JS.Ast.html#LFloat"><span class="hs-identifier hs-var">LFloat</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Float</span></span><span>
 </span><span id="line-15"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="LString"><span class="annot"><a href="JS.Ast.html#LString"><span class="hs-identifier hs-var">LString</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span>
-</span><span id="line-16"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679039570"><span id="local-6989586621679039572"><span id="local-6989586621679039574"><span class="annot"><span class="annottext">Int -&gt; Lit -&gt; ShowS
+</span><span id="line-16"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679043067"><span id="local-6989586621679043069"><span id="local-6989586621679043071"><span class="annot"><span class="annottext">Int -&gt; Lit -&gt; ShowS
 [Lit] -&gt; ShowS
 Lit -&gt; String
 (Int -&gt; Lit -&gt; ShowS)
@@ -26,7 +26,7 @@ show :: Lit -&gt; String
 $cshow :: Lit -&gt; String
 showsPrec :: Int -&gt; Lit -&gt; ShowS
 $cshowsPrec :: Int -&gt; Lit -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039565"><span id="local-6989586621679039567"><span class="annot"><span class="annottext">Lit -&gt; Lit -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679043062"><span id="local-6989586621679043064"><span class="annot"><span class="annottext">Lit -&gt; Lit -&gt; Bool
 (Lit -&gt; Lit -&gt; Bool) -&gt; (Lit -&gt; Lit -&gt; Bool) -&gt; Eq Lit
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 /= :: Lit -&gt; Lit -&gt; Bool
@@ -39,7 +39,8 @@ $c== :: Lit -&gt; Lit -&gt; Bool
 </span><span id="line-19"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="SExpr"><span class="annot"><a href="JS.Ast.html#SExpr"><span class="hs-identifier hs-var">SExpr</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span>
 </span><span id="line-20"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="SRet"><span class="annot"><a href="JS.Ast.html#SRet"><span class="hs-identifier hs-var">SRet</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span>
 </span><span id="line-21"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="SDef"><span class="annot"><a href="JS.Ast.html#SDef"><span class="hs-identifier hs-var">SDef</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Definition"><span class="hs-identifier hs-type">Definition</span></a></span><span>
-</span><span id="line-22"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679039555"><span id="local-6989586621679039557"><span id="local-6989586621679039559"><span class="annot"><span class="annottext">Int -&gt; Statement -&gt; ShowS
+</span><span id="line-22"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="SIf"><span class="annot"><a href="JS.Ast.html#SIf"><span class="hs-identifier hs-var">SIf</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span> </span><span class="annot"><a href="JS.Ast.html#Sub"><span class="hs-identifier hs-type">Sub</span></a></span><span>
+</span><span id="line-23"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679043050"><span id="local-6989586621679043052"><span id="local-6989586621679043054"><span class="annot"><span class="annottext">Int -&gt; Statement -&gt; ShowS
 [Statement] -&gt; ShowS
 Statement -&gt; String
 (Int -&gt; Statement -&gt; ShowS)
@@ -54,7 +55,7 @@ show :: Statement -&gt; String
 $cshow :: Statement -&gt; String
 showsPrec :: Int -&gt; Statement -&gt; ShowS
 $cshowsPrec :: Int -&gt; Statement -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039551"><span id="local-6989586621679039553"><span class="annot"><span class="annottext">Statement -&gt; Statement -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679043046"><span id="local-6989586621679043048"><span class="annot"><span class="annottext">Statement -&gt; Statement -&gt; Bool
 (Statement -&gt; Statement -&gt; Bool)
 -&gt; (Statement -&gt; Statement -&gt; Bool) -&gt; Eq Statement
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -63,16 +64,19 @@ $c/= :: Statement -&gt; Statement -&gt; Bool
 == :: Statement -&gt; Statement -&gt; Bool
 $c== :: Statement -&gt; Statement -&gt; Bool
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-23"></span><span>
-</span><span id="line-24"></span><span class="hs-keyword">type</span><span> </span><span id="Sub"><span class="annot"><a href="JS.Ast.html#Sub"><span class="hs-identifier hs-var">Sub</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="JS.Ast.html#Statement"><span class="hs-identifier hs-type">Statement</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-25"></span><span>
-</span><span id="line-26"></span><span class="hs-keyword">data</span><span> </span><span id="Expr"><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-var">Expr</span></a></span></span><span>
-</span><span id="line-27"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="ELit"><span class="annot"><a href="JS.Ast.html#ELit"><span class="hs-identifier hs-var">ELit</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Lit"><span class="hs-identifier hs-type">Lit</span></a></span><span>
-</span><span id="line-28"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EVar"><span class="annot"><a href="JS.Ast.html#EVar"><span class="hs-identifier hs-var">EVar</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span>
-</span><span id="line-29"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EFun"><span class="annot"><a href="JS.Ast.html#EFun"><span class="hs-identifier hs-var">EFun</span></a></span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="JS.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><a href="JS.Ast.html#Sub"><span class="hs-identifier hs-type">Sub</span></a></span><span>
-</span><span id="line-30"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EFunCall"><span class="annot"><a href="JS.Ast.html#EFunCall"><span class="hs-identifier hs-var">EFunCall</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-31"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="ERecord"><span class="annot"><a href="JS.Ast.html#ERecord"><span class="hs-identifier hs-var">ERecord</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="JS.Ast.html#Record"><span class="hs-identifier hs-type">Record</span></a></span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-32"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679039539"><span id="local-6989586621679039541"><span id="local-6989586621679039543"><span class="annot"><span class="annottext">Int -&gt; Expr -&gt; ShowS
+</span><span id="line-24"></span><span>
+</span><span id="line-25"></span><span class="hs-keyword">type</span><span> </span><span id="Sub"><span class="annot"><a href="JS.Ast.html#Sub"><span class="hs-identifier hs-var">Sub</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="JS.Ast.html#Statement"><span class="hs-identifier hs-type">Statement</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-26"></span><span>
+</span><span id="line-27"></span><span class="hs-keyword">data</span><span> </span><span id="Expr"><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-var">Expr</span></a></span></span><span>
+</span><span id="line-28"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="ELit"><span class="annot"><a href="JS.Ast.html#ELit"><span class="hs-identifier hs-var">ELit</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Lit"><span class="hs-identifier hs-type">Lit</span></a></span><span>
+</span><span id="line-29"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EVar"><span class="annot"><a href="JS.Ast.html#EVar"><span class="hs-identifier hs-var">EVar</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span>
+</span><span id="line-30"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EFun"><span class="annot"><a href="JS.Ast.html#EFun"><span class="hs-identifier hs-var">EFun</span></a></span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="JS.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><a href="JS.Ast.html#Sub"><span class="hs-identifier hs-type">Sub</span></a></span><span>
+</span><span id="line-31"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EFunCall"><span class="annot"><a href="JS.Ast.html#EFunCall"><span class="hs-identifier hs-var">EFunCall</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-32"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="ERecord"><span class="annot"><a href="JS.Ast.html#ERecord"><span class="hs-identifier hs-var">ERecord</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="JS.Ast.html#Record"><span class="hs-identifier hs-type">Record</span></a></span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-33"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EAnd"><span class="annot"><a href="JS.Ast.html#EAnd"><span class="hs-identifier hs-var">EAnd</span></a></span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-34"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EEqual"><span class="annot"><a href="JS.Ast.html#EEqual"><span class="hs-identifier hs-var">EEqual</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span>
+</span><span id="line-35"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="ERecordAccess"><span class="annot"><a href="JS.Ast.html#ERecordAccess"><span class="hs-identifier hs-var">ERecordAccess</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span> </span><span class="annot"><a href="JS.Ast.html#Label"><span class="hs-identifier hs-type">Label</span></a></span><span>
+</span><span id="line-36"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679043031"><span id="local-6989586621679043033"><span id="local-6989586621679043035"><span class="annot"><span class="annottext">Int -&gt; Expr -&gt; ShowS
 [Expr] -&gt; ShowS
 Expr -&gt; String
 (Int -&gt; Expr -&gt; ShowS)
@@ -85,7 +89,7 @@ show :: Expr -&gt; String
 $cshow :: Expr -&gt; String
 showsPrec :: Int -&gt; Expr -&gt; ShowS
 $cshowsPrec :: Int -&gt; Expr -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039535"><span id="local-6989586621679039537"><span class="annot"><span class="annottext">Expr -&gt; Expr -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679043027"><span id="local-6989586621679043029"><span class="annot"><span class="annottext">Expr -&gt; Expr -&gt; Bool
 (Expr -&gt; Expr -&gt; Bool) -&gt; (Expr -&gt; Expr -&gt; Bool) -&gt; Eq Expr
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 /= :: Expr -&gt; Expr -&gt; Bool
@@ -93,11 +97,13 @@ $c/= :: Expr -&gt; Expr -&gt; Bool
 == :: Expr -&gt; Expr -&gt; Bool
 $c== :: Expr -&gt; Expr -&gt; Bool
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-33"></span><span>
-</span><span id="line-34"></span><span class="hs-keyword">data</span><span> </span><span id="Definition"><span class="annot"><a href="JS.Ast.html#Definition"><span class="hs-identifier hs-var">Definition</span></a></span></span><span>
-</span><span id="line-35"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="Variable"><span class="annot"><a href="JS.Ast.html#Variable"><span class="hs-identifier hs-var">Variable</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span>
-</span><span id="line-36"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Function"><span class="annot"><a href="JS.Ast.html#Function"><span class="hs-identifier hs-var">Function</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="JS.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><a href="JS.Ast.html#Sub"><span class="hs-identifier hs-type">Sub</span></a></span><span>
-</span><span id="line-37"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679039527"><span id="local-6989586621679039529"><span id="local-6989586621679039531"><span class="annot"><span class="annottext">Int -&gt; Definition -&gt; ShowS
+</span><span id="line-37"></span><span>
+</span><span id="line-38"></span><span class="hs-keyword">type</span><span> </span><span id="Label"><span class="annot"><a href="JS.Ast.html#Label"><span class="hs-identifier hs-var">Label</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span> </span><span>
+</span><span id="line-39"></span><span>
+</span><span id="line-40"></span><span class="hs-keyword">data</span><span> </span><span id="Definition"><span class="annot"><a href="JS.Ast.html#Definition"><span class="hs-identifier hs-var">Definition</span></a></span></span><span>
+</span><span id="line-41"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="Variable"><span class="annot"><a href="JS.Ast.html#Variable"><span class="hs-identifier hs-var">Variable</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="annot"><a href="JS.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span>
+</span><span id="line-42"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Function"><span class="annot"><a href="JS.Ast.html#Function"><span class="hs-identifier hs-var">Function</span></a></span></span><span> </span><span class="annot"><a href="JS.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="JS.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><a href="JS.Ast.html#Sub"><span class="hs-identifier hs-type">Sub</span></a></span><span>
+</span><span id="line-43"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679043019"><span id="local-6989586621679043021"><span id="local-6989586621679043023"><span class="annot"><span class="annottext">Int -&gt; Definition -&gt; ShowS
 [Definition] -&gt; ShowS
 Definition -&gt; String
 (Int -&gt; Definition -&gt; ShowS)
@@ -112,7 +118,7 @@ show :: Definition -&gt; String
 $cshow :: Definition -&gt; String
 showsPrec :: Int -&gt; Definition -&gt; ShowS
 $cshowsPrec :: Int -&gt; Definition -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039523"><span id="local-6989586621679039525"><span class="annot"><span class="annottext">Definition -&gt; Definition -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679043015"><span id="local-6989586621679043017"><span class="annot"><span class="annottext">Definition -&gt; Definition -&gt; Bool
 (Definition -&gt; Definition -&gt; Bool)
 -&gt; (Definition -&gt; Definition -&gt; Bool) -&gt; Eq Definition
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -121,10 +127,10 @@ $c/= :: Definition -&gt; Definition -&gt; Bool
 == :: Definition -&gt; Definition -&gt; Bool
 $c== :: Definition -&gt; Definition -&gt; Bool
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-38"></span><span>
-</span><span id="line-39"></span><span class="hs-keyword">newtype</span><span> </span><span id="File"><span class="annot"><a href="JS.Ast.html#File"><span class="hs-identifier hs-var">File</span></a></span></span><span>
-</span><span id="line-40"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="File"><span class="annot"><a href="JS.Ast.html#File"><span class="hs-identifier hs-var">File</span></a></span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="JS.Ast.html#Statement"><span class="hs-identifier hs-type">Statement</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-41"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679039516"><span id="local-6989586621679039518"><span id="local-6989586621679039520"><span class="annot"><span class="annottext">Int -&gt; File -&gt; ShowS
+</span><span id="line-44"></span><span>
+</span><span id="line-45"></span><span class="hs-keyword">newtype</span><span> </span><span id="File"><span class="annot"><a href="JS.Ast.html#File"><span class="hs-identifier hs-var">File</span></a></span></span><span>
+</span><span id="line-46"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="File"><span class="annot"><a href="JS.Ast.html#File"><span class="hs-identifier hs-var">File</span></a></span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="JS.Ast.html#Statement"><span class="hs-identifier hs-type">Statement</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-47"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679043008"><span id="local-6989586621679043010"><span id="local-6989586621679043012"><span class="annot"><span class="annottext">Int -&gt; File -&gt; ShowS
 [File] -&gt; ShowS
 File -&gt; String
 (Int -&gt; File -&gt; ShowS)
@@ -137,7 +143,7 @@ show :: File -&gt; String
 $cshow :: File -&gt; String
 showsPrec :: Int -&gt; File -&gt; ShowS
 $cshowsPrec :: Int -&gt; File -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039512"><span id="local-6989586621679039514"><span class="annot"><span class="annottext">File -&gt; File -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679043004"><span id="local-6989586621679043006"><span class="annot"><span class="annottext">File -&gt; File -&gt; Bool
 (File -&gt; File -&gt; Bool) -&gt; (File -&gt; File -&gt; Bool) -&gt; Eq File
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 /= :: File -&gt; File -&gt; Bool
@@ -145,4 +151,4 @@ $c/= :: File -&gt; File -&gt; Bool
 == :: File -&gt; File -&gt; Bool
 $c== :: File -&gt; File -&gt; Bool
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-42"></span></pre></body></html>
+</span><span id="line-48"></span></pre></body></html>

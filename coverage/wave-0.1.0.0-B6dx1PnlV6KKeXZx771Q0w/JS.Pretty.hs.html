@@ -62,39 +62,52 @@ span.spaces    { background: white }
 <span class="lineno">   43 </span><span class="spaces">     </span><span class="nottickedoff">in &quot;const&quot; &lt;+&gt; pretty name &lt;+&gt; &quot;=&quot;</span>
 <span class="lineno">   44 </span><span class="spaces">          </span><span class="nottickedoff">&lt;+&gt; vsep</span>
 <span class="lineno">   45 </span><span class="spaces">            </span><span class="nottickedoff">[ &quot;function&quot; &lt;&gt; &quot;(&quot; &lt;&gt; arguments &lt;&gt; &quot;)&quot; &lt;+&gt; &quot;{&quot;,</span>
-<span class="lineno">   46 </span><span class="spaces">              </span><span class="nottickedoff">indent 2 &quot;return&quot; &lt;+&gt; ppSub body &lt;&gt; &quot;;&quot;,</span>
+<span class="lineno">   46 </span><span class="spaces">              </span><span class="nottickedoff">indent 2 $ ppSub body &lt;&gt; &quot;;&quot;,</span>
 <span class="lineno">   47 </span><span class="spaces">              </span><span class="nottickedoff">&quot;}&quot;</span>
 <span class="lineno">   48 </span><span class="spaces">            </span><span class="nottickedoff">]</span></span>
 <span class="lineno">   49 </span>
 <span class="lineno">   50 </span>ppStatement :: Statement -&gt; Doc a
 <span class="lineno">   51 </span><span class="decl"><span class="istickedoff">ppStatement = \case</span>
 <span class="lineno">   52 </span><span class="spaces">  </span><span class="istickedoff">SExpr expr -&gt; <span class="nottickedoff">ppExpr expr</span></span>
-<span class="lineno">   53 </span><span class="spaces">  </span><span class="istickedoff">SRet expr -&gt; ppExpr expr</span>
-<span class="lineno">   54 </span><span class="spaces">  </span><span class="istickedoff">SDef def -&gt; <span class="nottickedoff">ppDef def</span></span></span>
-<span class="lineno">   55 </span>
-<span class="lineno">   56 </span>ppExpr :: Expr -&gt; Doc a
-<span class="lineno">   57 </span><span class="decl"><span class="istickedoff">ppExpr = \case</span>
-<span class="lineno">   58 </span><span class="spaces">  </span><span class="istickedoff">ELit lit -&gt; ppLit lit</span>
-<span class="lineno">   59 </span><span class="spaces">  </span><span class="istickedoff">EVar var -&gt; pretty var</span>
-<span class="lineno">   60 </span><span class="spaces">  </span><span class="istickedoff">EFun args body -&gt;</span>
-<span class="lineno">   61 </span><span class="spaces">    </span><span class="istickedoff">let arguments = concatWith (surround &quot;, &quot;) (pretty &lt;$&gt; args)</span>
-<span class="lineno">   62 </span><span class="spaces">     </span><span class="istickedoff">in vsep</span>
-<span class="lineno">   63 </span><span class="spaces">          </span><span class="istickedoff">[ &quot;function&quot; &lt;&gt; &quot;(&quot; &lt;&gt; arguments &lt;&gt; &quot;)&quot; &lt;+&gt; &quot;{&quot;,</span>
-<span class="lineno">   64 </span><span class="spaces">            </span><span class="istickedoff">indent 2 &quot;return&quot; &lt;+&gt; ppSub body &lt;&gt; &quot;;&quot;,</span>
-<span class="lineno">   65 </span><span class="spaces">            </span><span class="istickedoff">&quot;}&quot;</span>
-<span class="lineno">   66 </span><span class="spaces">          </span><span class="istickedoff">]</span>
-<span class="lineno">   67 </span><span class="spaces">  </span><span class="istickedoff">EFunCall fun args -&gt;</span>
-<span class="lineno">   68 </span><span class="spaces">    </span><span class="istickedoff">let encloseIfNotSimple = if isSimpleExpr fun then id else parens</span>
-<span class="lineno">   69 </span><span class="spaces">        </span><span class="istickedoff">arguments = concatWith (surround &quot;, &quot;) (ppExpr &lt;$&gt; args)</span>
-<span class="lineno">   70 </span><span class="spaces">     </span><span class="istickedoff">in encloseIfNotSimple (ppExpr fun) &lt;&gt; &quot;(&quot; &lt;&gt; arguments &lt;&gt; &quot;)&quot;</span>
-<span class="lineno">   71 </span><span class="spaces">  </span><span class="istickedoff">ERecord record -&gt; ppRecord ppExpr record</span></span>
-<span class="lineno">   72 </span>
-<span class="lineno">   73 </span>-- need surrounding parens?
-<span class="lineno">   74 </span>isSimpleExpr :: Expr -&gt; Bool
-<span class="lineno">   75 </span><span class="decl"><span class="istickedoff">isSimpleExpr = \case</span>
-<span class="lineno">   76 </span><span class="spaces">  </span><span class="istickedoff">ERecord {} -&gt; <span class="nottickedoff">False</span></span>
-<span class="lineno">   77 </span><span class="spaces">  </span><span class="istickedoff">EFun {} -&gt; False</span>
-<span class="lineno">   78 </span><span class="spaces">  </span><span class="istickedoff">_ -&gt; True</span></span>
+<span class="lineno">   53 </span><span class="spaces">  </span><span class="istickedoff">SRet expr -&gt; &quot;return&quot; &lt;+&gt; ppExpr expr</span>
+<span class="lineno">   54 </span><span class="spaces">  </span><span class="istickedoff">SDef def -&gt; <span class="nottickedoff">ppDef def</span></span>
+<span class="lineno">   55 </span><span class="spaces">  </span><span class="istickedoff">SIf cond sub -&gt;</span>
+<span class="lineno">   56 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">vsep</span></span>
+<span class="lineno">   57 </span><span class="spaces">      </span><span class="istickedoff"><span class="nottickedoff">[ &quot;if&quot; &lt;+&gt; parens (ppExpr cond) &lt;+&gt; &quot;{&quot;,</span></span>
+<span class="lineno">   58 </span><span class="spaces">        </span><span class="istickedoff"><span class="nottickedoff">indent 2 $ ppSub sub,</span></span>
+<span class="lineno">   59 </span><span class="spaces">        </span><span class="istickedoff"><span class="nottickedoff">&quot;}&quot;</span></span>
+<span class="lineno">   60 </span><span class="spaces">      </span><span class="istickedoff"><span class="nottickedoff">]</span></span></span>
+<span class="lineno">   61 </span>
+<span class="lineno">   62 </span>ppExpr :: Expr -&gt; Doc a
+<span class="lineno">   63 </span><span class="decl"><span class="istickedoff">ppExpr = \case</span>
+<span class="lineno">   64 </span><span class="spaces">  </span><span class="istickedoff">ELit lit -&gt; ppLit lit</span>
+<span class="lineno">   65 </span><span class="spaces">  </span><span class="istickedoff">EVar var -&gt; pretty var</span>
+<span class="lineno">   66 </span><span class="spaces">  </span><span class="istickedoff">EFun args body -&gt;</span>
+<span class="lineno">   67 </span><span class="spaces">    </span><span class="istickedoff">let arguments = concatWith (surround &quot;, &quot;) (pretty &lt;$&gt; args)</span>
+<span class="lineno">   68 </span><span class="spaces">     </span><span class="istickedoff">in vsep</span>
+<span class="lineno">   69 </span><span class="spaces">          </span><span class="istickedoff">[ &quot;function&quot; &lt;&gt; &quot;(&quot; &lt;&gt; arguments &lt;&gt; &quot;)&quot; &lt;+&gt; &quot;{&quot;,</span>
+<span class="lineno">   70 </span><span class="spaces">            </span><span class="istickedoff">indent 2 $ ppSub body &lt;&gt; &quot;;&quot;,</span>
+<span class="lineno">   71 </span><span class="spaces">            </span><span class="istickedoff">&quot;}&quot;</span>
+<span class="lineno">   72 </span><span class="spaces">          </span><span class="istickedoff">]</span>
+<span class="lineno">   73 </span><span class="spaces">  </span><span class="istickedoff">EFunCall fun args -&gt;</span>
+<span class="lineno">   74 </span><span class="spaces">    </span><span class="istickedoff">let encloseIfNotSimple = if isSimpleExpr fun then id else parens</span>
+<span class="lineno">   75 </span><span class="spaces">        </span><span class="istickedoff">arguments = concatWith (surround &quot;, &quot;) (ppExpr &lt;$&gt; args)</span>
+<span class="lineno">   76 </span><span class="spaces">     </span><span class="istickedoff">in encloseIfNotSimple (ppExpr fun) &lt;&gt; &quot;(&quot; &lt;&gt; arguments &lt;&gt; &quot;)&quot;</span>
+<span class="lineno">   77 </span><span class="spaces">  </span><span class="istickedoff">ERecord record -&gt; ppRecord ppExpr record</span>
+<span class="lineno">   78 </span><span class="spaces">  </span><span class="istickedoff">EAnd exprs -&gt; <span class="nottickedoff">concatWith (surround &quot; &amp;&amp; &quot;) (ppExpr &lt;$&gt; exprs)</span></span>
+<span class="lineno">   79 </span><span class="spaces">  </span><span class="istickedoff">EEqual a b -&gt; <span class="nottickedoff">ppExpr a &lt;+&gt; &quot;===&quot; &lt;+&gt; ppExpr b</span></span>
+<span class="lineno">   80 </span><span class="spaces">  </span><span class="istickedoff">ERecordAccess expr label -&gt;</span>
+<span class="lineno">   81 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">(if isSimpleExpr expr then id else parens) (ppExpr expr)</span></span>
+<span class="lineno">   82 </span><span class="spaces">      </span><span class="istickedoff"><span class="nottickedoff">&lt;&gt; &quot;.&quot;</span></span>
+<span class="lineno">   83 </span><span class="spaces">      </span><span class="istickedoff"><span class="nottickedoff">&lt;&gt; pretty label</span></span></span>
+<span class="lineno">   84 </span>
+<span class="lineno">   85 </span>-- need surrounding parens?
+<span class="lineno">   86 </span>isSimpleExpr :: Expr -&gt; Bool
+<span class="lineno">   87 </span><span class="decl"><span class="istickedoff">isSimpleExpr = \case</span>
+<span class="lineno">   88 </span><span class="spaces">  </span><span class="istickedoff">ERecord {} -&gt; <span class="nottickedoff">False</span></span>
+<span class="lineno">   89 </span><span class="spaces">  </span><span class="istickedoff">EFun {} -&gt; False</span>
+<span class="lineno">   90 </span><span class="spaces">  </span><span class="istickedoff">EEqual {} -&gt; <span class="nottickedoff">False</span></span>
+<span class="lineno">   91 </span><span class="spaces">  </span><span class="istickedoff">_ -&gt; True</span></span>
 
 </pre>
 </body>

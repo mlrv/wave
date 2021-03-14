@@ -17,6 +17,7 @@ data Statement
 SExpr :: Expr -> Statement
 SRet :: Expr -> Statement
 SDef :: Definition -> Statement
+SIf :: Expr -> Sub -> Statement
 type Sub = [Statement]
 data Expr
 ELit :: Lit -> Expr
@@ -24,6 +25,10 @@ EVar :: Var -> Expr
 EFun :: [Var] -> Sub -> Expr
 EFunCall :: Expr -> [Expr] -> Expr
 ERecord :: Record Expr -> Expr
+EAnd :: [Expr] -> Expr
+EEqual :: Expr -> Expr -> Expr
+ERecordAccess :: Expr -> Label -> Expr
+type Label = Text
 data Definition
 Variable :: Var -> Expr -> Definition
 Function :: Var -> [Var] -> Sub -> Definition
@@ -75,9 +80,11 @@ EVar :: Var -> Expr
 EFun :: [Var] -> Sub -> Expr
 EFunCall :: Expr -> [Expr] -> Expr
 ERecord :: Record Expr -> Expr
-Effi :: Text -> [Expr] -> Expr
+EFfi :: Text -> [Expr] -> Expr
 EVariant :: Text -> Expr -> Expr
 ECase :: Expr -> [(Pattern, Expr)] -> Expr
+ERecordAccess :: Expr -> Label -> Expr
+type Label = Text
 data Definition
 Variable :: Var -> Expr -> Definition
 Function :: Var -> [Var] -> Sub -> Definition
@@ -97,12 +104,24 @@ instance GHC.Classes.Eq Wave.Ast.File
 instance GHC.Show.Show Wave.Ast.File
 
 module Translate
-translateFile :: File -> File
-translateDef :: Definition -> Definition
-translateExpr :: Expr -> Expr
+type TransState = Int
+type Translate a = MonadState TransState a
+translate :: (a -> State TransState b) -> a -> b
+genVar :: Translate m => Text -> m Var
+translateFile :: Translate m => File -> m File
+translateDef :: Translate m => Definition -> m Definition
+translateExpr :: Translate m => Expr -> m Expr
+data PatResult
+PatResult :: [Expr] -> [(Var, Expr)] -> PatResult
+[conditions] :: PatResult -> [Expr]
+[matchers] :: PatResult -> [(Var, Expr)]
+translatePatterns :: Translate m => Expr -> [(Pattern, Expr)] -> m Sub
+translatePattern :: Translate m => Expr -> Pattern -> m PatResult
 translateLit :: Lit -> Lit
-translateSub :: Sub -> Sub
-translateStatement :: Statement -> Statement
+translateSub :: Translate m => Sub -> m Sub
+translateStatement :: Translate m => Statement -> m Statement
+instance GHC.Base.Semigroup Translate.PatResult
+instance GHC.Base.Monoid Translate.PatResult
 
 module Compile
 compile :: File -> Text

@@ -17,51 +17,158 @@ span.spaces    { background: white }
 <span class="decl"><span class="nottickedoff">never executed</span> <span class="tickonlytrue">always true</span> <span class="tickonlyfalse">always false</span></span>
 </pre>
 <pre>
-<span class="lineno">    1 </span>{-# LANGUAGE OverloadedStrings #-}
-<span class="lineno">    2 </span>
-<span class="lineno">    3 </span>module Translate where
-<span class="lineno">    4 </span>
-<span class="lineno">    5 </span>import qualified Data.Map as M
-<span class="lineno">    6 </span>import qualified JS.Ast as JS
-<span class="lineno">    7 </span>import Wave.Ast
-<span class="lineno">    8 </span>
-<span class="lineno">    9 </span>translateFile :: File -&gt; JS.File
-<span class="lineno">   10 </span><span class="decl"><span class="nottickedoff">translateFile (File defs) = JS.File $ map (JS.SDef . translateDef) defs</span></span>
-<span class="lineno">   11 </span>
-<span class="lineno">   12 </span>translateDef :: Definition -&gt; JS.Definition
-<span class="lineno">   13 </span><span class="decl"><span class="istickedoff">translateDef = \case</span>
-<span class="lineno">   14 </span><span class="spaces">  </span><span class="istickedoff">Variable var expr -&gt; JS.Variable var (translateExpr expr)</span>
-<span class="lineno">   15 </span><span class="spaces">  </span><span class="istickedoff">Function var args body -&gt; JS.Function var args (translateSub body)</span></span>
-<span class="lineno">   16 </span>
-<span class="lineno">   17 </span>translateExpr :: Expr -&gt; JS.Expr
-<span class="lineno">   18 </span><span class="decl"><span class="istickedoff">translateExpr = \case</span>
-<span class="lineno">   19 </span><span class="spaces">  </span><span class="istickedoff">ELit lit -&gt; JS.ELit (translateLit lit)</span>
-<span class="lineno">   20 </span><span class="spaces">  </span><span class="istickedoff">EVar var -&gt; JS.EVar var</span>
-<span class="lineno">   21 </span><span class="spaces">  </span><span class="istickedoff">EFun args body -&gt; JS.EFun args (translateSub body)</span>
-<span class="lineno">   22 </span><span class="spaces">  </span><span class="istickedoff">EFunCall fun args -&gt; <span class="nottickedoff">JS.EFunCall (translateExpr fun) (map translateExpr args)</span></span>
-<span class="lineno">   23 </span><span class="spaces">  </span><span class="istickedoff">ERecord record -&gt; <span class="nottickedoff">JS.ERecord (fmap translateExpr record)</span></span>
-<span class="lineno">   24 </span><span class="spaces">  </span><span class="istickedoff">Effi fun args -&gt; <span class="nottickedoff">JS.EFunCall (JS.EVar fun) (map translateExpr args)</span></span>
-<span class="lineno">   25 </span><span class="spaces">  </span><span class="istickedoff">EVariant kind value -&gt;</span>
-<span class="lineno">   26 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">JS.ERecord $</span></span>
-<span class="lineno">   27 </span><span class="spaces">      </span><span class="istickedoff"><span class="nottickedoff">M.fromList</span></span>
-<span class="lineno">   28 </span><span class="spaces">        </span><span class="istickedoff"><span class="nottickedoff">[ (&quot;_kind&quot;, JS.ELit $ JS.LString kind),</span></span>
-<span class="lineno">   29 </span><span class="spaces">          </span><span class="istickedoff"><span class="nottickedoff">(&quot;_value&quot;, translateExpr value)</span></span>
-<span class="lineno">   30 </span><span class="spaces">        </span><span class="istickedoff"><span class="nottickedoff">]</span></span></span>
-<span class="lineno">   31 </span>  -- ECase {} -&gt; undefined
-<span class="lineno">   32 </span>
-<span class="lineno">   33 </span>translateLit :: Lit -&gt; JS.Lit
-<span class="lineno">   34 </span><span class="decl"><span class="istickedoff">translateLit = \case</span>
-<span class="lineno">   35 </span><span class="spaces">  </span><span class="istickedoff">LInt int -&gt; JS.LInt int</span>
-<span class="lineno">   36 </span><span class="spaces">  </span><span class="istickedoff">LFloat float -&gt; <span class="nottickedoff">JS.LFloat float</span></span>
-<span class="lineno">   37 </span><span class="spaces">  </span><span class="istickedoff">LString str -&gt; <span class="nottickedoff">JS.LString str</span></span></span>
+<span class="lineno">    1 </span>{-# LANGUAGE ConstraintKinds #-}
+<span class="lineno">    2 </span>{-# LANGUAGE FlexibleContexts #-}
+<span class="lineno">    3 </span>{-# LANGUAGE OverloadedStrings #-}
+<span class="lineno">    4 </span>{-# LANGUAGE ViewPatterns #-}
+<span class="lineno">    5 </span>
+<span class="lineno">    6 </span>module Translate where
+<span class="lineno">    7 </span>
+<span class="lineno">    8 </span>import Control.Monad.State
+<span class="lineno">    9 </span>import qualified Data.Map as M
+<span class="lineno">   10 </span>import qualified Data.Text as T
+<span class="lineno">   11 </span>import Data.Traversable
+<span class="lineno">   12 </span>import qualified JS.Ast as JS
+<span class="lineno">   13 </span>import Wave.Ast
+<span class="lineno">   14 </span>
+<span class="lineno">   15 </span>-- expl
+<span class="lineno">   16 </span>type TransState = Int
+<span class="lineno">   17 </span>
+<span class="lineno">   18 </span>type Translate a = MonadState TransState a
+<span class="lineno">   19 </span>
+<span class="lineno">   20 </span>translate :: (a -&gt; State TransState b) -&gt; a -&gt; b
+<span class="lineno">   21 </span><span class="decl"><span class="istickedoff">translate tran ast = evalState (tran ast) <span class="nottickedoff">0</span></span></span>
+<span class="lineno">   22 </span>
+<span class="lineno">   23 </span>genVar :: Translate m =&gt; T.Text -&gt; m Var
+<span class="lineno">   24 </span><span class="decl"><span class="nottickedoff">genVar var = do</span>
+<span class="lineno">   25 </span><span class="spaces">  </span><span class="nottickedoff">n &lt;- get</span>
+<span class="lineno">   26 </span><span class="spaces">  </span><span class="nottickedoff">modify (+ 1)</span>
+<span class="lineno">   27 </span><span class="spaces">  </span><span class="nottickedoff">pure (&quot;_&quot; &lt;&gt; var &lt;&gt; &quot;_&quot; &lt;&gt; T.pack (show n))</span></span>
+<span class="lineno">   28 </span>
+<span class="lineno">   29 </span>translateFile :: Translate m =&gt; File -&gt; m JS.File
+<span class="lineno">   30 </span><span class="decl"><span class="nottickedoff">translateFile (File defs) = do</span>
+<span class="lineno">   31 </span><span class="spaces">  </span><span class="nottickedoff">defs' &lt;- traverse translateDef defs</span>
+<span class="lineno">   32 </span><span class="spaces">  </span><span class="nottickedoff">pure $ JS.File $ map JS.SDef defs'</span></span>
+<span class="lineno">   33 </span>
+<span class="lineno">   34 </span>translateDef :: Translate m =&gt; Definition -&gt; m JS.Definition
+<span class="lineno">   35 </span><span class="decl"><span class="istickedoff">translateDef = \case</span>
+<span class="lineno">   36 </span><span class="spaces">  </span><span class="istickedoff">Variable var expr -&gt; JS.Variable var &lt;$&gt; translateExpr expr</span>
+<span class="lineno">   37 </span><span class="spaces">  </span><span class="istickedoff">Function var args body -&gt; JS.Function var args &lt;$&gt; translateSub body</span></span>
 <span class="lineno">   38 </span>
-<span class="lineno">   39 </span>translateSub :: Sub -&gt; JS.Sub
-<span class="lineno">   40 </span><span class="decl"><span class="istickedoff">translateSub = map translateStatement</span></span>
-<span class="lineno">   41 </span>
-<span class="lineno">   42 </span>translateStatement :: Statement -&gt; JS.Statement
-<span class="lineno">   43 </span><span class="decl"><span class="istickedoff">translateStatement = \case</span>
-<span class="lineno">   44 </span><span class="spaces">  </span><span class="istickedoff">SExpr expr -&gt; JS.SExpr (translateExpr expr)</span>
-<span class="lineno">   45 </span><span class="spaces">  </span><span class="istickedoff">SDef def -&gt; JS.SDef (translateDef def)</span></span>
+<span class="lineno">   39 </span>translateExpr :: Translate m =&gt; Expr -&gt; m JS.Expr
+<span class="lineno">   40 </span><span class="decl"><span class="istickedoff">translateExpr = \case</span>
+<span class="lineno">   41 </span><span class="spaces">  </span><span class="istickedoff">ELit lit -&gt; pure $ JS.ELit $ translateLit lit</span>
+<span class="lineno">   42 </span><span class="spaces">  </span><span class="istickedoff">EVar var -&gt; pure $ JS.EVar var</span>
+<span class="lineno">   43 </span><span class="spaces">  </span><span class="istickedoff">EFun args body -&gt; JS.EFun args &lt;$&gt; translateSub body</span>
+<span class="lineno">   44 </span><span class="spaces">  </span><span class="istickedoff">EFunCall fun args -&gt; <span class="nottickedoff">do</span></span>
+<span class="lineno">   45 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">fun' &lt;- translateExpr fun</span></span>
+<span class="lineno">   46 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">args' &lt;- traverse translateExpr args</span></span>
+<span class="lineno">   47 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">pure $ JS.EFunCall fun' args'</span></span>
+<span class="lineno">   48 </span><span class="spaces">  </span><span class="istickedoff">ERecord record -&gt; <span class="nottickedoff">JS.ERecord &lt;$&gt; traverse translateExpr record</span></span>
+<span class="lineno">   49 </span><span class="spaces">  </span><span class="istickedoff">EFfi fun args -&gt; <span class="nottickedoff">JS.EFunCall (JS.EVar fun) &lt;$&gt; traverse translateExpr args</span></span>
+<span class="lineno">   50 </span><span class="spaces">  </span><span class="istickedoff">EVariant kind value -&gt; <span class="nottickedoff">do</span></span>
+<span class="lineno">   51 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">value' &lt;- translateExpr value</span></span>
+<span class="lineno">   52 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">pure $</span></span>
+<span class="lineno">   53 </span><span class="spaces">      </span><span class="istickedoff"><span class="nottickedoff">JS.ERecord $</span></span>
+<span class="lineno">   54 </span><span class="spaces">        </span><span class="istickedoff"><span class="nottickedoff">M.fromList</span></span>
+<span class="lineno">   55 </span><span class="spaces">          </span><span class="istickedoff"><span class="nottickedoff">[ (&quot;_kind&quot;, JS.ELit $ JS.LString kind),</span></span>
+<span class="lineno">   56 </span><span class="spaces">            </span><span class="istickedoff"><span class="nottickedoff">(&quot;_value&quot;, value') -- extract pattern stuff in</span></span>
+<span class="lineno">   57 </span><span class="spaces">          </span><span class="istickedoff"><span class="nottickedoff">]</span></span>
+<span class="lineno">   58 </span><span class="spaces">  </span><span class="istickedoff">ECase expr patterns -&gt; <span class="nottickedoff">do</span></span>
+<span class="lineno">   59 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">expr' &lt;- translateExpr expr</span></span>
+<span class="lineno">   60 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">var &lt;- genVar &quot;case&quot;</span></span>
+<span class="lineno">   61 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">patterns' &lt;- translatePatterns (JS.EVar var) patterns</span></span>
+<span class="lineno">   62 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">pure $</span></span>
+<span class="lineno">   63 </span><span class="spaces">      </span><span class="istickedoff"><span class="nottickedoff">JS.EFunCall</span></span>
+<span class="lineno">   64 </span><span class="spaces">        </span><span class="istickedoff"><span class="nottickedoff">(JS.EFun [var] patterns')</span></span>
+<span class="lineno">   65 </span><span class="spaces">        </span><span class="istickedoff"><span class="nottickedoff">[expr']</span></span>
+<span class="lineno">   66 </span><span class="spaces">  </span><span class="istickedoff">ERecordAccess expr label -&gt; <span class="nottickedoff">do</span></span>
+<span class="lineno">   67 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">expr' &lt;- translateExpr expr</span></span>
+<span class="lineno">   68 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">pure $</span></span>
+<span class="lineno">   69 </span><span class="spaces">      </span><span class="istickedoff"><span class="nottickedoff">JS.ERecordAccess expr' label</span></span></span>
+<span class="lineno">   70 </span>
+<span class="lineno">   71 </span>-- translate `pattern -&gt; result` to something like
+<span class="lineno">   72 </span>-- if (conditions) {
+<span class="lineno">   73 </span>--  return function (matchersV) {
+<span class="lineno">   74 </span>--    return result;
+<span class="lineno">   75 </span>--   }(matchersE)
+<span class="lineno">   76 </span>-- }
+<span class="lineno">   77 </span>
+<span class="lineno">   78 </span>data PatResult = PatResult
+<span class="lineno">   79 </span>  { <span class="nottickedoff"><span class="decl"><span class="nottickedoff">conditions</span></span></span> :: [JS.Expr],
+<span class="lineno">   80 </span>    <span class="nottickedoff"><span class="decl"><span class="nottickedoff">matchers</span></span></span> :: [(Var, JS.Expr)]
+<span class="lineno">   81 </span>  }
+<span class="lineno">   82 </span>
+<span class="lineno">   83 </span>instance Semigroup PatResult where
+<span class="lineno">   84 </span>  <span class="decl"><span class="nottickedoff">(&lt;&gt;) (PatResult c1 m1) (PatResult c2 m2) =</span>
+<span class="lineno">   85 </span><span class="spaces">    </span><span class="nottickedoff">PatResult (c1 &lt;&gt; c2) (m1 &lt;&gt; m2)</span></span>
+<span class="lineno">   86 </span>
+<span class="lineno">   87 </span>instance Monoid PatResult where
+<span class="lineno">   88 </span>  <span class="decl"><span class="nottickedoff">mempty = PatResult [] []</span></span>
+<span class="lineno">   89 </span>
+<span class="lineno">   90 </span>translatePatterns :: Translate m =&gt; JS.Expr -&gt; [(Pattern, Expr)] -&gt; m JS.Sub
+<span class="lineno">   91 </span><span class="decl"><span class="nottickedoff">translatePatterns var = traverse $ \(pat, expr) -&gt; do</span>
+<span class="lineno">   92 </span><span class="spaces">  </span><span class="nottickedoff">result' &lt;- translateExpr expr</span>
+<span class="lineno">   93 </span><span class="spaces">  </span><span class="nottickedoff">PatResult conds matchers' &lt;- translatePattern var pat</span>
+<span class="lineno">   94 </span><span class="spaces">  </span><span class="nottickedoff">let (matchersV, matchersE) = unzip matchers'</span>
+<span class="lineno">   95 </span><span class="spaces">  </span><span class="nottickedoff">pure $</span>
+<span class="lineno">   96 </span><span class="spaces">    </span><span class="nottickedoff">JS.SIf</span>
+<span class="lineno">   97 </span><span class="spaces">      </span><span class="nottickedoff">(JS.EAnd conds)</span>
+<span class="lineno">   98 </span><span class="spaces">      </span><span class="nottickedoff">[ JS.SRet $</span>
+<span class="lineno">   99 </span><span class="spaces">          </span><span class="nottickedoff">JS.EFunCall</span>
+<span class="lineno">  100 </span><span class="spaces">            </span><span class="nottickedoff">(JS.EFun matchersV [JS.SRet result'])</span>
+<span class="lineno">  101 </span><span class="spaces">            </span><span class="nottickedoff">matchersE</span>
+<span class="lineno">  102 </span><span class="spaces">      </span><span class="nottickedoff">]</span></span>
+<span class="lineno">  103 </span>
+<span class="lineno">  104 </span>translatePattern :: Translate m =&gt; JS.Expr -&gt; Pattern -&gt; m PatResult
+<span class="lineno">  105 </span><span class="decl"><span class="nottickedoff">translatePattern expr = \case</span>
+<span class="lineno">  106 </span><span class="spaces">  </span><span class="nottickedoff">PWildcard -&gt;</span>
+<span class="lineno">  107 </span><span class="spaces">    </span><span class="nottickedoff">pure</span>
+<span class="lineno">  108 </span><span class="spaces">      </span><span class="nottickedoff">PatResult</span>
+<span class="lineno">  109 </span><span class="spaces">        </span><span class="nottickedoff">{ conditions = [JS.ELit $ JS.LBool True],</span>
+<span class="lineno">  110 </span><span class="spaces">          </span><span class="nottickedoff">matchers = []</span>
+<span class="lineno">  111 </span><span class="spaces">        </span><span class="nottickedoff">}</span>
+<span class="lineno">  112 </span><span class="spaces">  </span><span class="nottickedoff">PVar var -&gt;</span>
+<span class="lineno">  113 </span><span class="spaces">    </span><span class="nottickedoff">pure</span>
+<span class="lineno">  114 </span><span class="spaces">      </span><span class="nottickedoff">PatResult</span>
+<span class="lineno">  115 </span><span class="spaces">        </span><span class="nottickedoff">{ conditions = [JS.ELit $ JS.LBool True],</span>
+<span class="lineno">  116 </span><span class="spaces">          </span><span class="nottickedoff">matchers = [(var, expr)]</span>
+<span class="lineno">  117 </span><span class="spaces">        </span><span class="nottickedoff">}</span>
+<span class="lineno">  118 </span><span class="spaces">  </span><span class="nottickedoff">PLit lit -&gt;</span>
+<span class="lineno">  119 </span><span class="spaces">    </span><span class="nottickedoff">pure</span>
+<span class="lineno">  120 </span><span class="spaces">      </span><span class="nottickedoff">PatResult</span>
+<span class="lineno">  121 </span><span class="spaces">        </span><span class="nottickedoff">{ conditions = [JS.EEqual (JS.ELit $ translateLit lit) expr],</span>
+<span class="lineno">  122 </span><span class="spaces">          </span><span class="nottickedoff">matchers = []</span>
+<span class="lineno">  123 </span><span class="spaces">        </span><span class="nottickedoff">}</span>
+<span class="lineno">  124 </span><span class="spaces">  </span><span class="nottickedoff">PRecord (M.toList -&gt; fields) -&gt; do</span>
+<span class="lineno">  125 </span><span class="spaces">    </span><span class="nottickedoff">fmap mconcat $</span>
+<span class="lineno">  126 </span><span class="spaces">      </span><span class="nottickedoff">for fields $ \(field, pat) -&gt;</span>
+<span class="lineno">  127 </span><span class="spaces">        </span><span class="nottickedoff">translatePattern (JS.ERecordAccess expr field) pat</span>
+<span class="lineno">  128 </span><span class="spaces">  </span><span class="nottickedoff">PVariant tag pat -&gt; do</span>
+<span class="lineno">  129 </span><span class="spaces">    </span><span class="nottickedoff">pat' &lt;- translatePattern (JS.ERecordAccess expr &quot;_value&quot;) pat</span>
+<span class="lineno">  130 </span><span class="spaces">    </span><span class="nottickedoff">pure</span>
+<span class="lineno">  131 </span><span class="spaces">      </span><span class="nottickedoff">PatResult</span>
+<span class="lineno">  132 </span><span class="spaces">        </span><span class="nottickedoff">{ conditions =</span>
+<span class="lineno">  133 </span><span class="spaces">            </span><span class="nottickedoff">JS.EEqual</span>
+<span class="lineno">  134 </span><span class="spaces">              </span><span class="nottickedoff">(JS.ELit $ JS.LString tag)</span>
+<span class="lineno">  135 </span><span class="spaces">              </span><span class="nottickedoff">(JS.ERecordAccess expr &quot;_kind&quot;) :</span>
+<span class="lineno">  136 </span><span class="spaces">            </span><span class="nottickedoff">conditions pat',</span>
+<span class="lineno">  137 </span><span class="spaces">          </span><span class="nottickedoff">matchers = matchers pat'</span>
+<span class="lineno">  138 </span><span class="spaces">        </span><span class="nottickedoff">}</span></span>
+<span class="lineno">  139 </span>
+<span class="lineno">  140 </span>translateLit :: Lit -&gt; JS.Lit
+<span class="lineno">  141 </span><span class="decl"><span class="istickedoff">translateLit = \case</span>
+<span class="lineno">  142 </span><span class="spaces">  </span><span class="istickedoff">LInt int -&gt; JS.LInt int</span>
+<span class="lineno">  143 </span><span class="spaces">  </span><span class="istickedoff">LFloat float -&gt; <span class="nottickedoff">JS.LFloat float</span></span>
+<span class="lineno">  144 </span><span class="spaces">  </span><span class="istickedoff">LString str -&gt; <span class="nottickedoff">JS.LString str</span></span></span>
+<span class="lineno">  145 </span>
+<span class="lineno">  146 </span>translateSub :: Translate m =&gt; Sub -&gt; m JS.Sub
+<span class="lineno">  147 </span><span class="decl"><span class="istickedoff">translateSub = traverse translateStatement</span></span>
+<span class="lineno">  148 </span>
+<span class="lineno">  149 </span>translateStatement :: Translate m =&gt; Statement -&gt; m JS.Statement
+<span class="lineno">  150 </span><span class="decl"><span class="istickedoff">translateStatement = \case</span>
+<span class="lineno">  151 </span><span class="spaces">  </span><span class="istickedoff">SExpr expr -&gt; JS.SExpr &lt;$&gt; translateExpr expr</span>
+<span class="lineno">  152 </span><span class="spaces">  </span><span class="istickedoff">SDef def -&gt; JS.SDef &lt;$&gt; translateDef def</span></span>
 
 </pre>
 </body>

@@ -5,14 +5,14 @@
 </span><span id="line-5"></span><span>
 </span><span id="line-6"></span><span class="hs-keyword">type</span><span> </span><span id="Var"><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-var">Var</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span>
 </span><span id="line-7"></span><span>
-</span><span id="line-8"></span><span class="hs-keyword">type</span><span> </span><span id="Record"><span class="annot"><a href="Wave.Ast.html#Record"><span class="hs-identifier hs-var">Record</span></a></span></span><span> </span><span id="local-6989586621679039818"><span class="annot"><a href="#local-6989586621679039818"><span class="hs-identifier hs-type">a</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-9"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">M.Map</span></span><span> </span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679039818"><span class="hs-identifier hs-type">a</span></a></span><span>
+</span><span id="line-8"></span><span class="hs-keyword">type</span><span> </span><span id="Record"><span class="annot"><a href="Wave.Ast.html#Record"><span class="hs-identifier hs-var">Record</span></a></span></span><span> </span><span id="local-6989586621679043328"><span class="annot"><a href="#local-6989586621679043328"><span class="hs-identifier hs-type">a</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-9"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">M.Map</span></span><span> </span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679043328"><span class="hs-identifier hs-type">a</span></a></span><span>
 </span><span id="line-10"></span><span>
 </span><span id="line-11"></span><span class="hs-keyword">data</span><span> </span><span id="Lit"><span class="annot"><a href="Wave.Ast.html#Lit"><span class="hs-identifier hs-var">Lit</span></a></span></span><span>
 </span><span id="line-12"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="LInt"><span class="annot"><a href="Wave.Ast.html#LInt"><span class="hs-identifier hs-var">LInt</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span>
 </span><span id="line-13"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="LFloat"><span class="annot"><a href="Wave.Ast.html#LFloat"><span class="hs-identifier hs-var">LFloat</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Float</span></span><span>
 </span><span id="line-14"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="LString"><span class="annot"><a href="Wave.Ast.html#LString"><span class="hs-identifier hs-var">LString</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span>
-</span><span id="line-15"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679039808"><span id="local-6989586621679039810"><span id="local-6989586621679039812"><span class="annot"><span class="annottext">Int -&gt; Lit -&gt; ShowS
+</span><span id="line-15"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679043318"><span id="local-6989586621679043320"><span id="local-6989586621679043322"><span class="annot"><span class="annottext">Int -&gt; Lit -&gt; ShowS
 [Lit] -&gt; ShowS
 Lit -&gt; String
 (Int -&gt; Lit -&gt; ShowS)
@@ -25,7 +25,7 @@ show :: Lit -&gt; String
 $cshow :: Lit -&gt; String
 showsPrec :: Int -&gt; Lit -&gt; ShowS
 $cshowsPrec :: Int -&gt; Lit -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039803"><span id="local-6989586621679039805"><span class="annot"><span class="annottext">Lit -&gt; Lit -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679043313"><span id="local-6989586621679043315"><span class="annot"><span class="annottext">Lit -&gt; Lit -&gt; Bool
 (Lit -&gt; Lit -&gt; Bool) -&gt; (Lit -&gt; Lit -&gt; Bool) -&gt; Eq Lit
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 /= :: Lit -&gt; Lit -&gt; Bool
@@ -37,7 +37,7 @@ $c== :: Lit -&gt; Lit -&gt; Bool
 </span><span id="line-17"></span><span class="hs-keyword">data</span><span> </span><span id="Statement"><span class="annot"><a href="Wave.Ast.html#Statement"><span class="hs-identifier hs-var">Statement</span></a></span></span><span>
 </span><span id="line-18"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="SExpr"><span class="annot"><a href="Wave.Ast.html#SExpr"><span class="hs-identifier hs-var">SExpr</span></a></span></span><span> </span><span class="annot"><a href="Wave.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span>
 </span><span id="line-19"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="SDef"><span class="annot"><a href="Wave.Ast.html#SDef"><span class="hs-identifier hs-var">SDef</span></a></span></span><span> </span><span class="annot"><a href="Wave.Ast.html#Definition"><span class="hs-identifier hs-type">Definition</span></a></span><span>
-</span><span id="line-20"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679039794"><span id="local-6989586621679039796"><span id="local-6989586621679039798"><span class="annot"><span class="annottext">Int -&gt; Statement -&gt; ShowS
+</span><span id="line-20"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679043304"><span id="local-6989586621679043306"><span id="local-6989586621679043308"><span class="annot"><span class="annottext">Int -&gt; Statement -&gt; ShowS
 [Statement] -&gt; ShowS
 Statement -&gt; String
 (Int -&gt; Statement -&gt; ShowS)
@@ -52,7 +52,7 @@ show :: Statement -&gt; String
 $cshow :: Statement -&gt; String
 showsPrec :: Int -&gt; Statement -&gt; ShowS
 $cshowsPrec :: Int -&gt; Statement -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039790"><span id="local-6989586621679039792"><span class="annot"><span class="annottext">Statement -&gt; Statement -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679043300"><span id="local-6989586621679043302"><span class="annot"><span class="annottext">Statement -&gt; Statement -&gt; Bool
 (Statement -&gt; Statement -&gt; Bool)
 -&gt; (Statement -&gt; Statement -&gt; Bool) -&gt; Eq Statement
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -70,7 +70,7 @@ $c== :: Statement -&gt; Statement -&gt; Bool
 </span><span id="line-27"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="PLit"><span class="annot"><a href="Wave.Ast.html#PLit"><span class="hs-identifier hs-var">PLit</span></a></span></span><span> </span><span class="annot"><a href="Wave.Ast.html#Lit"><span class="hs-identifier hs-type">Lit</span></a></span><span>
 </span><span id="line-28"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="PRecord"><span class="annot"><a href="Wave.Ast.html#PRecord"><span class="hs-identifier hs-var">PRecord</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Wave.Ast.html#Record"><span class="hs-identifier hs-type">Record</span></a></span><span> </span><span class="annot"><a href="Wave.Ast.html#Pattern"><span class="hs-identifier hs-type">Pattern</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-29"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="PVariant"><span class="annot"><a href="Wave.Ast.html#PVariant"><span class="hs-identifier hs-var">PVariant</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span> </span><span class="annot"><a href="Wave.Ast.html#Pattern"><span class="hs-identifier hs-type">Pattern</span></a></span><span>
-</span><span id="line-30"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679039778"><span id="local-6989586621679039780"><span id="local-6989586621679039782"><span class="annot"><span class="annottext">Int -&gt; Pattern -&gt; ShowS
+</span><span id="line-30"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679043288"><span id="local-6989586621679043290"><span id="local-6989586621679043292"><span class="annot"><span class="annottext">Int -&gt; Pattern -&gt; ShowS
 [Pattern] -&gt; ShowS
 Pattern -&gt; String
 (Int -&gt; Pattern -&gt; ShowS)
@@ -83,7 +83,7 @@ show :: Pattern -&gt; String
 $cshow :: Pattern -&gt; String
 showsPrec :: Int -&gt; Pattern -&gt; ShowS
 $cshowsPrec :: Int -&gt; Pattern -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039774"><span id="local-6989586621679039776"><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679043284"><span id="local-6989586621679043286"><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Bool
 (Pattern -&gt; Pattern -&gt; Bool)
 -&gt; (Pattern -&gt; Pattern -&gt; Bool) -&gt; Eq Pattern
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -99,10 +99,11 @@ $c== :: Pattern -&gt; Pattern -&gt; Bool
 </span><span id="line-35"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EFun"><span class="annot"><a href="Wave.Ast.html#EFun"><span class="hs-identifier hs-var">EFun</span></a></span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><a href="Wave.Ast.html#Sub"><span class="hs-identifier hs-type">Sub</span></a></span><span>
 </span><span id="line-36"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EFunCall"><span class="annot"><a href="Wave.Ast.html#EFunCall"><span class="hs-identifier hs-var">EFunCall</span></a></span></span><span> </span><span class="annot"><a href="Wave.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Wave.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span class="hs-special">]</span><span>
 </span><span id="line-37"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="ERecord"><span class="annot"><a href="Wave.Ast.html#ERecord"><span class="hs-identifier hs-var">ERecord</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Wave.Ast.html#Record"><span class="hs-identifier hs-type">Record</span></a></span><span> </span><span class="annot"><a href="Wave.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-38"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Effi"><span class="annot"><a href="Wave.Ast.html#Effi"><span class="hs-identifier hs-var">Effi</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Wave.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-38"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EFfi"><span class="annot"><a href="Wave.Ast.html#EFfi"><span class="hs-identifier hs-var">EFfi</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Wave.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span class="hs-special">]</span><span>
 </span><span id="line-39"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EVariant"><span class="annot"><a href="Wave.Ast.html#EVariant"><span class="hs-identifier hs-var">EVariant</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span> </span><span class="annot"><a href="Wave.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span>
 </span><span id="line-40"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="ECase"><span class="annot"><a href="Wave.Ast.html#ECase"><span class="hs-identifier hs-var">ECase</span></a></span></span><span> </span><span class="annot"><a href="Wave.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><a href="Wave.Ast.html#Pattern"><span class="hs-identifier hs-type">Pattern</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Wave.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span>
-</span><span id="line-41"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679039760"><span id="local-6989586621679039762"><span id="local-6989586621679039764"><span class="annot"><span class="annottext">Int -&gt; Expr -&gt; ShowS
+</span><span id="line-41"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="ERecordAccess"><span class="annot"><a href="Wave.Ast.html#ERecordAccess"><span class="hs-identifier hs-var">ERecordAccess</span></a></span></span><span> </span><span class="annot"><a href="Wave.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span> </span><span class="annot"><a href="Wave.Ast.html#Label"><span class="hs-identifier hs-type">Label</span></a></span><span>
+</span><span id="line-42"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679043268"><span id="local-6989586621679043270"><span id="local-6989586621679043272"><span class="annot"><span class="annottext">Int -&gt; Expr -&gt; ShowS
 [Expr] -&gt; ShowS
 Expr -&gt; String
 (Int -&gt; Expr -&gt; ShowS)
@@ -115,7 +116,7 @@ show :: Expr -&gt; String
 $cshow :: Expr -&gt; String
 showsPrec :: Int -&gt; Expr -&gt; ShowS
 $cshowsPrec :: Int -&gt; Expr -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039756"><span id="local-6989586621679039758"><span class="annot"><span class="annottext">Expr -&gt; Expr -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679043264"><span id="local-6989586621679043266"><span class="annot"><span class="annottext">Expr -&gt; Expr -&gt; Bool
 (Expr -&gt; Expr -&gt; Bool) -&gt; (Expr -&gt; Expr -&gt; Bool) -&gt; Eq Expr
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 /= :: Expr -&gt; Expr -&gt; Bool
@@ -123,11 +124,13 @@ $c/= :: Expr -&gt; Expr -&gt; Bool
 == :: Expr -&gt; Expr -&gt; Bool
 $c== :: Expr -&gt; Expr -&gt; Bool
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-42"></span><span>
-</span><span id="line-43"></span><span class="hs-keyword">data</span><span> </span><span id="Definition"><span class="annot"><a href="Wave.Ast.html#Definition"><span class="hs-identifier hs-var">Definition</span></a></span></span><span>
-</span><span id="line-44"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="Variable"><span class="annot"><a href="Wave.Ast.html#Variable"><span class="hs-identifier hs-var">Variable</span></a></span></span><span> </span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="annot"><a href="Wave.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span>
-</span><span id="line-45"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Function"><span class="annot"><a href="Wave.Ast.html#Function"><span class="hs-identifier hs-var">Function</span></a></span></span><span> </span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><a href="Wave.Ast.html#Sub"><span class="hs-identifier hs-type">Sub</span></a></span><span>
-</span><span id="line-46"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679039748"><span id="local-6989586621679039750"><span id="local-6989586621679039752"><span class="annot"><span class="annottext">Int -&gt; Definition -&gt; ShowS
+</span><span id="line-43"></span><span>
+</span><span id="line-44"></span><span class="hs-keyword">type</span><span> </span><span id="Label"><span class="annot"><a href="Wave.Ast.html#Label"><span class="hs-identifier hs-var">Label</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span>
+</span><span id="line-45"></span><span>
+</span><span id="line-46"></span><span class="hs-keyword">data</span><span> </span><span id="Definition"><span class="annot"><a href="Wave.Ast.html#Definition"><span class="hs-identifier hs-var">Definition</span></a></span></span><span>
+</span><span id="line-47"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="Variable"><span class="annot"><a href="Wave.Ast.html#Variable"><span class="hs-identifier hs-var">Variable</span></a></span></span><span> </span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="annot"><a href="Wave.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span>
+</span><span id="line-48"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="Function"><span class="annot"><a href="Wave.Ast.html#Function"><span class="hs-identifier hs-var">Function</span></a></span></span><span> </span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><a href="Wave.Ast.html#Sub"><span class="hs-identifier hs-type">Sub</span></a></span><span>
+</span><span id="line-49"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679043256"><span id="local-6989586621679043258"><span id="local-6989586621679043260"><span class="annot"><span class="annottext">Int -&gt; Definition -&gt; ShowS
 [Definition] -&gt; ShowS
 Definition -&gt; String
 (Int -&gt; Definition -&gt; ShowS)
@@ -142,7 +145,7 @@ show :: Definition -&gt; String
 $cshow :: Definition -&gt; String
 showsPrec :: Int -&gt; Definition -&gt; ShowS
 $cshowsPrec :: Int -&gt; Definition -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039744"><span id="local-6989586621679039746"><span class="annot"><span class="annottext">Definition -&gt; Definition -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679043252"><span id="local-6989586621679043254"><span class="annot"><span class="annottext">Definition -&gt; Definition -&gt; Bool
 (Definition -&gt; Definition -&gt; Bool)
 -&gt; (Definition -&gt; Definition -&gt; Bool) -&gt; Eq Definition
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -151,10 +154,10 @@ $c/= :: Definition -&gt; Definition -&gt; Bool
 == :: Definition -&gt; Definition -&gt; Bool
 $c== :: Definition -&gt; Definition -&gt; Bool
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-47"></span><span>
-</span><span id="line-48"></span><span class="hs-keyword">newtype</span><span> </span><span id="File"><span class="annot"><a href="Wave.Ast.html#File"><span class="hs-identifier hs-var">File</span></a></span></span><span>
-</span><span id="line-49"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="File"><span class="annot"><a href="Wave.Ast.html#File"><span class="hs-identifier hs-var">File</span></a></span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Wave.Ast.html#Definition"><span class="hs-identifier hs-type">Definition</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-50"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679039737"><span id="local-6989586621679039739"><span id="local-6989586621679039741"><span class="annot"><span class="annottext">Int -&gt; File -&gt; ShowS
+</span><span id="line-50"></span><span>
+</span><span id="line-51"></span><span class="hs-keyword">newtype</span><span> </span><span id="File"><span class="annot"><a href="Wave.Ast.html#File"><span class="hs-identifier hs-var">File</span></a></span></span><span>
+</span><span id="line-52"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="File"><span class="annot"><a href="Wave.Ast.html#File"><span class="hs-identifier hs-var">File</span></a></span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Wave.Ast.html#Definition"><span class="hs-identifier hs-type">Definition</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-53"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679043245"><span id="local-6989586621679043247"><span id="local-6989586621679043249"><span class="annot"><span class="annottext">Int -&gt; File -&gt; ShowS
 [File] -&gt; ShowS
 File -&gt; String
 (Int -&gt; File -&gt; ShowS)
@@ -167,7 +170,7 @@ show :: File -&gt; String
 $cshow :: File -&gt; String
 showsPrec :: Int -&gt; File -&gt; ShowS
 $cshowsPrec :: Int -&gt; File -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679039733"><span id="local-6989586621679039735"><span class="annot"><span class="annottext">File -&gt; File -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679043241"><span id="local-6989586621679043243"><span class="annot"><span class="annottext">File -&gt; File -&gt; Bool
 (File -&gt; File -&gt; Bool) -&gt; (File -&gt; File -&gt; Bool) -&gt; Eq File
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
 /= :: File -&gt; File -&gt; Bool
@@ -175,4 +178,4 @@ $c/= :: File -&gt; File -&gt; Bool
 == :: File -&gt; File -&gt; Bool
 $c== :: File -&gt; File -&gt; Bool
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">)</span><span>
-</span><span id="line-51"></span></pre></body></html>
+</span><span id="line-54"></span></pre></body></html>
