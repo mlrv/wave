@@ -35,10 +35,13 @@ data Expr
   | EFun [Var] Sub
   | EFunCall Expr [Expr]
   | ERecord (Record Expr)
-  | Effi T.Text [Expr]
+  | EFfi T.Text [Expr]
   | EVariant T.Text Expr
   | ECase Expr [(Pattern, Expr)]
+  | ERecordAccess Expr Label
   deriving (Show, Eq)
+
+type Label = T.Text
 
 data Definition
   = Variable Var Expr

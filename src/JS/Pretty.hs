@@ -43,15 +43,21 @@ ppDef = \case
      in "const" <+> pretty name <+> "="
           <+> vsep
             [ "function" <> "(" <> arguments <> ")" <+> "{",
-              indent 2 "return" <+> ppSub body <> ";",
+              indent 2 $ ppSub body <> ";",
               "}"
             ]
 
 ppStatement :: Statement -> Doc a
 ppStatement = \case
   SExpr expr -> ppExpr expr
-  SRet expr -> ppExpr expr
+  SRet expr -> "return" <+> ppExpr expr
   SDef def -> ppDef def
+  SIf cond sub ->
+    vsep
+      [ "if" <+> parens (ppExpr cond) <+> "{",
+        indent 2 $ ppSub sub,
+        "}"
+      ]
 
 ppExpr :: Expr -> Doc a
 ppExpr = \case
@@ -61,7 +67,7 @@ ppExpr = \case
     let arguments = concatWith (surround ", ") (pretty <$> args)
      in vsep
           [ "function" <> "(" <> arguments <> ")" <+> "{",
-            indent 2 "return" <+> ppSub body <> ";",
+            indent 2 $ ppSub body <> ";",
             "}"
           ]
   EFunCall fun args ->
@@ -69,10 +75,17 @@ ppExpr = \case
         arguments = concatWith (surround ", ") (ppExpr <$> args)
      in encloseIfNotSimple (ppExpr fun) <> "(" <> arguments <> ")"
   ERecord record -> ppRecord ppExpr record
+  EAnd exprs -> concatWith (surround " && ") (ppExpr <$> exprs)
+  EEqual a b -> ppExpr a <+> "===" <+> ppExpr b
+  ERecordAccess expr label ->
+    (if isSimpleExpr expr then id else parens) (ppExpr expr)
+      <> "."
+      <> pretty label
 
 -- need surrounding parens?
 isSimpleExpr :: Expr -> Bool
 isSimpleExpr = \case
   ERecord {} -> False
   EFun {} -> False
+  EEqual {} -> False
   _ -> True

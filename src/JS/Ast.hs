@@ -19,6 +19,7 @@ data Statement
   = SExpr Expr
   | SRet Expr
   | SDef Definition
+  | SIf Expr Sub
   deriving (Show, Eq)
 
 type Sub = [Statement]
@@ -29,7 +30,12 @@ data Expr
   | EFun [Var] Sub
   | EFunCall Expr [Expr]
   | ERecord (Record Expr)
+  | EAnd [Expr]
+  | EEqual Expr Expr
+  | ERecordAccess Expr Label
   deriving (Show, Eq)
+
+type Label = T.Text 
 
 data Definition
   = Variable Var Expr

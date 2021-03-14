@@ -6,4 +6,4 @@ import JS.Pretty
 import qualified Wave.Ast as Wave
 
 compile :: Wave.File -> T.Text
-compile = render . ppFile . translateFile
+compile = render . ppFile . translate translateFile
