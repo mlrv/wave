@@ -13,8 +13,7 @@ import qualified JS.Ast as JS
 import PatternMatching
 import Wave.Ast
 
--- 
-
+-- translate wave's AST to a subset of JS'AST
 type Translate a = MonadState Int a
 
 translate :: (a -> State Int b) -> a -> b
