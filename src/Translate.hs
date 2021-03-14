@@ -54,7 +54,7 @@ translateExpr = \case
       JS.ERecord $
         M.fromList
           [ ("_kind", JS.ELit $ JS.LString kind),
-            ("_value", value') -- extract pattern stuff in
+            ("_value", value')
           ]
   ECase expr patterns -> do
     expr' <- translateExpr expr
