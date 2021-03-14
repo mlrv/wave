@@ -23,22 +23,22 @@ statement = do
   describe "Statements" $ do
     it "expr lit" $
       shouldBe
-        (translateStatement $ SExpr $ ELit $ LInt 1)
+        (translate translateStatement $ SExpr $ ELit $ LInt 1)
         (JS.SExpr $ JS.ELit $ JS.LInt 1)
     it "expr var" $
       shouldBe
-        (translateStatement $ SExpr $ EVar "foobar")
+        (translate translateStatement $ SExpr $ EVar "foobar")
         (JS.SExpr $ JS.EVar "foobar")
     it "expr fun" $
       shouldBe
-        (translateStatement $ SExpr $ EFun ["x", "y"] [SExpr $ ELit $ LInt 1])
+        (translate translateStatement $ SExpr $ EFun ["x", "y"] [SExpr $ ELit $ LInt 1])
         (JS.SExpr $ JS.EFun ["x", "y"] [JS.SExpr $ JS.ELit $ JS.LInt 1])
 
     it "def var" $
       shouldBe
-        (translateStatement $ SDef $ Variable "x" $ ELit $ LInt 1)
+        (translate translateStatement $ SDef $ Variable "x" $ ELit $ LInt 1)
         (JS.SDef $ JS.Variable "x" $ JS.ELit $ JS.LInt 1)
     it "def fun" $
       shouldBe
-        (translateStatement $ SDef $ Function "f" ["x", "y"] [SExpr $ ELit $ LInt 1])
+        (translate translateStatement $ SDef $ Function "f" ["x", "y"] [SExpr $ ELit $ LInt 1])
         (JS.SDef $ JS.Function "f" ["x", "y"] [JS.SExpr $ JS.ELit $ JS.LInt 1])
