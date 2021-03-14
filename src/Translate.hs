@@ -10,14 +10,14 @@ import qualified Data.Map as M
 import qualified Data.Text as T
 import Data.Traversable
 import qualified JS.Ast as JS
+import PatternMatching
 import Wave.Ast
 
--- expl
-type TransState = Int
+-- 
 
-type Translate a = MonadState TransState a
+type Translate a = MonadState Int a
 
-translate :: (a -> State TransState b) -> a -> b
+translate :: (a -> State Int b) -> a -> b
 translate tran ast = evalState (tran ast) 0
 
 genVar :: Translate m => T.Text -> m Var
@@ -25,6 +25,8 @@ genVar var = do
   n <- get
   modify (+ 1)
   pure ("_" <> var <> "_" <> T.pack (show n))
+
+--
 
 translateFile :: Translate m => File -> m JS.File
 translateFile (File defs) = do
@@ -67,25 +69,6 @@ translateExpr = \case
     expr' <- translateExpr expr
     pure $
       JS.ERecordAccess expr' label
-
--- translate `pattern -> result` to something like
--- if (conditions) {
---  return function (matchersV) {
---    return result;
---   }(matchersE)
--- }
-
-data PatResult = PatResult
-  { conditions :: [JS.Expr],
-    matchers :: [(Var, JS.Expr)]
-  }
-
-instance Semigroup PatResult where
-  (<>) (PatResult c1 m1) (PatResult c2 m2) =
-    PatResult (c1 <> c2) (m1 <> m2)
-
-instance Monoid PatResult where
-  mempty = PatResult [] []
 
 translatePatterns :: Translate m => JS.Expr -> [(Pattern, Expr)] -> m JS.Sub
 translatePatterns var = traverse $ \(pat, expr) -> do
@@ -137,12 +120,6 @@ translatePattern expr = \case
           matchers = matchers pat'
         }
 
-translateLit :: Lit -> JS.Lit
-translateLit = \case
-  LInt int -> JS.LInt int
-  LFloat float -> JS.LFloat float
-  LString str -> JS.LString str
-
 translateSub :: Translate m => Sub -> m JS.Sub
 translateSub = traverse translateStatement
 
@@ -150,3 +127,9 @@ translateStatement :: Translate m => Statement -> m JS.Statement
 translateStatement = \case
   SExpr expr -> JS.SExpr <$> translateExpr expr
   SDef def -> JS.SDef <$> translateDef def
+
+translateLit :: Lit -> JS.Lit
+translateLit = \case
+  LInt int -> JS.LInt int
+  LFloat float -> JS.LFloat float
+  LString str -> JS.LString str
