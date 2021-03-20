@@ -30,7 +30,7 @@ genVar var = do
 translateFile :: Translate m => File -> m JS.File
 translateFile (File defs) = do
   defs' <- traverse translateDef defs
-  pure $ JS.File $ map JS.SDef defs'
+  pure $ JS.File $ map JS.SDef defs' ++ [JS.SExpr $ JS.EFunCall (JS.EVar "main") []]
 
 translateDef :: Translate m => Definition -> m JS.Definition
 translateDef = \case
