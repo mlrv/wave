@@ -9,7 +9,7 @@ import qualified JS.Ast as JS
 import System.Directory (createDirectoryIfMissing)
 import System.Process (readProcess)
 import Test.Hspec
-import Test.QuickCheck
+import Test.QuickCheck hiding (variant)
 import Translate
 import Wave.Ast
 
@@ -20,101 +20,169 @@ spec :: Spec
 spec = do
   runIO $ createDirectoryIfMissing False testDir
   describe "translate" $ do
-    statement
+    lit
+    record
+    variant
+    recordAccess
+    patternMatch
 
-statement :: Spec
-statement = do
-  describe "Statements" $ do
-    it "expr lit" $
-      shouldBe
-        (translate translateStatement $ SExpr $ ELit $ LInt 1)
-        (JS.SExpr $ JS.ELit $ JS.LInt 1)
+lit :: Spec
+lit = do
+  describe "Lit" $ do
+    it "int" $
+      check
+        "lit int"
+        (exprToFile $ ELit $ LInt 1)
+        "1"
+    it "float" $
+      check
+        "lit float"
+        (exprToFile $ ELit $ LFloat 1.23)
+        "1.23"
+    it "string" $
+      check
+        "lit string"
+        (exprToFile $ ELit $ LString "wave")
+        "wave"
 
-    it "expr var" $
-      shouldBe
-        (translate translateStatement $ SExpr $ EVar "foobar")
-        (JS.SExpr $ JS.EVar "foobar")
-
-    it "expr fun" $
-      shouldBe
-        (translate translateStatement $ SExpr $ EFun ["x", "y"] [SExpr $ ELit $ LInt 1])
-        (JS.SExpr $ JS.EFun ["x", "y"] [JS.SExpr $ JS.ELit $ JS.LInt 1])
-
-    it "expr fun call" $
-      shouldBe
-        (translate translateStatement $ SExpr $ EFunCall (EVar "f") [EVar "x", EVar "y"])
-        (JS.SExpr $ JS.EFunCall (JS.EVar "f") [JS.EVar "x", JS.EVar "y"])
-
-    it "expr record" $
-      shouldBe
-        (translate translateStatement $ SExpr $ ERecord $ M.fromList [("a", ELit $ LInt 1)])
-        (JS.SExpr $ JS.ERecord $ M.fromList [("a", JS.ELit $ JS.LInt 1)])
-
-    it "expr ffi" $
-      shouldBe
-        (translate translateStatement $ SExpr $ EFfi "foobar" [EVar "x"])
-        (JS.SExpr $ JS.EFunCall (JS.EVar "foobar") [JS.EVar "x"])
-
-    it "expr variant" $
-      shouldBe
-        (translate translateStatement $ SExpr $ EVariant "tag" (ELit $ LInt 1))
-        ( JS.SExpr $
-            JS.ERecord $
+record :: Spec
+record = do
+  describe "Record" $ do
+    it "simple" $
+      check
+        "record simple"
+        ( exprToFile $
+            ERecord $
               M.fromList
-                [ ("_kind", JS.ELit (JS.LString "tag")),
-                  ("_value", JS.ELit (JS.LInt 1))
+                [("x", ELit $ LInt 1), ("y", ELit $ LString "wave")]
+        )
+        "{ x: 1, y: 'wave' }"
+    it "nested" $
+      check
+        "record nested"
+        ( exprToFile $
+            ERecord $
+              M.fromList
+                [ ("a", ELit $ LInt 1),
+                  ( "b",
+                    ERecord $
+                      M.fromList
+                        [ ( "c",
+                            ERecord $
+                              M.fromList
+                                [ ("d", ELit $ LInt 1)
+                                ]
+                          )
+                        ]
+                  )
                 ]
         )
+        "{ a: 1, b: { c: { d: 1 } } }"
 
-    it "expr case" $
-      shouldBe
-        ( translate translateStatement $
-            SExpr $
-              ECase
-                (EVar "x")
-                [ (PLit $ LInt 1, ELit $ LInt 10),
-                  (PVar "y", ELit $ LInt 20)
-                ]
-        )
-        ( JS.SExpr $
-            JS.EFunCall
-              ( JS.EFun
-                  ["_case_0"]
-                  [ JS.SIf
-                      (JS.EAnd [JS.EEqual (JS.ELit $ JS.LInt 1) (JS.EVar "_case_0")])
-                      [ JS.SRet
-                          ( JS.EFunCall
-                              (JS.EFun [] [JS.SRet (JS.ELit $ JS.LInt 10)])
-                              []
-                          )
-                      ],
-                    JS.SIf
-                      (JS.EAnd [JS.ELit $ JS.LBool True])
-                      [ JS.SRet
-                          ( JS.EFunCall
-                              (JS.EFun ["y"] [JS.SRet (JS.ELit $ JS.LInt 20)])
-                              [JS.EVar "_case_0"]
-                          )
-                      ]
-                  ]
+variant :: Spec
+variant = do
+  describe "Variant" $ do
+    it "simple" $
+      check
+        "variant simple"
+        (exprToFile $ EVariant "Foo" $ ELit $ LInt 1)
+        "{ _kind: 'Foo', _value: 1 }"
+    it "complex" $
+      check
+        "variant complex"
+        (exprToFile $ EVariant "Foo" $ EVariant "Bar" $ ELit $ LString "wave")
+        "{ _kind: 'Foo', _value: { _kind: 'Bar', _value: 'wave' } }"
+
+recordAccess :: Spec
+recordAccess = do
+  describe "Record Access" $ do
+    it "empty" $
+      check
+        "record access empty"
+        (exprToFile $ ERecordAccess (ERecord M.empty) "x")
+        "undefined"
+    it "simple" $
+      check
+        "record access simple"
+        (exprToFile $ ERecordAccess (ERecord $ M.fromList [("x", ELit $ LInt 1)]) "x")
+        "1"
+    it "complex" $
+      check
+        "record access complex"
+        ( exprToFile $
+            ERecordAccess
+              ( ERecordAccess
+                  ( ERecord $
+                      M.fromList
+                        [ ("x", ERecord $ M.fromList [("y", ELit $ LInt 1)])
+                        ]
+                  )
+                  "x"
               )
-              [JS.EVar "x"]
+              "y"
         )
+        "1"
 
-    it "expr record access" $
-      shouldBe
-        (translate translateStatement $ SExpr $ ERecordAccess (ERecord M.empty) "x")
-        (JS.SExpr $ JS.ERecordAccess (JS.ERecord M.empty) "x")
-
-    it "def var" $
-      shouldBe
-        (translate translateStatement $ SDef $ Variable "x" $ ELit $ LInt 1)
-        (JS.SDef $ JS.Variable "x" $ JS.ELit $ JS.LInt 1)
-
-    it "def fun" $
-      shouldBe
-        (translate translateStatement $ SDef $ Function "f" ["x", "y"] [SExpr $ ELit $ LInt 1])
-        (JS.SDef $ JS.Function "f" ["x", "y"] [JS.SExpr $ JS.ELit $ JS.LInt 1])
+patternMatch :: Spec
+patternMatch = do
+  describe "Pattern Match" $ do
+    it "wildcard" $
+      check
+        "patternMatch wildcard"
+        ( exprToFile $
+            ECase
+              (ELit $ LInt 1)
+              [(PWildcard, ELit $ LInt 2)]
+        )
+        "2"
+    it "case int" $
+      check
+        "patternMatch case int"
+        ( exprToFile $
+            ECase
+              (ELit $ LInt 1)
+              [ (PLit $ LInt 2, ELit $ LInt 2),
+                (PLit $ LInt 1, ELit $ LInt 1)
+              ]
+        )
+        "1"
+    it "case var" $
+      check
+        "patternMatch case var"
+        ( exprToFile $
+            ECase
+              (ELit $ LInt 1)
+              [ (PLit $ LInt 2, ELit $ LInt 2),
+                (PLit $ LInt 3, ELit $ LInt 3),
+                (PVar "x", EVar "x")
+              ]
+        )
+        "1"
+    it "case variant" $
+      check
+        "patternMatch case variant record"
+        ( exprToFile $
+            ECase
+              ( EVariant "Foo" $
+                  ERecord $
+                    M.fromList
+                      [ ("x", ELit $ LInt 1),
+                        ("y", ELit $ LString "wave")
+                      ]
+              )
+              [ ( PVariant
+                    "Foo"
+                    ( PRecord $
+                        M.fromList
+                          [ ("x", PVar "x_match"),
+                            ("y", PLit $ LInt 2)
+                          ]
+                    ),
+                  EVar "x_match"
+                )
+              ]
+        )
+        "0"
 
 -- utilities
 check :: FilePath -> File -> String -> IO ()
