@@ -2,9 +2,12 @@
 
 module Tests.Translate where
 
+import Compile
 import qualified Data.Map as M
-import qualified Data.Text as Ty
+import qualified Data.Text.IO as T
 import qualified JS.Ast as JS
+import System.Directory (createDirectoryIfMissing)
+import System.Process (readProcess)
 import Test.Hspec
 import Test.QuickCheck
 import Translate
@@ -15,6 +18,7 @@ main = hspec spec
 
 spec :: Spec
 spec = do
+  runIO $ createDirectoryIfMissing False testDir
   describe "translate" $ do
     statement
 
@@ -111,3 +115,24 @@ statement = do
       shouldBe
         (translate translateStatement $ SDef $ Function "f" ["x", "y"] [SExpr $ ELit $ LInt 1])
         (JS.SDef $ JS.Function "f" ["x", "y"] [JS.SExpr $ JS.ELit $ JS.LInt 1])
+
+-- utilities
+check :: FilePath -> File -> String -> IO ()
+check path file expected =
+  let fileName = testDir <> path <> ".wave"
+   in do
+        T.writeFile fileName $ compile file
+        result <- readProcess "node" [fileName] ""
+        result `shouldBe` expected <> "\n"
+
+testDir = "/tmp/test"
+
+exprToFile :: Expr -> File
+exprToFile expr =
+  File
+    [ Function
+        "main"
+        []
+        [ SExpr $ EFfi "console.log" [expr]
+        ]
+    ]
