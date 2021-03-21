@@ -18,6 +18,7 @@ library
   exposed-modules:     Wave.Ast
                        Wave.Types
                        Wave.Common
+                       Wave.Builtins
                        JS.Ast
                        JS.Pretty
                        Translate

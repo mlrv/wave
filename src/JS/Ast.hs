@@ -33,6 +33,8 @@ data Expr
   | EAnd [Expr]
   | EEqual Expr Expr
   | ERecordAccess Expr Label
+  | EBinOp T.Text Expr Expr
+  | ERaw T.Text
   deriving (Show, Eq)
 
 type Label = T.Text 

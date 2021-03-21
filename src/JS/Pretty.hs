@@ -76,11 +76,13 @@ ppExpr = \case
      in encloseIfNotSimple (ppExpr fun) <> "(" <> arguments <> ")"
   ERecord record -> ppRecord ppExpr record
   EAnd exprs -> concatWith (surround " && ") (ppExpr <$> exprs)
-  EEqual a b -> ppExpr a <+> "===" <+> ppExpr b
+  EEqual a b -> ppExpr $ EBinOp "===" a b
   ERecordAccess expr label ->
     (if isSimpleExpr expr then id else parens) (ppExpr expr)
       <> "."
       <> pretty label
+  EBinOp op a b -> ppExpr a <+> pretty op <+> ppExpr b
+  ERaw raw -> pretty raw
 
 -- need surrounding parens?
 isSimpleExpr :: Expr -> Bool
@@ -88,4 +90,6 @@ isSimpleExpr = \case
   ERecord {} -> False
   EFun {} -> False
   EEqual {} -> False
+  EBinOp {} -> False
+  ERaw {} -> False
   _ -> True

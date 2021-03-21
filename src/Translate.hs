@@ -1,10 +1,12 @@
 {-# LANGUAGE ConstraintKinds #-}
 {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ViewPatterns #-}
 
 module Translate where
 
+import Control.Monad.Reader
 import Control.Monad.State
 import qualified Data.Map as M
 import qualified Data.Text as T
@@ -12,13 +14,22 @@ import Data.Traversable
 import qualified JS.Ast as JS
 import PatternMatching
 import Wave.Ast
+import Wave.Builtins hiding (builtins)
 import Wave.Common
 
 -- translate wave's AST to a subset of JS'AST
-type Translate a = MonadState Int a
+type TransState = Int
 
-translate :: (a -> State Int b) -> a -> b
-translate tran ast = evalState (tran ast) 0
+type TransReader = Builtins
+
+type Translate a = (MonadState TransState a, MonadReader Builtins a)
+
+translate :: (a -> StateT TransState (Reader Builtins) b) -> Builtins -> a -> b
+translate tran builtins ast =
+  let s = tran ast
+      r = evalStateT s 0
+      b = runReader r builtins
+   in b
 
 genVar :: Translate m => T.Text -> m Var
 genVar var = do
@@ -43,7 +54,18 @@ translateDef = \case
 translateExpr :: Translate m => Expr -> m JS.Expr
 translateExpr = \case
   ELit lit -> pure $ JS.ELit $ translateLit lit
-  EVar var -> pure $ JS.EVar var
+  EVar var -> do
+    builtinOp <- asks (M.lookup var)
+    case builtinOp of
+      Nothing -> pure $ JS.EVar var
+      Just Builtin {bImpl} ->
+        case bImpl of
+          Fun f -> pure $ JS.ERaw f
+          BinOp op ->
+            pure $
+              JS.EFun
+                ["a", "b"]
+                [JS.SRet $ JS.EBinOp op (JS.EVar "a") (JS.EVar "b")]
   EFun args body -> JS.EFun args <$> translateSub body
   EFunCall fun args -> do
     fun' <- translateExpr fun
