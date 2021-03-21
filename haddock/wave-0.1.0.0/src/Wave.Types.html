@@ -7,5 +7,26 @@
 </span><span id="line-7"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="TypeCon"><span class="annot"><a href="Wave.Types.html#TypeCon"><span class="hs-identifier hs-var">TypeCon</span></a></span></span><span> </span><span class="annot"><a href="Wave.Common.html#TypeCon"><span class="hs-identifier hs-type">TypeCon</span></a></span><span> </span><span class="hs-comment">-- type constructor</span><span>
 </span><span id="line-8"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="TypeApp"><span class="annot"><a href="Wave.Types.html#TypeApp"><span class="hs-identifier hs-var">TypeApp</span></a></span></span><span> </span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span> </span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span> </span><span class="hs-comment">-- type application</span><span>
 </span><span id="line-9"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="TypeFun"><span class="annot"><a href="Wave.Types.html#TypeFun"><span class="hs-identifier hs-var">TypeFun</span></a></span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span> </span><span class="hs-comment">-- type of a function</span><span>
-</span><span id="line-10"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="TypeRec"><span class="annot"><a href="Wave.Types.html#TypeRec"><span class="hs-identifier hs-var">TypeRec</span></a></span></span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><a href="Wave.Common.html#Label"><span class="hs-identifier hs-type">Label</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span> </span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span> </span><span class="hs-comment">-- type of a record</span><span>
-</span><span id="line-11"></span></pre></body></html>
+</span><span id="line-10"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="TypeRec"><span class="annot"><a href="Wave.Types.html#TypeRec"><span class="hs-identifier hs-var">TypeRec</span></a></span></span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><a href="Wave.Common.html#Label"><span class="hs-identifier hs-type">Label</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span> </span><span class="hs-comment">-- type of a record</span><span>
+</span><span id="line-11"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679043899"><span id="local-6989586621679043901"><span id="local-6989586621679043903"><span class="annot"><span class="annottext">Int -&gt; Type -&gt; ShowS
+[Type] -&gt; ShowS
+Type -&gt; String
+(Int -&gt; Type -&gt; ShowS)
+-&gt; (Type -&gt; String) -&gt; ([Type] -&gt; ShowS) -&gt; Show Type
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [Type] -&gt; ShowS
+$cshowList :: [Type] -&gt; ShowS
+show :: Type -&gt; String
+$cshow :: Type -&gt; String
+showsPrec :: Int -&gt; Type -&gt; ShowS
+$cshowsPrec :: Int -&gt; Type -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679043894"><span id="local-6989586621679043896"><span class="annot"><span class="annottext">Type -&gt; Type -&gt; Bool
+(Type -&gt; Type -&gt; Bool) -&gt; (Type -&gt; Type -&gt; Bool) -&gt; Eq Type
+forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
+/= :: Type -&gt; Type -&gt; Bool
+$c/= :: Type -&gt; Type -&gt; Bool
+== :: Type -&gt; Type -&gt; Bool
+$c== :: Type -&gt; Type -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-12"></span></pre></body></html>

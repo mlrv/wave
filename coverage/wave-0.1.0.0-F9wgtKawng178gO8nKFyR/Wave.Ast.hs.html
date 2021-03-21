@@ -22,7 +22,7 @@ span.spaces    { background: white }
 <span class="lineno">    3 </span>-- wave's AST
 <span class="lineno">    4 </span>
 <span class="lineno">    5 </span>import qualified Data.Text as T
-<span class="lineno">    6 </span>import Wave.Common (Label, Record, Variant)
+<span class="lineno">    6 </span>import Wave.Common
 <span class="lineno">    7 </span>import Wave.Types
 <span class="lineno">    8 </span>
 <span class="lineno">    9 </span>-- the name of a variable
@@ -48,34 +48,45 @@ span.spaces    { background: white }
 <span class="lineno">   29 </span>  | ERecordAccess Expr Label
 <span class="lineno">   30 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
 <span class="lineno">   31 </span>
-<span class="lineno">   32 </span>-- a definition, either a variable or a function
-<span class="lineno">   33 </span>data Definition
-<span class="lineno">   34 </span>  = Variable Var Expr
-<span class="lineno">   35 </span>  | Function Var [Var] Sub
-<span class="lineno">   36 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
-<span class="lineno">   37 </span>
-<span class="lineno">   38 </span>-- a statement, either an expression or a definition
-<span class="lineno">   39 </span>data Statement
-<span class="lineno">   40 </span>  = SExpr Expr
-<span class="lineno">   41 </span>  | SDef Definition
-<span class="lineno">   42 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
-<span class="lineno">   43 </span>
-<span class="lineno">   44 </span>-- a series of statements
-<span class="lineno">   45 </span>type Sub = [Statement]
-<span class="lineno">   46 </span>
-<span class="lineno">   47 </span>-- a pattern
-<span class="lineno">   48 </span>data Pattern
-<span class="lineno">   49 </span>  = PWildcard -- match all
-<span class="lineno">   50 </span>  | PVar Var -- match all and bind the expression to a variable
-<span class="lineno">   51 </span>  | PLit Lit
-<span class="lineno">   52 </span>  | PRecord (Record Pattern)
-<span class="lineno">   53 </span>  | PVariant (Variant Pattern)
-<span class="lineno">   54 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
-<span class="lineno">   55 </span>
-<span class="lineno">   56 </span>-- a wave's source file, a collection of definitions
-<span class="lineno">   57 </span>newtype File
-<span class="lineno">   58 </span>  = File [Definition]
-<span class="lineno">   59 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff">Eq</span></span></span></span>)
+<span class="lineno">   32 </span>-- a datatype
+<span class="lineno">   33 </span>data DataType
+<span class="lineno">   34 </span>  = DataType Constr [TypeVar] [Variant Type]
+<span class="lineno">   35 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
+<span class="lineno">   36 </span>
+<span class="lineno">   37 </span>-- a datatype definition or term definition
+<span class="lineno">   38 </span>data Definition
+<span class="lineno">   39 </span>  = TypeDef DataType
+<span class="lineno">   40 </span>  | TermDef TermDef
+<span class="lineno">   41 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
+<span class="lineno">   42 </span>
+<span class="lineno">   43 </span>-- a term definition, either a variable or a function
+<span class="lineno">   44 </span>data TermDef
+<span class="lineno">   45 </span>  = Variable Var Expr
+<span class="lineno">   46 </span>  | Function Var [Var] Sub
+<span class="lineno">   47 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
+<span class="lineno">   48 </span>
+<span class="lineno">   49 </span>-- a statement, either an expression or a term definition
+<span class="lineno">   50 </span>data Statement
+<span class="lineno">   51 </span>  = SExpr Expr
+<span class="lineno">   52 </span>  | SDef TermDef
+<span class="lineno">   53 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
+<span class="lineno">   54 </span>
+<span class="lineno">   55 </span>-- a series of statements
+<span class="lineno">   56 </span>type Sub = [Statement]
+<span class="lineno">   57 </span>
+<span class="lineno">   58 </span>-- a pattern
+<span class="lineno">   59 </span>data Pattern
+<span class="lineno">   60 </span>  = PWildcard -- match all
+<span class="lineno">   61 </span>  | PVar Var -- match all and bind the expression to a variable
+<span class="lineno">   62 </span>  | PLit Lit
+<span class="lineno">   63 </span>  | PRecord (Record Pattern)
+<span class="lineno">   64 </span>  | PVariant (Variant Pattern)
+<span class="lineno">   65 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
+<span class="lineno">   66 </span>
+<span class="lineno">   67 </span>-- a wave's source file, a collection of definitions
+<span class="lineno">   68 </span>newtype File
+<span class="lineno">   69 </span>  = File [Definition]
+<span class="lineno">   70 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff">Eq</span></span></span></span>)
 
 </pre>
 </body>

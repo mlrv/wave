@@ -74,7 +74,9 @@ TypeVar :: TypeVar -> Type
 TypeCon :: TypeCon -> Type
 TypeApp :: Type -> Type -> Type
 TypeFun :: [Type] -> Type -> Type
-TypeRec :: [(Label, Type)] -> Type -> Type
+TypeRec :: [(Label, Type)] -> Type
+instance GHC.Classes.Eq Wave.Types.Type
+instance GHC.Show.Show Wave.Types.Type
 
 module Wave.Ast
 type Var = Text
@@ -92,12 +94,17 @@ EFfi :: Text -> [Expr] -> Expr
 EVariant :: Variant Expr -> Expr
 ECase :: Expr -> [(Pattern, Expr)] -> Expr
 ERecordAccess :: Expr -> Label -> Expr
+data DataType
+DataType :: Constr -> [TypeVar] -> [Variant Type] -> DataType
 data Definition
-Variable :: Var -> Expr -> Definition
-Function :: Var -> [Var] -> Sub -> Definition
+TypeDef :: DataType -> Definition
+TermDef :: TermDef -> Definition
+data TermDef
+Variable :: Var -> Expr -> TermDef
+Function :: Var -> [Var] -> Sub -> TermDef
 data Statement
 SExpr :: Expr -> Statement
-SDef :: Definition -> Statement
+SDef :: TermDef -> Statement
 type Sub = [Statement]
 data Pattern
 PWildcard :: Pattern
@@ -109,14 +116,18 @@ newtype File
 File :: [Definition] -> File
 instance GHC.Classes.Eq Wave.Ast.Lit
 instance GHC.Show.Show Wave.Ast.Lit
+instance GHC.Classes.Eq Wave.Ast.DataType
+instance GHC.Show.Show Wave.Ast.DataType
 instance GHC.Classes.Eq Wave.Ast.Pattern
 instance GHC.Show.Show Wave.Ast.Pattern
-instance GHC.Classes.Eq Wave.Ast.Definition
-instance GHC.Show.Show Wave.Ast.Definition
+instance GHC.Classes.Eq Wave.Ast.TermDef
+instance GHC.Show.Show Wave.Ast.TermDef
 instance GHC.Classes.Eq Wave.Ast.Statement
 instance GHC.Show.Show Wave.Ast.Statement
 instance GHC.Classes.Eq Wave.Ast.Expr
 instance GHC.Show.Show Wave.Ast.Expr
+instance GHC.Classes.Eq Wave.Ast.Definition
+instance GHC.Show.Show Wave.Ast.Definition
 instance GHC.Classes.Eq Wave.Ast.File
 instance GHC.Show.Show Wave.Ast.File
 
@@ -133,7 +144,7 @@ type Translate a = MonadState Int a
 translate :: (a -> State Int b) -> a -> b
 genVar :: Translate m => Text -> m Var
 translateFile :: Translate m => File -> m File
-translateDef :: Translate m => Definition -> m Definition
+translateDef :: Translate m => TermDef -> m Definition
 translateExpr :: Translate m => Expr -> m Expr
 translatePatterns :: Translate m => Expr -> [(Pattern, Expr)] -> m Sub
 translatePattern :: Translate m => Expr -> Pattern -> m PatResult
