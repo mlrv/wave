@@ -57,14 +57,31 @@ ppStatement :: Statement -> Doc a
 ppExpr :: Expr -> Doc a
 isSimpleExpr :: Expr -> Bool
 
+module Wave.Common
+type TypeVar = Text
+type TypeCon = Text
+type Label = Text
+type Constr = Text
+type Record a = Map Label a
+data Variant a
+Variant :: Constr -> a -> Variant a
+instance GHC.Classes.Eq a => GHC.Classes.Eq (Wave.Common.Variant a)
+instance GHC.Show.Show a => GHC.Show.Show (Wave.Common.Variant a)
+
+module Wave.Types
+data Type
+TypeVar :: TypeVar -> Type
+TypeCon :: TypeCon -> Type
+TypeApp :: Type -> Type -> Type
+TypeFun :: [Type] -> Type -> Type
+TypeRec :: [(Label, Type)] -> Type -> Type
+
 module Wave.Ast
 type Var = Text
 data Lit
 LInt :: Int -> Lit
 LFloat :: Float -> Lit
 LString :: Text -> Lit
-type Label = Text
-type Record a = Map Label a
 data Expr
 ELit :: Lit -> Expr
 EVar :: Var -> Expr
@@ -72,7 +89,7 @@ EFun :: [Var] -> Sub -> Expr
 EFunCall :: Expr -> [Expr] -> Expr
 ERecord :: Record Expr -> Expr
 EFfi :: Text -> [Expr] -> Expr
-EVariant :: Text -> Expr -> Expr
+EVariant :: Variant Expr -> Expr
 ECase :: Expr -> [(Pattern, Expr)] -> Expr
 ERecordAccess :: Expr -> Label -> Expr
 data Definition
@@ -87,7 +104,7 @@ PWildcard :: Pattern
 PVar :: Var -> Pattern
 PLit :: Lit -> Pattern
 PRecord :: Record Pattern -> Pattern
-PVariant :: Text -> Pattern -> Pattern
+PVariant :: Variant Pattern -> Pattern
 newtype File
 File :: [Definition] -> File
 instance GHC.Classes.Eq Wave.Ast.Lit

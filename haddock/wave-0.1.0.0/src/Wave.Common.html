@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Wave.Common</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-2"></span><span>
+</span><span id="line-3"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Map</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">M</span></span><span>
+</span><span id="line-4"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">T</span></span><span>
+</span><span id="line-5"></span><span>
+</span><span id="line-6"></span><span class="hs-keyword">type</span><span> </span><span id="TypeVar"><span class="annot"><a href="Wave.Common.html#TypeVar"><span class="hs-identifier hs-var">TypeVar</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span>
+</span><span id="line-7"></span><span>
+</span><span id="line-8"></span><span class="hs-keyword">type</span><span> </span><span id="TypeCon"><span class="annot"><a href="Wave.Common.html#TypeCon"><span class="hs-identifier hs-var">TypeCon</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span>
+</span><span id="line-9"></span><span>
+</span><span id="line-10"></span><span class="hs-keyword">type</span><span> </span><span id="Label"><span class="annot"><a href="Wave.Common.html#Label"><span class="hs-identifier hs-var">Label</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span>
+</span><span id="line-11"></span><span>
+</span><span id="line-12"></span><span class="hs-keyword">type</span><span> </span><span id="Constr"><span class="annot"><a href="Wave.Common.html#Constr"><span class="hs-identifier hs-var">Constr</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span>
+</span><span id="line-13"></span><span>
+</span><span id="line-14"></span><span class="hs-comment">-- a record with keys of type String and values of type `a`, like</span><span>
+</span><span id="line-15"></span><span class="hs-comment">-- { x: 1, y: 2, z: 3 }</span><span>
+</span><span id="line-16"></span><span class="hs-keyword">type</span><span> </span><span id="Record"><span class="annot"><a href="Wave.Common.html#Record"><span class="hs-identifier hs-var">Record</span></a></span></span><span> </span><span id="local-6989586621679043462"><span class="annot"><a href="#local-6989586621679043462"><span class="hs-identifier hs-type">a</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-17"></span><span>  </span><span class="annot"><span class="hs-identifier hs-type">M.Map</span></span><span> </span><span class="annot"><a href="Wave.Common.html#Label"><span class="hs-identifier hs-type">Label</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679043462"><span class="hs-identifier hs-type">a</span></a></span><span>
+</span><span id="line-18"></span><span>
+</span><span id="line-19"></span><span class="hs-comment">-- a Data constructor</span><span>
+</span><span id="line-20"></span><span class="hs-keyword">data</span><span> </span><span id="Variant"><span class="annot"><a href="Wave.Common.html#Variant"><span class="hs-identifier hs-var">Variant</span></a></span></span><span> </span><span id="local-6989586621679043460"><span class="annot"><a href="#local-6989586621679043460"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-21"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="Variant"><span class="annot"><a href="Wave.Common.html#Variant"><span class="hs-identifier hs-var">Variant</span></a></span></span><span> </span><span class="annot"><a href="Wave.Common.html#Constr"><span class="hs-identifier hs-type">Constr</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679043460"><span class="hs-identifier hs-type">a</span></a></span><span>
+</span><span id="line-22"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679043453"><span id="local-6989586621679043455"><span id="local-6989586621679043457"><span class="annot"><span class="annottext">Int -&gt; Variant a -&gt; ShowS
+[Variant a] -&gt; ShowS
+Variant a -&gt; String
+(Int -&gt; Variant a -&gt; ShowS)
+-&gt; (Variant a -&gt; String)
+-&gt; ([Variant a] -&gt; ShowS)
+-&gt; Show (Variant a)
+forall a. Show a =&gt; Int -&gt; Variant a -&gt; ShowS
+forall a. Show a =&gt; [Variant a] -&gt; ShowS
+forall a. Show a =&gt; Variant a -&gt; String
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [Variant a] -&gt; ShowS
+$cshowList :: forall a. Show a =&gt; [Variant a] -&gt; ShowS
+show :: Variant a -&gt; String
+$cshow :: forall a. Show a =&gt; Variant a -&gt; String
+showsPrec :: Int -&gt; Variant a -&gt; ShowS
+$cshowsPrec :: forall a. Show a =&gt; Int -&gt; Variant a -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679043448"><span id="local-6989586621679043450"><span class="annot"><span class="annottext">Variant a -&gt; Variant a -&gt; Bool
+(Variant a -&gt; Variant a -&gt; Bool)
+-&gt; (Variant a -&gt; Variant a -&gt; Bool) -&gt; Eq (Variant a)
+forall a. Eq a =&gt; Variant a -&gt; Variant a -&gt; Bool
+forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
+/= :: Variant a -&gt; Variant a -&gt; Bool
+$c/= :: forall a. Eq a =&gt; Variant a -&gt; Variant a -&gt; Bool
+== :: Variant a -&gt; Variant a -&gt; Bool
+$c== :: forall a. Eq a =&gt; Variant a -&gt; Variant a -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">)</span></pre></body></html>
