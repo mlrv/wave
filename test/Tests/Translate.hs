@@ -158,7 +158,22 @@ patternMatch = do
               ]
         )
         "1"
-    it "case variant" $
+    it "case variant key" $
+      check
+        "patternMatch case variant key"
+        ( exprToFile $
+            ECase
+              ( EVariant "Foo" $
+                  ERecord $
+                    M.fromList
+                      [ ("x", ELit $ LInt 1),
+                        ("y", ELit $ LString "wave")
+                      ]
+              )
+              [(PVariant "Foo" (PVar "foo"), ERecordAccess (EVar "foo") "y")]
+        )
+        "wave"
+    it "case variant record" $
       check
         "patternMatch case variant record"
         ( exprToFile $
@@ -175,14 +190,14 @@ patternMatch = do
                     ( PRecord $
                         M.fromList
                           [ ("x", PVar "x_match"),
-                            ("y", PLit $ LInt 2)
+                            ("y", PLit $ LString "wave")
                           ]
                     ),
                   EVar "x_match"
                 )
               ]
         )
-        "0"
+        "1"
 
 -- utilities
 check :: FilePath -> File -> String -> IO ()
