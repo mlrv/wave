@@ -12,6 +12,7 @@ import Test.Hspec
 import Test.QuickCheck hiding (variant)
 import Translate
 import Wave.Ast
+import Wave.Builtins hiding (builtins)
 import Wave.Common
 
 main :: IO ()
@@ -26,6 +27,7 @@ spec = do
     variant
     recordAccess
     patternMatch
+    builtins
 
 lit :: Spec
 lit = do
@@ -203,6 +205,95 @@ patternMatch = do
         )
         "1"
 
+builtins :: Spec
+builtins = do
+  describe "Builtins" $ do
+    builtinInts
+    builtinStrings
+    builtinBools
+
+builtinInts :: Spec
+builtinInts = do
+  describe "Builtin ints" $ do
+    it "add" $
+      check
+        "builtin ints add"
+        (exprToFile $ EFunCall (EVar "add") [ELit $ LInt 1, ELit $ LInt 2])
+        "3"
+    it "sub" $
+      check
+        "builtin ints sub"
+        (exprToFile $ EFunCall (EVar "sub") [ELit $ LInt 2, ELit $ LInt 1])
+        "1"
+    it "mul" $
+      check
+        "builtin ints mul"
+        (exprToFile $ EFunCall (EVar "mul") [ELit $ LInt 2, ELit $ LInt 3])
+        "6"
+    it "div" $
+      check
+        "builtin ints div"
+        (exprToFile $ EFunCall (EVar "div") [ELit $ LInt 4, ELit $ LInt 2])
+        "2"
+    it "negate" $
+      check
+        "builtin ints negate"
+        (exprToFile $ EFunCall (EVar "negate") [ELit $ LInt 4])
+        "-4"
+
+builtinStrings :: Spec
+builtinStrings = do
+  describe "Builtin strings" $ do
+    it "concat" $
+      check
+        "builtin strings concat"
+        (exprToFile $ EFunCall (EVar "concat") [ELit $ LString "wa", ELit $ LString "ve"])
+        "wave"
+
+builtinBools :: Spec
+builtinBools = do
+  describe "Builtin bools" $ do
+    it "and true true" $
+      check
+        "builtin bools and true true"
+        (exprToFile $ EFunCall (EVar "and") [true, true])
+        "true"
+    it "and true false" $
+      check
+        "builtin bools and true false"
+        (exprToFile $ EFunCall (EVar "and") [true, false])
+        "false"
+    it "and false true" $
+      check
+        "builtin bools and false true"
+        (exprToFile $ EFunCall (EVar "and") [false, true])
+        "false"
+    it "and false false" $
+      check
+        "builtin bools and false false"
+        (exprToFile $ EFunCall (EVar "and") [false, false])
+        "false"
+    it "or true true" $
+      check
+        "builtin bools or true true"
+        (exprToFile $ EFunCall (EVar "or") [true, true])
+        "true"
+    it "or true false" $
+      check
+        "builtin bools or true true"
+        (exprToFile $ EFunCall (EVar "or") [true, false])
+        "true"
+    it "or false true" $
+      check
+        "builtin bools or true true"
+        (exprToFile $ EFunCall (EVar "or") [false, true])
+        "true"
+  it "or false false" $
+    check
+      "builtin bools or true true"
+      (exprToFile $ EFunCall (EVar "or") [false, false])
+      "false"
+
 -- utilities
 check :: FilePath -> File -> String -> IO ()
 check path file expected =
@@ -217,9 +308,10 @@ testDir = "/tmp/test"
 exprToFile :: Expr -> File
 exprToFile expr =
   File
-    [ TermDef $ Function
-        "main"
-        []
-        [ SExpr $ EFfi "console.log" [expr]
-        ]
+    [ TermDef $
+        Function
+          "main"
+          []
+          [ SExpr $ EFfi "console.log" [expr]
+          ]
     ]

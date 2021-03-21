@@ -32,7 +32,9 @@ builtin c n t i = (n, Builtin n t $ c i)
 builtins :: Builtins
 builtins =
   M.unions
-    [ ints
+    [ ints,
+      strings,
+      bools
     ]
 
 ints :: Builtins
@@ -47,6 +49,24 @@ ints =
   where
     binOpInt = TypeFun [tInt, tInt] tInt
     opInt = TypeFun [tInt] tInt
+
+strings :: Builtins
+strings =
+  M.fromList
+    [builtinBinOp "concat" binOpInt "+"]
+  where
+    binOpInt = TypeFun [tString, tString] tString
+
+bools :: Builtins
+bools =
+  M.fromList
+    [ builtinBinOp "and" binOpInt "&&",
+      builtinBinOp "or" binOpInt "||",
+      builtinFun "not" opInt "function (x) { return !x }"
+    ]
+  where
+    binOpInt = TypeFun [tBool, tBool] tBool
+    opInt = TypeFun [tBool] tBool
 
 -- Builtin values
 unit :: Expr
@@ -73,3 +93,23 @@ tString = TypeCon "String"
 
 tBool :: Type
 tBool = TypeCon "Bool"
+
+-- Builtin datatypes
+bool :: DataType
+bool =
+  DataType
+    "Bool"
+    []
+    [ Variant "True" tUnit,
+      Variant "False" tUnit
+    ]
+
+maybe :: DataType
+maybe =
+  DataType
+    "Maybe"
+    ["a"]
+    [ Variant "Just" $ TypeVar "a",
+      Variant "None" tUnit
+    ]
+

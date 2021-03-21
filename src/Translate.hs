@@ -73,6 +73,8 @@ translateExpr = \case
     pure $ JS.EFunCall fun' args'
   ERecord record -> JS.ERecord <$> traverse translateExpr record
   EFfi fun args -> JS.EFunCall (JS.EVar fun) <$> traverse translateExpr args
+  EVariant (Variant "True" _) -> pure $ JS.ELit $ JS.LBool True
+  EVariant (Variant "False" _) -> pure $ JS.ELit $ JS.LBool False
   EVariant (Variant kind value) -> do
     value' <- translateExpr value
     pure $
