@@ -31,16 +31,16 @@ span.spaces    { background: white }
 <span class="lineno">   12 </span>-- }
 <span class="lineno">   13 </span>
 <span class="lineno">   14 </span>data PatResult = PatResult
-<span class="lineno">   15 </span>  { <span class="nottickedoff"><span class="decl"><span class="nottickedoff">conditions</span></span></span> :: [JS.Expr],
-<span class="lineno">   16 </span>    <span class="nottickedoff"><span class="decl"><span class="nottickedoff">matchers</span></span></span> :: [(Var, JS.Expr)]
+<span class="lineno">   15 </span>  { <span class="istickedoff"><span class="decl"><span class="istickedoff">conditions</span></span></span> :: [JS.Expr],
+<span class="lineno">   16 </span>    <span class="istickedoff"><span class="decl"><span class="istickedoff">matchers</span></span></span> :: [(Var, JS.Expr)]
 <span class="lineno">   17 </span>  }
 <span class="lineno">   18 </span>
 <span class="lineno">   19 </span>instance Semigroup PatResult where
-<span class="lineno">   20 </span>  <span class="decl"><span class="nottickedoff">(&lt;&gt;) (PatResult c1 m1) (PatResult c2 m2) =</span>
-<span class="lineno">   21 </span><span class="spaces">    </span><span class="nottickedoff">PatResult (c1 &lt;&gt; c2) (m1 &lt;&gt; m2)</span></span>
+<span class="lineno">   20 </span>  <span class="decl"><span class="istickedoff">(&lt;&gt;) (PatResult c1 m1) (PatResult c2 m2) =</span>
+<span class="lineno">   21 </span><span class="spaces">    </span><span class="istickedoff">PatResult (c1 &lt;&gt; c2) (m1 &lt;&gt; m2)</span></span>
 <span class="lineno">   22 </span>
 <span class="lineno">   23 </span>instance Monoid PatResult where
-<span class="lineno">   24 </span>  <span class="decl"><span class="nottickedoff">mempty = PatResult [] []</span></span>
+<span class="lineno">   24 </span>  <span class="decl"><span class="istickedoff">mempty = PatResult [] []</span></span>
 
 </pre>
 </body>
