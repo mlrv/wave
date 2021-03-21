@@ -12,6 +12,7 @@ import Data.Traversable
 import qualified JS.Ast as JS
 import PatternMatching
 import Wave.Ast
+import Wave.Common
 
 -- translate wave's AST to a subset of JS'AST
 type Translate a = MonadState Int a
@@ -48,7 +49,7 @@ translateExpr = \case
     pure $ JS.EFunCall fun' args'
   ERecord record -> JS.ERecord <$> traverse translateExpr record
   EFfi fun args -> JS.EFunCall (JS.EVar fun) <$> traverse translateExpr args
-  EVariant kind value -> do
+  EVariant (Variant kind value) -> do
     value' <- translateExpr value
     pure $
       JS.ERecord $
@@ -107,7 +108,7 @@ translatePattern expr = \case
     fmap mconcat $
       for fields $ \(field, pat) ->
         translatePattern (JS.ERecordAccess expr field) pat
-  PVariant tag pat -> do
+  PVariant (Variant tag pat) -> do
     pat' <- translatePattern (JS.ERecordAccess expr "_value") pat
     pure
       PatResult

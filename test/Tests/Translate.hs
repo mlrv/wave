@@ -12,6 +12,7 @@ import Test.Hspec
 import Test.QuickCheck hiding (variant)
 import Translate
 import Wave.Ast
+import Wave.Common
 
 main :: IO ()
 main = hspec spec
@@ -85,12 +86,12 @@ variant = do
     it "simple" $
       check
         "variant simple"
-        (exprToFile $ EVariant "Foo" $ ELit $ LInt 1)
+        (exprToFile $ EVariant $ Variant "Foo" $ ELit $ LInt 1)
         "{ _kind: 'Foo', _value: 1 }"
     it "complex" $
       check
         "variant complex"
-        (exprToFile $ EVariant "Foo" $ EVariant "Bar" $ ELit $ LString "wave")
+        (exprToFile $ EVariant $ Variant "Foo" $ EVariant $ Variant "Bar" $ ELit $ LString "wave")
         "{ _kind: 'Foo', _value: { _kind: 'Bar', _value: 'wave' } }"
 
 recordAccess :: Spec
@@ -163,14 +164,15 @@ patternMatch = do
         "patternMatch case variant key"
         ( exprToFile $
             ECase
-              ( EVariant "Foo" $
-                  ERecord $
-                    M.fromList
-                      [ ("x", ELit $ LInt 1),
-                        ("y", ELit $ LString "wave")
-                      ]
+              ( EVariant $
+                  Variant "Foo" $
+                    ERecord $
+                      M.fromList
+                        [ ("x", ELit $ LInt 1),
+                          ("y", ELit $ LString "wave")
+                        ]
               )
-              [(PVariant "Foo" (PVar "foo"), ERecordAccess (EVar "foo") "y")]
+              [(PVariant $ Variant "Foo" (PVar "foo"), ERecordAccess (EVar "foo") "y")]
         )
         "wave"
     it "case variant record" $
@@ -178,21 +180,23 @@ patternMatch = do
         "patternMatch case variant record"
         ( exprToFile $
             ECase
-              ( EVariant "Foo" $
-                  ERecord $
-                    M.fromList
-                      [ ("x", ELit $ LInt 1),
-                        ("y", ELit $ LString "wave")
-                      ]
+              ( EVariant $
+                  Variant "Foo" $
+                    ERecord $
+                      M.fromList
+                        [ ("x", ELit $ LInt 1),
+                          ("y", ELit $ LString "wave")
+                        ]
               )
-              [ ( PVariant
-                    "Foo"
-                    ( PRecord $
-                        M.fromList
-                          [ ("x", PVar "x_match"),
-                            ("y", PLit $ LString "wave")
-                          ]
-                    ),
+              [ ( PVariant $
+                    Variant
+                      "Foo"
+                      ( PRecord $
+                          M.fromList
+                            [ ("x", PVar "x_match"),
+                              ("y", PLit $ LString "wave")
+                            ]
+                      ),
                   EVar "x_match"
                 )
               ]

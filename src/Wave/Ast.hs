@@ -2,8 +2,9 @@ module Wave.Ast where
 
 -- wave's AST
 
-import qualified Data.Map as M
 import qualified Data.Text as T
+import Wave.Common (Label, Record, Variant)
+import Wave.Types
 
 -- the name of a variable
 type Var = T.Text
@@ -15,14 +16,6 @@ data Lit
   | LString T.Text
   deriving (Show, Eq)
 
--- a simple text label
-type Label = T.Text
-
--- a record with keys of type String and values of type `a`, like
--- { "x": 1, "y": 2, "z": 3 }
-type Record a =
-  M.Map Label a
-
 -- an expression that evaluates to a value
 data Expr
   = ELit Lit
@@ -31,7 +24,7 @@ data Expr
   | EFunCall Expr [Expr]
   | ERecord (Record Expr)
   | EFfi T.Text [Expr] -- foreign function interface call
-  | EVariant T.Text Expr -- equivalent to data constructors
+  | EVariant (Variant Expr) -- equivalent to data constructors
   | ECase Expr [(Pattern, Expr)]
   | ERecordAccess Expr Label
   deriving (Show, Eq)
@@ -57,7 +50,7 @@ data Pattern
   | PVar Var -- match all and bind the expression to a variable
   | PLit Lit
   | PRecord (Record Pattern)
-  | PVariant T.Text Pattern
+  | PVariant (Variant Pattern)
   deriving (Show, Eq)
 
 -- a wave's source file, a collection of definitions
