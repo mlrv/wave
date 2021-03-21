@@ -52,18 +52,20 @@ span.spaces    { background: white }
 <span class="lineno">   33 </span>  | EAnd [Expr]
 <span class="lineno">   34 </span>  | EEqual Expr Expr
 <span class="lineno">   35 </span>  | ERecordAccess Expr Label
-<span class="lineno">   36 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
-<span class="lineno">   37 </span>
-<span class="lineno">   38 </span>type Label = T.Text 
+<span class="lineno">   36 </span>  | EBinOp T.Text Expr Expr
+<span class="lineno">   37 </span>  | ERaw T.Text
+<span class="lineno">   38 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
 <span class="lineno">   39 </span>
-<span class="lineno">   40 </span>data Definition
-<span class="lineno">   41 </span>  = Variable Var Expr
-<span class="lineno">   42 </span>  | Function Var [Var] Sub
-<span class="lineno">   43 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
-<span class="lineno">   44 </span>
-<span class="lineno">   45 </span>newtype File
-<span class="lineno">   46 </span>  = File [Statement]
-<span class="lineno">   47 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff">Eq</span></span></span></span>)
+<span class="lineno">   40 </span>type Label = T.Text 
+<span class="lineno">   41 </span>
+<span class="lineno">   42 </span>data Definition
+<span class="lineno">   43 </span>  = Variable Var Expr
+<span class="lineno">   44 </span>  | Function Var [Var] Sub
+<span class="lineno">   45 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff">Eq</span></span>)
+<span class="lineno">   46 </span>
+<span class="lineno">   47 </span>newtype File
+<span class="lineno">   48 </span>  = File [Statement]
+<span class="lineno">   49 </span>  deriving (<span class="decl"><span class="nottickedoff">Show</span></span>, <span class="decl"><span class="nottickedoff"><span class="decl"><span class="nottickedoff">Eq</span></span></span></span>)
 
 </pre>
 </body>

@@ -28,6 +28,8 @@ ERecord :: Record Expr -> Expr
 EAnd :: [Expr] -> Expr
 EEqual :: Expr -> Expr -> Expr
 ERecordAccess :: Expr -> Label -> Expr
+EBinOp :: Text -> Expr -> Expr -> Expr
+ERaw :: Text -> Expr
 type Label = Text
 data Definition
 Variable :: Var -> Expr -> Definition
@@ -131,6 +133,30 @@ instance GHC.Show.Show Wave.Ast.Definition
 instance GHC.Classes.Eq Wave.Ast.File
 instance GHC.Show.Show Wave.Ast.File
 
+module Wave.Builtins
+type Builtins = Map Var Builtin
+data Builtin
+Builtin :: Var -> Type -> Impl -> Builtin
+[bName] :: Builtin -> Var
+[bType] :: Builtin -> Type
+[bImpl] :: Builtin -> Impl
+data Impl
+Fun :: Text -> Impl
+BinOp :: Text -> Impl
+builtinFun :: Var -> Type -> Text -> (Var, Builtin)
+builtinBinOp :: Var -> Type -> Text -> (Var, Builtin)
+builtin :: (Text -> Impl) -> Var -> Type -> Text -> (Var, Builtin)
+builtins :: Builtins
+ints :: Builtins
+unit :: Expr
+true :: Expr
+false :: Expr
+tUnit :: Type
+tInt :: Type
+tFloat :: Type
+tString :: Type
+tBool :: Type
+
 module PatternMatching
 data PatResult
 PatResult :: [Expr] -> [(Var, Expr)] -> PatResult
@@ -140,8 +166,10 @@ instance GHC.Base.Semigroup PatternMatching.PatResult
 instance GHC.Base.Monoid PatternMatching.PatResult
 
 module Translate
-type Translate a = MonadState Int a
-translate :: (a -> State Int b) -> a -> b
+type TransState = Int
+type TransReader = Builtins
+type Translate a = (MonadState TransState a, MonadReader Builtins a)
+translate :: (a -> StateT TransState (Reader Builtins) b) -> Builtins -> a -> b
 genVar :: Translate m => Text -> m Var
 translateFile :: Translate m => File -> m File
 translateDef :: Translate m => TermDef -> m Definition

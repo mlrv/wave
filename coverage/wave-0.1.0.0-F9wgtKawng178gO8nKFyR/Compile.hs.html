@@ -19,13 +19,14 @@ span.spaces    { background: white }
 <pre>
 <span class="lineno">    1 </span>module Compile where
 <span class="lineno">    2 </span>
-<span class="lineno">    3 </span>import Translate
-<span class="lineno">    4 </span>import qualified Data.Text as T
-<span class="lineno">    5 </span>import JS.Pretty
+<span class="lineno">    3 </span>import qualified Data.Text as T
+<span class="lineno">    4 </span>import JS.Pretty
+<span class="lineno">    5 </span>import Translate
 <span class="lineno">    6 </span>import qualified Wave.Ast as Wave
-<span class="lineno">    7 </span>
-<span class="lineno">    8 </span>compile :: Wave.File -&gt; T.Text
-<span class="lineno">    9 </span><span class="decl"><span class="istickedoff">compile = render . ppFile . translate translateFile</span></span>
+<span class="lineno">    7 </span>import Wave.Builtins
+<span class="lineno">    8 </span>
+<span class="lineno">    9 </span>compile :: Wave.File -&gt; T.Text
+<span class="lineno">   10 </span><span class="decl"><span class="istickedoff">compile = render . ppFile . translate translateFile builtins</span></span>
 
 </pre>
 </body>

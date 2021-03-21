@@ -95,19 +95,23 @@ span.spaces    { background: white }
 <span class="lineno">   76 </span><span class="spaces">     </span><span class="istickedoff">in encloseIfNotSimple (ppExpr fun) &lt;&gt; &quot;(&quot; &lt;&gt; arguments &lt;&gt; &quot;)&quot;</span>
 <span class="lineno">   77 </span><span class="spaces">  </span><span class="istickedoff">ERecord record -&gt; ppRecord ppExpr record</span>
 <span class="lineno">   78 </span><span class="spaces">  </span><span class="istickedoff">EAnd exprs -&gt; concatWith (surround &quot; &amp;&amp; &quot;) (ppExpr &lt;$&gt; exprs)</span>
-<span class="lineno">   79 </span><span class="spaces">  </span><span class="istickedoff">EEqual a b -&gt; ppExpr a &lt;+&gt; &quot;===&quot; &lt;+&gt; ppExpr b</span>
+<span class="lineno">   79 </span><span class="spaces">  </span><span class="istickedoff">EEqual a b -&gt; ppExpr $ EBinOp &quot;===&quot; a b</span>
 <span class="lineno">   80 </span><span class="spaces">  </span><span class="istickedoff">ERecordAccess expr label -&gt;</span>
 <span class="lineno">   81 </span><span class="spaces">    </span><span class="istickedoff">(if isSimpleExpr expr then id else parens) (ppExpr expr)</span>
 <span class="lineno">   82 </span><span class="spaces">      </span><span class="istickedoff">&lt;&gt; &quot;.&quot;</span>
-<span class="lineno">   83 </span><span class="spaces">      </span><span class="istickedoff">&lt;&gt; pretty label</span></span>
-<span class="lineno">   84 </span>
-<span class="lineno">   85 </span>-- need surrounding parens?
-<span class="lineno">   86 </span>isSimpleExpr :: Expr -&gt; Bool
-<span class="lineno">   87 </span><span class="decl"><span class="istickedoff">isSimpleExpr = \case</span>
-<span class="lineno">   88 </span><span class="spaces">  </span><span class="istickedoff">ERecord {} -&gt; False</span>
-<span class="lineno">   89 </span><span class="spaces">  </span><span class="istickedoff">EFun {} -&gt; False</span>
-<span class="lineno">   90 </span><span class="spaces">  </span><span class="istickedoff">EEqual {} -&gt; <span class="nottickedoff">False</span></span>
-<span class="lineno">   91 </span><span class="spaces">  </span><span class="istickedoff">_ -&gt; True</span></span>
+<span class="lineno">   83 </span><span class="spaces">      </span><span class="istickedoff">&lt;&gt; pretty label</span>
+<span class="lineno">   84 </span><span class="spaces">  </span><span class="istickedoff">EBinOp op a b -&gt; ppExpr a &lt;+&gt; pretty op &lt;+&gt; ppExpr b</span>
+<span class="lineno">   85 </span><span class="spaces">  </span><span class="istickedoff">ERaw raw -&gt; <span class="nottickedoff">pretty raw</span></span></span>
+<span class="lineno">   86 </span>
+<span class="lineno">   87 </span>-- need surrounding parens?
+<span class="lineno">   88 </span>isSimpleExpr :: Expr -&gt; Bool
+<span class="lineno">   89 </span><span class="decl"><span class="istickedoff">isSimpleExpr = \case</span>
+<span class="lineno">   90 </span><span class="spaces">  </span><span class="istickedoff">ERecord {} -&gt; False</span>
+<span class="lineno">   91 </span><span class="spaces">  </span><span class="istickedoff">EFun {} -&gt; False</span>
+<span class="lineno">   92 </span><span class="spaces">  </span><span class="istickedoff">EEqual {} -&gt; <span class="nottickedoff">False</span></span>
+<span class="lineno">   93 </span><span class="spaces">  </span><span class="istickedoff">EBinOp {} -&gt; <span class="nottickedoff">False</span></span>
+<span class="lineno">   94 </span><span class="spaces">  </span><span class="istickedoff">ERaw {} -&gt; <span class="nottickedoff">False</span></span>
+<span class="lineno">   95 </span><span class="spaces">  </span><span class="istickedoff">_ -&gt; True</span></span>
 
 </pre>
 </body>

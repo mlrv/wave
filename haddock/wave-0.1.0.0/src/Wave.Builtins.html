@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE OverloadedStrings #-}</span><span>
+</span><span id="line-2"></span><span>
+</span><span id="line-3"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Wave.Builtins</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-4"></span><span>
+</span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Map</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">M</span></span><span>
+</span><span id="line-6"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">T</span></span><span>
+</span><span id="line-7"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Wave.Ast.html"><span class="hs-identifier">Wave.Ast</span></a></span><span>
+</span><span id="line-8"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Wave.Common.html"><span class="hs-identifier">Wave.Common</span></a></span><span>
+</span><span id="line-9"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Wave.Types.html"><span class="hs-identifier">Wave.Types</span></a></span><span>
+</span><span id="line-10"></span><span>
+</span><span id="line-11"></span><span class="hs-keyword">type</span><span> </span><span id="Builtins"><span class="annot"><a href="Wave.Builtins.html#Builtins"><span class="hs-identifier hs-var">Builtins</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">M.Map</span></span><span> </span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="annot"><a href="Wave.Builtins.html#Builtin"><span class="hs-identifier hs-type">Builtin</span></a></span><span>
+</span><span id="line-12"></span><span>
+</span><span id="line-13"></span><span class="hs-keyword">data</span><span> </span><span id="Builtin"><span class="annot"><a href="Wave.Builtins.html#Builtin"><span class="hs-identifier hs-var">Builtin</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Builtin"><span class="annot"><a href="Wave.Builtins.html#Builtin"><span class="hs-identifier hs-var">Builtin</span></a></span></span><span>
+</span><span id="line-14"></span><span>  </span><span class="hs-special">{</span><span> </span><span id="bName"><span class="annot"><span class="annottext">Builtin -&gt; Var
+</span><a href="Wave.Builtins.html#bName"><span class="hs-identifier hs-var hs-var">bName</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-15"></span><span>    </span><span id="bType"><span class="annot"><span class="annottext">Builtin -&gt; Type
+</span><a href="Wave.Builtins.html#bType"><span class="hs-identifier hs-var hs-var">bType</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-16"></span><span>    </span><span id="bImpl"><span class="annot"><span class="annottext">Builtin -&gt; Impl
+</span><a href="Wave.Builtins.html#bImpl"><span class="hs-identifier hs-var hs-var">bImpl</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Builtins.html#Impl"><span class="hs-identifier hs-type">Impl</span></a></span><span>
+</span><span id="line-17"></span><span>  </span><span class="hs-special">}</span><span>
+</span><span id="line-18"></span><span>
+</span><span id="line-19"></span><span class="hs-keyword">data</span><span> </span><span id="Impl"><span class="annot"><a href="Wave.Builtins.html#Impl"><span class="hs-identifier hs-var">Impl</span></a></span></span><span>
+</span><span id="line-20"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="Fun"><span class="annot"><a href="Wave.Builtins.html#Fun"><span class="hs-identifier hs-var">Fun</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span>
+</span><span id="line-21"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="BinOp"><span class="annot"><a href="Wave.Builtins.html#BinOp"><span class="hs-identifier hs-var">BinOp</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span>
+</span><span id="line-22"></span><span>
+</span><span id="line-23"></span><span class="annot"><a href="Wave.Builtins.html#builtinFun"><span class="hs-identifier hs-type">builtinFun</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Wave.Builtins.html#Builtin"><span class="hs-identifier hs-type">Builtin</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-24"></span><span id="builtinFun"><span class="annot"><span class="annottext">builtinFun :: Var -&gt; Type -&gt; Var -&gt; (Var, Builtin)
+</span><a href="Wave.Builtins.html#builtinFun"><span class="hs-identifier hs-var hs-var">builtinFun</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Var -&gt; Impl) -&gt; Var -&gt; Type -&gt; Var -&gt; (Var, Builtin)
+</span><a href="Wave.Builtins.html#builtin"><span class="hs-identifier hs-var">builtin</span></a></span><span> </span><span class="annot"><span class="annottext">Var -&gt; Impl
+</span><a href="Wave.Builtins.html#Fun"><span class="hs-identifier hs-var">Fun</span></a></span><span>
+</span><span id="line-25"></span><span>
+</span><span id="line-26"></span><span class="annot"><a href="Wave.Builtins.html#builtinBinOp"><span class="hs-identifier hs-type">builtinBinOp</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Wave.Builtins.html#Builtin"><span class="hs-identifier hs-type">Builtin</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-27"></span><span id="builtinBinOp"><span class="annot"><span class="annottext">builtinBinOp :: Var -&gt; Type -&gt; Var -&gt; (Var, Builtin)
+</span><a href="Wave.Builtins.html#builtinBinOp"><span class="hs-identifier hs-var hs-var">builtinBinOp</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Var -&gt; Impl) -&gt; Var -&gt; Type -&gt; Var -&gt; (Var, Builtin)
+</span><a href="Wave.Builtins.html#builtin"><span class="hs-identifier hs-var">builtin</span></a></span><span> </span><span class="annot"><span class="annottext">Var -&gt; Impl
+</span><a href="Wave.Builtins.html#BinOp"><span class="hs-identifier hs-var">BinOp</span></a></span><span>
+</span><span id="line-28"></span><span>
+</span><span id="line-29"></span><span class="annot"><a href="Wave.Builtins.html#builtin"><span class="hs-identifier hs-type">builtin</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Wave.Builtins.html#Impl"><span class="hs-identifier hs-type">Impl</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Wave.Ast.html#Var"><span class="hs-identifier hs-type">Var</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Wave.Builtins.html#Builtin"><span class="hs-identifier hs-type">Builtin</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-30"></span><span id="builtin"><span class="annot"><span class="annottext">builtin :: (Var -&gt; Impl) -&gt; Var -&gt; Type -&gt; Var -&gt; (Var, Builtin)
+</span><a href="Wave.Builtins.html#builtin"><span class="hs-identifier hs-var hs-var">builtin</span></a></span></span><span> </span><span id="local-6989586621679044776"><span class="annot"><span class="annottext">Var -&gt; Impl
+</span><a href="#local-6989586621679044776"><span class="hs-identifier hs-var">c</span></a></span></span><span> </span><span id="local-6989586621679044775"><span class="annot"><span class="annottext">Var
+</span><a href="#local-6989586621679044775"><span class="hs-identifier hs-var">n</span></a></span></span><span> </span><span id="local-6989586621679044774"><span class="annot"><span class="annottext">Type
+</span><a href="#local-6989586621679044774"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span id="local-6989586621679044773"><span class="annot"><span class="annottext">Var
+</span><a href="#local-6989586621679044773"><span class="hs-identifier hs-var">i</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Var
+</span><a href="#local-6989586621679044775"><span class="hs-identifier hs-var">n</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Var -&gt; Type -&gt; Impl -&gt; Builtin
+</span><a href="Wave.Builtins.html#Builtin"><span class="hs-identifier hs-var">Builtin</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><a href="#local-6989586621679044775"><span class="hs-identifier hs-var">n</span></a></span><span> </span><span class="annot"><span class="annottext">Type
+</span><a href="#local-6989586621679044774"><span class="hs-identifier hs-var">t</span></a></span><span> </span><span class="annot"><span class="annottext">(Impl -&gt; Builtin) -&gt; Impl -&gt; Builtin
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Var -&gt; Impl
+</span><a href="#local-6989586621679044776"><span class="hs-identifier hs-var">c</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><a href="#local-6989586621679044773"><span class="hs-identifier hs-var">i</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-31"></span><span>
+</span><span id="line-32"></span><span class="annot"><a href="Wave.Builtins.html#builtins"><span class="hs-identifier hs-type">builtins</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Builtins.html#Builtins"><span class="hs-identifier hs-type">Builtins</span></a></span><span>
+</span><span id="line-33"></span><span id="builtins"><span class="annot"><span class="annottext">builtins :: Builtins
+</span><a href="Wave.Builtins.html#builtins"><span class="hs-identifier hs-var hs-var">builtins</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-34"></span><span>  </span><span class="annot"><span class="annottext">[Builtins] -&gt; Builtins
+forall (f :: * -&gt; *) k a.
+(Foldable f, Ord k) =&gt;
+f (Map k a) -&gt; Map k a
+</span><span class="hs-identifier hs-var">M.unions</span></span><span>
+</span><span id="line-35"></span><span>    </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Builtins
+</span><a href="Wave.Builtins.html#ints"><span class="hs-identifier hs-var">ints</span></a></span><span>
+</span><span id="line-36"></span><span>    </span><span class="hs-special">]</span><span>
+</span><span id="line-37"></span><span>
+</span><span id="line-38"></span><span class="annot"><a href="Wave.Builtins.html#ints"><span class="hs-identifier hs-type">ints</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Builtins.html#Builtins"><span class="hs-identifier hs-type">Builtins</span></a></span><span>
+</span><span id="line-39"></span><span id="ints"><span class="annot"><span class="annottext">ints :: Builtins
+</span><a href="Wave.Builtins.html#ints"><span class="hs-identifier hs-var hs-var">ints</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-40"></span><span>  </span><span class="annot"><span class="annottext">[(Var, Builtin)] -&gt; Builtins
+forall k a. Ord k =&gt; [(k, a)] -&gt; Map k a
+</span><span class="hs-identifier hs-var">M.fromList</span></span><span>
+</span><span id="line-41"></span><span>    </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Var -&gt; Type -&gt; Var -&gt; (Var, Builtin)
+</span><a href="Wave.Builtins.html#builtinBinOp"><span class="hs-identifier hs-var">builtinBinOp</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;add&quot;</span></span><span> </span><span class="annot"><span class="annottext">Type
+</span><a href="#local-6989586621679044768"><span class="hs-identifier hs-var">binOpInt</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;+&quot;</span></span><span class="hs-special">,</span><span>
+</span><span id="line-42"></span><span>      </span><span class="annot"><span class="annottext">Var -&gt; Type -&gt; Var -&gt; (Var, Builtin)
+</span><a href="Wave.Builtins.html#builtinBinOp"><span class="hs-identifier hs-var">builtinBinOp</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;sub&quot;</span></span><span> </span><span class="annot"><span class="annottext">Type
+</span><a href="#local-6989586621679044768"><span class="hs-identifier hs-var">binOpInt</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;-&quot;</span></span><span class="hs-special">,</span><span>
+</span><span id="line-43"></span><span>      </span><span class="annot"><span class="annottext">Var -&gt; Type -&gt; Var -&gt; (Var, Builtin)
+</span><a href="Wave.Builtins.html#builtinBinOp"><span class="hs-identifier hs-var">builtinBinOp</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;mul&quot;</span></span><span> </span><span class="annot"><span class="annottext">Type
+</span><a href="#local-6989586621679044768"><span class="hs-identifier hs-var">binOpInt</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;*&quot;</span></span><span class="hs-special">,</span><span>
+</span><span id="line-44"></span><span>      </span><span class="annot"><span class="annottext">Var -&gt; Type -&gt; Var -&gt; (Var, Builtin)
+</span><a href="Wave.Builtins.html#builtinBinOp"><span class="hs-identifier hs-var">builtinBinOp</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;div&quot;</span></span><span> </span><span class="annot"><span class="annottext">Type
+</span><a href="#local-6989586621679044768"><span class="hs-identifier hs-var">binOpInt</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;/&quot;</span></span><span class="hs-special">,</span><span>
+</span><span id="line-45"></span><span>      </span><span class="annot"><span class="annottext">Var -&gt; Type -&gt; Var -&gt; (Var, Builtin)
+</span><a href="Wave.Builtins.html#builtinFun"><span class="hs-identifier hs-var">builtinFun</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;negate&quot;</span></span><span> </span><span class="annot"><span class="annottext">Type
+</span><a href="#local-6989586621679044767"><span class="hs-identifier hs-var">opInt</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;function (x) { return 0 - x }&quot;</span></span><span>
+</span><span id="line-46"></span><span>    </span><span class="hs-special">]</span><span>
+</span><span id="line-47"></span><span>  </span><span class="hs-keyword">where</span><span>
+</span><span id="line-48"></span><span>    </span><span id="local-6989586621679044768"><span class="annot"><span class="annottext">binOpInt :: Type
+</span><a href="#local-6989586621679044768"><span class="hs-identifier hs-var hs-var">binOpInt</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Type] -&gt; Type -&gt; Type
+</span><a href="Wave.Types.html#TypeFun"><span class="hs-identifier hs-var">TypeFun</span></a></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Type
+</span><a href="Wave.Builtins.html#tInt"><span class="hs-identifier hs-var">tInt</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Type
+</span><a href="Wave.Builtins.html#tInt"><span class="hs-identifier hs-var">tInt</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">Type
+</span><a href="Wave.Builtins.html#tInt"><span class="hs-identifier hs-var">tInt</span></a></span><span>
+</span><span id="line-49"></span><span>    </span><span id="local-6989586621679044767"><span class="annot"><span class="annottext">opInt :: Type
+</span><a href="#local-6989586621679044767"><span class="hs-identifier hs-var hs-var">opInt</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Type] -&gt; Type -&gt; Type
+</span><a href="Wave.Types.html#TypeFun"><span class="hs-identifier hs-var">TypeFun</span></a></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Type
+</span><a href="Wave.Builtins.html#tInt"><span class="hs-identifier hs-var">tInt</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">Type
+</span><a href="Wave.Builtins.html#tInt"><span class="hs-identifier hs-var">tInt</span></a></span><span>
+</span><span id="line-50"></span><span>
+</span><span id="line-51"></span><span class="hs-comment">-- Builtin values</span><span>
+</span><span id="line-52"></span><span class="annot"><a href="Wave.Builtins.html#unit"><span class="hs-keyword hs-type">unit</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span>
+</span><span id="line-53"></span><span id="unit"><span class="annot"><span class="annottext">unit :: Expr
+</span><a href="Wave.Builtins.html#unit"><span class="hs-keyword hs-var hs-var">unit</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Record Expr -&gt; Expr
+</span><a href="Wave.Ast.html#ERecord"><span class="hs-identifier hs-var">ERecord</span></a></span><span> </span><span class="annot"><span class="annottext">Record Expr
+forall k a. Map k a
+</span><span class="hs-identifier hs-var">M.empty</span></span><span>
+</span><span id="line-54"></span><span>
+</span><span id="line-55"></span><span class="annot"><a href="Wave.Builtins.html#true"><span class="hs-identifier hs-type">true</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span>
+</span><span id="line-56"></span><span id="true"><span class="annot"><span class="annottext">true :: Expr
+</span><a href="Wave.Builtins.html#true"><span class="hs-identifier hs-var hs-var">true</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Variant Expr -&gt; Expr
+</span><a href="Wave.Ast.html#EVariant"><span class="hs-identifier hs-var">EVariant</span></a></span><span> </span><span class="annot"><span class="annottext">(Variant Expr -&gt; Expr) -&gt; Variant Expr -&gt; Expr
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Var -&gt; Expr -&gt; Variant Expr
+forall a. Var -&gt; a -&gt; Variant a
+</span><a href="Wave.Common.html#Variant"><span class="hs-identifier hs-var">Variant</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;True&quot;</span></span><span> </span><span class="annot"><span class="annottext">Expr
+</span><a href="Wave.Builtins.html#unit"><span class="hs-keyword hs-var">unit</span></a></span><span>
+</span><span id="line-57"></span><span>
+</span><span id="line-58"></span><span class="annot"><a href="Wave.Builtins.html#false"><span class="hs-identifier hs-type">false</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Ast.html#Expr"><span class="hs-identifier hs-type">Expr</span></a></span><span>
+</span><span id="line-59"></span><span id="false"><span class="annot"><span class="annottext">false :: Expr
+</span><a href="Wave.Builtins.html#false"><span class="hs-identifier hs-var hs-var">false</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Variant Expr -&gt; Expr
+</span><a href="Wave.Ast.html#EVariant"><span class="hs-identifier hs-var">EVariant</span></a></span><span> </span><span class="annot"><span class="annottext">(Variant Expr -&gt; Expr) -&gt; Variant Expr -&gt; Expr
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Var -&gt; Expr -&gt; Variant Expr
+forall a. Var -&gt; a -&gt; Variant a
+</span><a href="Wave.Common.html#Variant"><span class="hs-identifier hs-var">Variant</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;False&quot;</span></span><span> </span><span class="annot"><span class="annottext">Expr
+</span><a href="Wave.Builtins.html#unit"><span class="hs-keyword hs-var">unit</span></a></span><span>
+</span><span id="line-60"></span><span>
+</span><span id="line-61"></span><span class="hs-comment">-- Builtin types</span><span>
+</span><span id="line-62"></span><span class="annot"><a href="Wave.Builtins.html#tUnit"><span class="hs-identifier hs-type">tUnit</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span>
+</span><span id="line-63"></span><span id="tUnit"><span class="annot"><span class="annottext">tUnit :: Type
+</span><a href="Wave.Builtins.html#tUnit"><span class="hs-identifier hs-var hs-var">tUnit</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[(Var, Type)] -&gt; Type
+</span><a href="Wave.Types.html#TypeRec"><span class="hs-identifier hs-var">TypeRec</span></a></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span>
+</span><span id="line-64"></span><span>
+</span><span id="line-65"></span><span class="annot"><a href="Wave.Builtins.html#tInt"><span class="hs-identifier hs-type">tInt</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span>
+</span><span id="line-66"></span><span id="tInt"><span class="annot"><span class="annottext">tInt :: Type
+</span><a href="Wave.Builtins.html#tInt"><span class="hs-identifier hs-var hs-var">tInt</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Var -&gt; Type
+</span><a href="Wave.Types.html#TypeCon"><span class="hs-identifier hs-var">TypeCon</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;Int&quot;</span></span><span>
+</span><span id="line-67"></span><span>
+</span><span id="line-68"></span><span class="annot"><a href="Wave.Builtins.html#tFloat"><span class="hs-identifier hs-type">tFloat</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span>
+</span><span id="line-69"></span><span id="tFloat"><span class="annot"><span class="annottext">tFloat :: Type
+</span><a href="Wave.Builtins.html#tFloat"><span class="hs-identifier hs-var hs-var">tFloat</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Var -&gt; Type
+</span><a href="Wave.Types.html#TypeCon"><span class="hs-identifier hs-var">TypeCon</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;Float&quot;</span></span><span>
+</span><span id="line-70"></span><span>
+</span><span id="line-71"></span><span class="annot"><a href="Wave.Builtins.html#tString"><span class="hs-identifier hs-type">tString</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span>
+</span><span id="line-72"></span><span id="tString"><span class="annot"><span class="annottext">tString :: Type
+</span><a href="Wave.Builtins.html#tString"><span class="hs-identifier hs-var hs-var">tString</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Var -&gt; Type
+</span><a href="Wave.Types.html#TypeCon"><span class="hs-identifier hs-var">TypeCon</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;String&quot;</span></span><span>
+</span><span id="line-73"></span><span>
+</span><span id="line-74"></span><span class="annot"><a href="Wave.Builtins.html#tBool"><span class="hs-identifier hs-type">tBool</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Types.html#Type"><span class="hs-identifier hs-type">Type</span></a></span><span>
+</span><span id="line-75"></span><span id="tBool"><span class="annot"><span class="annottext">tBool :: Type
+</span><a href="Wave.Builtins.html#tBool"><span class="hs-identifier hs-var hs-var">tBool</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Var -&gt; Type
+</span><a href="Wave.Types.html#TypeCon"><span class="hs-identifier hs-var">TypeCon</span></a></span><span> </span><span class="annot"><span class="annottext">Var
+</span><span class="hs-string">&quot;Bool&quot;</span></span><span>
+</span><span id="line-76"></span></pre></body></html>
