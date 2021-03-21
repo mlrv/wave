@@ -7,4 +7,5 @@ data Type
   | TypeCon TypeCon -- type constructor
   | TypeApp Type Type -- type application
   | TypeFun [Type] Type -- type of a function
-  | TypeRec [(Label, Type)] Type -- type of a record
+  | TypeRec [(Label, Type)] -- type of a record
+  deriving (Show, Eq)

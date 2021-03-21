@@ -217,7 +217,7 @@ testDir = "/tmp/test"
 exprToFile :: Expr -> File
 exprToFile expr =
   File
-    [ Function
+    [ TermDef $ Function
         "main"
         []
         [ SExpr $ EFfi "console.log" [expr]

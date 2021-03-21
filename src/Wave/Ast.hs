@@ -3,7 +3,7 @@ module Wave.Ast where
 -- wave's AST
 
 import qualified Data.Text as T
-import Wave.Common (Label, Record, Variant)
+import Wave.Common
 import Wave.Types
 
 -- the name of a variable
@@ -29,16 +29,27 @@ data Expr
   | ERecordAccess Expr Label
   deriving (Show, Eq)
 
--- a definition, either a variable or a function
+-- a datatype
+data DataType
+  = DataType Constr [TypeVar] [Variant Type]
+  deriving (Show, Eq)
+
+-- a datatype definition or term definition
 data Definition
+  = TypeDef DataType
+  | TermDef TermDef
+  deriving (Show, Eq)
+
+-- a term definition, either a variable or a function
+data TermDef
   = Variable Var Expr
   | Function Var [Var] Sub
   deriving (Show, Eq)
 
--- a statement, either an expression or a definition
+-- a statement, either an expression or a term definition
 data Statement
   = SExpr Expr
-  | SDef Definition
+  | SDef TermDef
   deriving (Show, Eq)
 
 -- a series of statements

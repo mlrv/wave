@@ -30,10 +30,12 @@ genVar var = do
 
 translateFile :: Translate m => File -> m JS.File
 translateFile (File defs) = do
-  defs' <- traverse translateDef defs
+  defs' <- traverse translateDef termDefs
   pure $ JS.File $ map JS.SDef defs' ++ [JS.SExpr $ JS.EFunCall (JS.EVar "main") []]
+  where
+    termDefs = [d | (TermDef d) <- defs] -- datatype defs are not translated
 
-translateDef :: Translate m => Definition -> m JS.Definition
+translateDef :: Translate m => TermDef -> m JS.Definition
 translateDef = \case
   Variable var expr -> JS.Variable var <$> translateExpr expr
   Function var args body -> JS.Function var args <$> translateSub body
