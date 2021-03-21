@@ -101,7 +101,7 @@ span.spaces    { background: white }
 <span class="lineno">   82 </span><span class="spaces">      </span><span class="istickedoff">&lt;&gt; &quot;.&quot;</span>
 <span class="lineno">   83 </span><span class="spaces">      </span><span class="istickedoff">&lt;&gt; pretty label</span>
 <span class="lineno">   84 </span><span class="spaces">  </span><span class="istickedoff">EBinOp op a b -&gt; ppExpr a &lt;+&gt; pretty op &lt;+&gt; ppExpr b</span>
-<span class="lineno">   85 </span><span class="spaces">  </span><span class="istickedoff">ERaw raw -&gt; <span class="nottickedoff">pretty raw</span></span></span>
+<span class="lineno">   85 </span><span class="spaces">  </span><span class="istickedoff">ERaw raw -&gt; pretty raw</span></span>
 <span class="lineno">   86 </span>
 <span class="lineno">   87 </span>-- need surrounding parens?
 <span class="lineno">   88 </span>isSimpleExpr :: Expr -&gt; Bool
@@ -110,7 +110,7 @@ span.spaces    { background: white }
 <span class="lineno">   91 </span><span class="spaces">  </span><span class="istickedoff">EFun {} -&gt; False</span>
 <span class="lineno">   92 </span><span class="spaces">  </span><span class="istickedoff">EEqual {} -&gt; <span class="nottickedoff">False</span></span>
 <span class="lineno">   93 </span><span class="spaces">  </span><span class="istickedoff">EBinOp {} -&gt; <span class="nottickedoff">False</span></span>
-<span class="lineno">   94 </span><span class="spaces">  </span><span class="istickedoff">ERaw {} -&gt; <span class="nottickedoff">False</span></span>
+<span class="lineno">   94 </span><span class="spaces">  </span><span class="istickedoff">ERaw {} -&gt; False</span>
 <span class="lineno">   95 </span><span class="spaces">  </span><span class="istickedoff">_ -&gt; True</span></span>
 
 </pre>

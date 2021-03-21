@@ -148,6 +148,8 @@ builtinBinOp :: Var -> Type -> Text -> (Var, Builtin)
 builtin :: (Text -> Impl) -> Var -> Type -> Text -> (Var, Builtin)
 builtins :: Builtins
 ints :: Builtins
+strings :: Builtins
+bools :: Builtins
 unit :: Expr
 true :: Expr
 false :: Expr
@@ -156,6 +158,8 @@ tInt :: Type
 tFloat :: Type
 tString :: Type
 tBool :: Type
+bool :: DataType
+maybe :: DataType
 
 module PatternMatching
 data PatResult

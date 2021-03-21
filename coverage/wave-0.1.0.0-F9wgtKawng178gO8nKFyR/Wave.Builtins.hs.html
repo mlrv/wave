@@ -40,58 +40,98 @@ span.spaces    { background: white }
 <span class="lineno">   21 </span>  | BinOp T.Text
 <span class="lineno">   22 </span>
 <span class="lineno">   23 </span>builtinFun :: Var -&gt; Type -&gt; T.Text -&gt; (Var, Builtin)
-<span class="lineno">   24 </span><span class="decl"><span class="istickedoff">builtinFun = builtin <span class="nottickedoff">Fun</span></span></span>
+<span class="lineno">   24 </span><span class="decl"><span class="istickedoff">builtinFun = builtin Fun</span></span>
 <span class="lineno">   25 </span>
 <span class="lineno">   26 </span>builtinBinOp :: Var -&gt; Type -&gt; T.Text -&gt; (Var, Builtin)
-<span class="lineno">   27 </span><span class="decl"><span class="istickedoff">builtinBinOp = builtin <span class="nottickedoff">BinOp</span></span></span>
+<span class="lineno">   27 </span><span class="decl"><span class="istickedoff">builtinBinOp = builtin BinOp</span></span>
 <span class="lineno">   28 </span>
 <span class="lineno">   29 </span>builtin :: (T.Text -&gt; Impl) -&gt; Var -&gt; Type -&gt; T.Text -&gt; (Var, Builtin)
-<span class="lineno">   30 </span><span class="decl"><span class="istickedoff">builtin c n t i = (n, <span class="nottickedoff">Builtin n t $ c i</span>)</span></span>
+<span class="lineno">   30 </span><span class="decl"><span class="istickedoff">builtin c n t i = (n, Builtin <span class="nottickedoff">n</span> <span class="nottickedoff">t</span> $ c i)</span></span>
 <span class="lineno">   31 </span>
 <span class="lineno">   32 </span>builtins :: Builtins
 <span class="lineno">   33 </span><span class="decl"><span class="istickedoff">builtins =</span>
 <span class="lineno">   34 </span><span class="spaces">  </span><span class="istickedoff">M.unions</span>
-<span class="lineno">   35 </span><span class="spaces">    </span><span class="istickedoff">[ ints</span>
-<span class="lineno">   36 </span><span class="spaces">    </span><span class="istickedoff">]</span></span>
-<span class="lineno">   37 </span>
-<span class="lineno">   38 </span>ints :: Builtins
-<span class="lineno">   39 </span><span class="decl"><span class="istickedoff">ints =</span>
-<span class="lineno">   40 </span><span class="spaces">  </span><span class="istickedoff">M.fromList</span>
-<span class="lineno">   41 </span><span class="spaces">    </span><span class="istickedoff">[ builtinBinOp &quot;add&quot; <span class="nottickedoff">binOpInt</span> <span class="nottickedoff">&quot;+&quot;</span>,</span>
-<span class="lineno">   42 </span><span class="spaces">      </span><span class="istickedoff">builtinBinOp &quot;sub&quot; <span class="nottickedoff">binOpInt</span> <span class="nottickedoff">&quot;-&quot;</span>,</span>
-<span class="lineno">   43 </span><span class="spaces">      </span><span class="istickedoff">builtinBinOp &quot;mul&quot; <span class="nottickedoff">binOpInt</span> <span class="nottickedoff">&quot;*&quot;</span>,</span>
-<span class="lineno">   44 </span><span class="spaces">      </span><span class="istickedoff">builtinBinOp &quot;div&quot; <span class="nottickedoff">binOpInt</span> <span class="nottickedoff">&quot;/&quot;</span>,</span>
-<span class="lineno">   45 </span><span class="spaces">      </span><span class="istickedoff">builtinFun &quot;negate&quot; <span class="nottickedoff">opInt</span> <span class="nottickedoff">&quot;function (x) { return 0 - x }&quot;</span></span>
-<span class="lineno">   46 </span><span class="spaces">    </span><span class="istickedoff">]</span>
-<span class="lineno">   47 </span><span class="spaces">  </span><span class="istickedoff">where</span>
-<span class="lineno">   48 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">binOpInt = TypeFun [tInt, tInt] tInt</span></span>
-<span class="lineno">   49 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">opInt = TypeFun [tInt] tInt</span></span></span>
-<span class="lineno">   50 </span>
-<span class="lineno">   51 </span>-- Builtin values
-<span class="lineno">   52 </span>unit :: Expr
-<span class="lineno">   53 </span><span class="decl"><span class="nottickedoff">unit = ERecord M.empty</span></span>
-<span class="lineno">   54 </span>
-<span class="lineno">   55 </span>true :: Expr
-<span class="lineno">   56 </span><span class="decl"><span class="nottickedoff">true = EVariant $ Variant &quot;True&quot; unit</span></span>
-<span class="lineno">   57 </span>
-<span class="lineno">   58 </span>false :: Expr
-<span class="lineno">   59 </span><span class="decl"><span class="nottickedoff">false = EVariant $ Variant &quot;False&quot; unit</span></span>
-<span class="lineno">   60 </span>
-<span class="lineno">   61 </span>-- Builtin types
-<span class="lineno">   62 </span>tUnit :: Type
-<span class="lineno">   63 </span><span class="decl"><span class="nottickedoff">tUnit = TypeRec []</span></span>
-<span class="lineno">   64 </span>
-<span class="lineno">   65 </span>tInt :: Type
-<span class="lineno">   66 </span><span class="decl"><span class="nottickedoff">tInt = TypeCon &quot;Int&quot;</span></span>
-<span class="lineno">   67 </span>
-<span class="lineno">   68 </span>tFloat :: Type
-<span class="lineno">   69 </span><span class="decl"><span class="nottickedoff">tFloat = TypeCon &quot;Float&quot;</span></span>
+<span class="lineno">   35 </span><span class="spaces">    </span><span class="istickedoff">[ ints,</span>
+<span class="lineno">   36 </span><span class="spaces">      </span><span class="istickedoff">strings,</span>
+<span class="lineno">   37 </span><span class="spaces">      </span><span class="istickedoff">bools</span>
+<span class="lineno">   38 </span><span class="spaces">    </span><span class="istickedoff">]</span></span>
+<span class="lineno">   39 </span>
+<span class="lineno">   40 </span>ints :: Builtins
+<span class="lineno">   41 </span><span class="decl"><span class="istickedoff">ints =</span>
+<span class="lineno">   42 </span><span class="spaces">  </span><span class="istickedoff">M.fromList</span>
+<span class="lineno">   43 </span><span class="spaces">    </span><span class="istickedoff">[ builtinBinOp &quot;add&quot; <span class="nottickedoff">binOpInt</span> &quot;+&quot;,</span>
+<span class="lineno">   44 </span><span class="spaces">      </span><span class="istickedoff">builtinBinOp &quot;sub&quot; <span class="nottickedoff">binOpInt</span> &quot;-&quot;,</span>
+<span class="lineno">   45 </span><span class="spaces">      </span><span class="istickedoff">builtinBinOp &quot;mul&quot; <span class="nottickedoff">binOpInt</span> &quot;*&quot;,</span>
+<span class="lineno">   46 </span><span class="spaces">      </span><span class="istickedoff">builtinBinOp &quot;div&quot; <span class="nottickedoff">binOpInt</span> &quot;/&quot;,</span>
+<span class="lineno">   47 </span><span class="spaces">      </span><span class="istickedoff">builtinFun &quot;negate&quot; <span class="nottickedoff">opInt</span> &quot;function (x) { return 0 - x }&quot;</span>
+<span class="lineno">   48 </span><span class="spaces">    </span><span class="istickedoff">]</span>
+<span class="lineno">   49 </span><span class="spaces">  </span><span class="istickedoff">where</span>
+<span class="lineno">   50 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">binOpInt = TypeFun [tInt, tInt] tInt</span></span>
+<span class="lineno">   51 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">opInt = TypeFun [tInt] tInt</span></span></span>
+<span class="lineno">   52 </span>
+<span class="lineno">   53 </span>strings :: Builtins
+<span class="lineno">   54 </span><span class="decl"><span class="istickedoff">strings =</span>
+<span class="lineno">   55 </span><span class="spaces">  </span><span class="istickedoff">M.fromList</span>
+<span class="lineno">   56 </span><span class="spaces">    </span><span class="istickedoff">[builtinBinOp &quot;concat&quot; <span class="nottickedoff">binOpInt</span> &quot;+&quot;]</span>
+<span class="lineno">   57 </span><span class="spaces">  </span><span class="istickedoff">where</span>
+<span class="lineno">   58 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">binOpInt = TypeFun [tString, tString] tString</span></span></span>
+<span class="lineno">   59 </span>
+<span class="lineno">   60 </span>bools :: Builtins
+<span class="lineno">   61 </span><span class="decl"><span class="istickedoff">bools =</span>
+<span class="lineno">   62 </span><span class="spaces">  </span><span class="istickedoff">M.fromList</span>
+<span class="lineno">   63 </span><span class="spaces">    </span><span class="istickedoff">[ builtinBinOp &quot;and&quot; <span class="nottickedoff">binOpInt</span> &quot;&amp;&amp;&quot;,</span>
+<span class="lineno">   64 </span><span class="spaces">      </span><span class="istickedoff">builtinBinOp &quot;or&quot; <span class="nottickedoff">binOpInt</span> &quot;||&quot;,</span>
+<span class="lineno">   65 </span><span class="spaces">      </span><span class="istickedoff">builtinFun &quot;not&quot; <span class="nottickedoff">opInt</span> <span class="nottickedoff">&quot;function (x) { return !x }&quot;</span></span>
+<span class="lineno">   66 </span><span class="spaces">    </span><span class="istickedoff">]</span>
+<span class="lineno">   67 </span><span class="spaces">  </span><span class="istickedoff">where</span>
+<span class="lineno">   68 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">binOpInt = TypeFun [tBool, tBool] tBool</span></span>
+<span class="lineno">   69 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">opInt = TypeFun [tBool] tBool</span></span></span>
 <span class="lineno">   70 </span>
-<span class="lineno">   71 </span>tString :: Type
-<span class="lineno">   72 </span><span class="decl"><span class="nottickedoff">tString = TypeCon &quot;String&quot;</span></span>
-<span class="lineno">   73 </span>
-<span class="lineno">   74 </span>tBool :: Type
-<span class="lineno">   75 </span><span class="decl"><span class="nottickedoff">tBool = TypeCon &quot;Bool&quot;</span></span>
+<span class="lineno">   71 </span>-- Builtin values
+<span class="lineno">   72 </span>unit :: Expr
+<span class="lineno">   73 </span><span class="decl"><span class="nottickedoff">unit = ERecord M.empty</span></span>
+<span class="lineno">   74 </span>
+<span class="lineno">   75 </span>true :: Expr
+<span class="lineno">   76 </span><span class="decl"><span class="istickedoff">true = EVariant $ Variant &quot;True&quot; <span class="nottickedoff">unit</span></span></span>
+<span class="lineno">   77 </span>
+<span class="lineno">   78 </span>false :: Expr
+<span class="lineno">   79 </span><span class="decl"><span class="istickedoff">false = EVariant $ Variant &quot;False&quot; <span class="nottickedoff">unit</span></span></span>
+<span class="lineno">   80 </span>
+<span class="lineno">   81 </span>-- Builtin types
+<span class="lineno">   82 </span>tUnit :: Type
+<span class="lineno">   83 </span><span class="decl"><span class="nottickedoff">tUnit = TypeRec []</span></span>
+<span class="lineno">   84 </span>
+<span class="lineno">   85 </span>tInt :: Type
+<span class="lineno">   86 </span><span class="decl"><span class="nottickedoff">tInt = TypeCon &quot;Int&quot;</span></span>
+<span class="lineno">   87 </span>
+<span class="lineno">   88 </span>tFloat :: Type
+<span class="lineno">   89 </span><span class="decl"><span class="nottickedoff">tFloat = TypeCon &quot;Float&quot;</span></span>
+<span class="lineno">   90 </span>
+<span class="lineno">   91 </span>tString :: Type
+<span class="lineno">   92 </span><span class="decl"><span class="nottickedoff">tString = TypeCon &quot;String&quot;</span></span>
+<span class="lineno">   93 </span>
+<span class="lineno">   94 </span>tBool :: Type
+<span class="lineno">   95 </span><span class="decl"><span class="nottickedoff">tBool = TypeCon &quot;Bool&quot;</span></span>
+<span class="lineno">   96 </span>
+<span class="lineno">   97 </span>-- Builtin datatypes
+<span class="lineno">   98 </span>bool :: DataType
+<span class="lineno">   99 </span><span class="decl"><span class="nottickedoff">bool =</span>
+<span class="lineno">  100 </span><span class="spaces">  </span><span class="nottickedoff">DataType</span>
+<span class="lineno">  101 </span><span class="spaces">    </span><span class="nottickedoff">&quot;Bool&quot;</span>
+<span class="lineno">  102 </span><span class="spaces">    </span><span class="nottickedoff">[]</span>
+<span class="lineno">  103 </span><span class="spaces">    </span><span class="nottickedoff">[ Variant &quot;True&quot; tUnit,</span>
+<span class="lineno">  104 </span><span class="spaces">      </span><span class="nottickedoff">Variant &quot;False&quot; tUnit</span>
+<span class="lineno">  105 </span><span class="spaces">    </span><span class="nottickedoff">]</span></span>
+<span class="lineno">  106 </span>
+<span class="lineno">  107 </span>maybe :: DataType
+<span class="lineno">  108 </span><span class="decl"><span class="nottickedoff">maybe =</span>
+<span class="lineno">  109 </span><span class="spaces">  </span><span class="nottickedoff">DataType</span>
+<span class="lineno">  110 </span><span class="spaces">    </span><span class="nottickedoff">&quot;Maybe&quot;</span>
+<span class="lineno">  111 </span><span class="spaces">    </span><span class="nottickedoff">[&quot;a&quot;]</span>
+<span class="lineno">  112 </span><span class="spaces">    </span><span class="nottickedoff">[ Variant &quot;Just&quot; $ TypeVar &quot;a&quot;,</span>
+<span class="lineno">  113 </span><span class="spaces">      </span><span class="nottickedoff">Variant &quot;None&quot; tUnit</span>
+<span class="lineno">  114 </span><span class="spaces">    </span><span class="nottickedoff">]</span></span>
+<span class="lineno">  115 </span>
 
 </pre>
 </body>
