@@ -17,16 +17,17 @@ data Lit
   deriving (Show, Eq)
 
 -- an expression that evaluates to a value
-data Expr
-  = ELit Lit
+data Expr a
+  = EAnnotated a (Expr a)
+  | ELit Lit
   | EVar Var
-  | EFun [Var] Sub
-  | EFunCall Expr [Expr]
-  | ERecord (Record Expr)
-  | EFfi T.Text [Expr] -- foreign function interface call
-  | EVariant (Variant Expr) -- equivalent to data constructors
-  | ECase Expr [(Pattern, Expr)]
-  | ERecordAccess Expr Label
+  | EFun [Var] (Sub a)
+  | EFunCall (Expr a) [Expr a]
+  | ERecord (Record (Expr a))
+  | EFfi T.Text [Expr a] -- foreign function interface call
+  | EVariant (Variant (Expr a)) -- equivalent to data constructors
+  | ECase (Expr a) [(Pattern, Expr a)]
+  | ERecordAccess (Expr a) Label
   deriving (Show, Eq)
 
 -- a datatype
@@ -35,25 +36,25 @@ data DataType
   deriving (Show, Eq)
 
 -- a datatype definition or term definition
-data Definition
+data Definition a
   = TypeDef DataType
-  | TermDef TermDef
+  | TermDef (TermDef a)
   deriving (Show, Eq)
 
 -- a term definition, either a variable or a function
-data TermDef
-  = Variable Var Expr
-  | Function Var [Var] Sub
+data TermDef a
+  = Variable Var (Expr a)
+  | Function Var [Var] (Sub a)
   deriving (Show, Eq)
 
 -- a statement, either an expression or a term definition
-data Statement
-  = SExpr Expr
-  | SDef TermDef
+data Statement a
+  = SExpr (Expr a)
+  | SDef (TermDef a)
   deriving (Show, Eq)
 
 -- a series of statements
-type Sub = [Statement]
+type Sub a = [Statement a]
 
 -- a pattern
 data Pattern
@@ -65,6 +66,6 @@ data Pattern
   deriving (Show, Eq)
 
 -- a wave's source file, a collection of definitions
-newtype File
-  = File [Definition]
+newtype File a
+  = File [Definition a]
   deriving (Show, Eq)

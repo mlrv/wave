@@ -295,7 +295,7 @@ builtinBools = do
       "false"
 
 -- utilities
-check :: FilePath -> File -> String -> IO ()
+check :: FilePath -> File () -> String -> IO ()
 check path file expected =
   let fileName = testDir <> path <> ".wave"
    in do
@@ -305,7 +305,7 @@ check path file expected =
 
 testDir = "/tmp/test"
 
-exprToFile :: Expr -> File
+exprToFile :: Expr () -> File ()
 exprToFile expr =
   File
     [ TermDef $

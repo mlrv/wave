@@ -6,5 +6,5 @@ import Translate
 import qualified Wave.Ast as Wave
 import Wave.Builtins
 
-compile :: Wave.File -> T.Text
+compile :: Wave.File () -> T.Text
 compile = render . ppFile . translate translateFile builtins

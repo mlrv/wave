@@ -39,20 +39,21 @@ genVar var = do
 
 --
 
-translateFile :: Translate m => File -> m JS.File
+translateFile :: Translate m => File () -> m JS.File
 translateFile (File defs) = do
   defs' <- traverse translateDef termDefs
   pure $ JS.File $ map JS.SDef defs' ++ [JS.SExpr $ JS.EFunCall (JS.EVar "main") []]
   where
     termDefs = [d | (TermDef d) <- defs] -- datatype defs are not translated
 
-translateDef :: Translate m => TermDef -> m JS.Definition
+translateDef :: Translate m => TermDef () -> m JS.Definition
 translateDef = \case
   Variable var expr -> JS.Variable var <$> translateExpr expr
   Function var args body -> JS.Function var args <$> translateSub body
 
-translateExpr :: Translate m => Expr -> m JS.Expr
+translateExpr :: Translate m => Expr () -> m JS.Expr
 translateExpr = \case
+  EAnnotated _ e -> translateExpr e
   ELit lit -> pure $ JS.ELit $ translateLit lit
   EVar var -> do
     builtinOp <- asks (M.lookup var)
@@ -96,7 +97,7 @@ translateExpr = \case
     pure $
       JS.ERecordAccess expr' label
 
-translatePatterns :: Translate m => JS.Expr -> [(Pattern, Expr)] -> m JS.Sub
+translatePatterns :: Translate m => JS.Expr -> [(Pattern, Expr ())] -> m JS.Sub
 translatePatterns var = traverse $ \(pat, expr) -> do
   result' <- translateExpr expr
   PatResult conds matchers' <- translatePattern var pat
@@ -146,10 +147,10 @@ translatePattern expr = \case
           matchers = matchers pat'
         }
 
-translateSub :: Translate m => Sub -> m JS.Sub
+translateSub :: Translate m => Sub () -> m JS.Sub
 translateSub = traverse translateStatement
 
-translateStatement :: Translate m => Statement -> m JS.Statement
+translateStatement :: Translate m => Statement () -> m JS.Statement
 translateStatement = \case
   SExpr expr -> JS.SExpr <$> translateExpr expr
   SDef def -> JS.SDef <$> translateDef def

@@ -69,13 +69,13 @@ bools =
     opInt = TypeFun [tBool] tBool
 
 -- Builtin values
-unit :: Expr
+unit :: Expr ()
 unit = ERecord M.empty
 
-true :: Expr
+true :: Expr ()
 true = EVariant $ Variant "True" unit
 
-false :: Expr
+false :: Expr ()
 false = EVariant $ Variant "False" unit
 
 -- Builtin types
