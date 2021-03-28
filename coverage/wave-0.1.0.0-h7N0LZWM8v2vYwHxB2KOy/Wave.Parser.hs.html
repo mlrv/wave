@@ -1,0 +1,84 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+span.lineno { color: white; background: #aaaaaa; border-right: solid white 12px }
+span.nottickedoff { background: yellow}
+span.istickedoff { background: white }
+span.tickonlyfalse { margin: -1px; border: 1px solid #f20913; background: #f20913 }
+span.tickonlytrue  { margin: -1px; border: 1px solid #60de51; background: #60de51 }
+span.funcount { font-size: small; color: orange; z-index: 2; position: absolute; right: 20 }
+span.decl { font-weight: bold }
+span.spaces    { background: white }
+</style>
+</head>
+<body>
+<pre>
+<span class="decl"><span class="nottickedoff">never executed</span> <span class="tickonlytrue">always true</span> <span class="tickonlyfalse">always false</span></span>
+</pre>
+<pre>
+<span class="lineno">    1 </span>{-# LANGUAGE OverloadedStrings #-}
+<span class="lineno">    2 </span>
+<span class="lineno">    3 </span>module Wave.Parser where
+<span class="lineno">    4 </span>
+<span class="lineno">    5 </span>import Control.Arrow (left)
+<span class="lineno">    6 </span>import Control.Monad
+<span class="lineno">    7 </span>import qualified Data.Text as T
+<span class="lineno">    8 </span>import Data.Void (Void)
+<span class="lineno">    9 </span>import qualified Text.Megaparsec ((&lt;?&gt;))
+<span class="lineno">   10 </span>import qualified Text.Megaparsec as P
+<span class="lineno">   11 </span>import qualified Text.Megaparsec.Char as P
+<span class="lineno">   12 </span>import qualified Text.Megaparsec.Char.Lexer as L
+<span class="lineno">   13 </span>import Wave.Ast
+<span class="lineno">   14 </span>
+<span class="lineno">   15 </span>type Parser = P.Parsec Void T.Text
+<span class="lineno">   16 </span>
+<span class="lineno">   17 </span>type Ann = P.SourcePos
+<span class="lineno">   18 </span>
+<span class="lineno">   19 </span>runParser :: Parser a -&gt; FilePath -&gt; T.Text -&gt; Either T.Text a
+<span class="lineno">   20 </span><span class="decl"><span class="istickedoff">runParser p file src =</span>
+<span class="lineno">   21 </span><span class="spaces">  </span><span class="istickedoff">let withEof = p &lt;* P.eof</span>
+<span class="lineno">   22 </span><span class="spaces">      </span><span class="istickedoff">parsed = P.runParser withEof <span class="nottickedoff">file</span> src</span>
+<span class="lineno">   23 </span><span class="spaces">   </span><span class="istickedoff">in left <span class="nottickedoff">(T.pack . P.errorBundlePretty)</span> parsed</span></span>
+<span class="lineno">   24 </span>
+<span class="lineno">   25 </span>parseLit :: Parser Lit
+<span class="lineno">   26 </span><span class="decl"><span class="istickedoff">parseLit =</span>
+<span class="lineno">   27 </span><span class="spaces">  </span><span class="istickedoff">P.choice</span>
+<span class="lineno">   28 </span><span class="spaces">    </span><span class="istickedoff">[ LString &lt;$&gt; stringLiteral,</span>
+<span class="lineno">   29 </span><span class="spaces">      </span><span class="istickedoff">numberLiteral</span>
+<span class="lineno">   30 </span><span class="spaces">    </span><span class="istickedoff">]</span></span>
+<span class="lineno">   31 </span>
+<span class="lineno">   32 </span>sc :: Parser ()
+<span class="lineno">   33 </span><span class="decl"><span class="nottickedoff">sc =</span>
+<span class="lineno">   34 </span><span class="spaces">  </span><span class="nottickedoff">L.space</span>
+<span class="lineno">   35 </span><span class="spaces">    </span><span class="nottickedoff">P.hspace1</span>
+<span class="lineno">   36 </span><span class="spaces">    </span><span class="nottickedoff">(L.skipLineComment &quot;//&quot;)</span>
+<span class="lineno">   37 </span><span class="spaces">    </span><span class="nottickedoff">(L.skipBlockCommentNested &quot;/*&quot; &quot;*/&quot;)</span></span>
+<span class="lineno">   38 </span>
+<span class="lineno">   39 </span>lexeme :: Parser a -&gt; Parser a
+<span class="lineno">   40 </span><span class="decl"><span class="nottickedoff">lexeme = L.lexeme sc</span></span>
+<span class="lineno">   41 </span>
+<span class="lineno">   42 </span>symbol :: T.Text -&gt; Parser ()
+<span class="lineno">   43 </span><span class="decl"><span class="nottickedoff">symbol = void . L.symbol sc</span></span>
+<span class="lineno">   44 </span>
+<span class="lineno">   45 </span>stringLiteral :: Parser T.Text
+<span class="lineno">   46 </span><span class="decl"><span class="istickedoff">stringLiteral =</span>
+<span class="lineno">   47 </span><span class="spaces">  </span><span class="istickedoff">fmap T.pack $ P.char '\&quot;' *&gt; P.manyTill L.charLiteral (P.char '\&quot;')</span></span>
+<span class="lineno">   48 </span>
+<span class="lineno">   49 </span>numberLiteral :: Parser Lit
+<span class="lineno">   50 </span><span class="decl"><span class="istickedoff">numberLiteral = do</span>
+<span class="lineno">   51 </span><span class="spaces">  </span><span class="istickedoff">sign &lt;- P.optional $ P.char '-'</span>
+<span class="lineno">   52 </span><span class="spaces">  </span><span class="istickedoff">int &lt;- P.some P.digitChar</span>
+<span class="lineno">   53 </span><span class="spaces">  </span><span class="istickedoff">dec &lt;- P.optional $ P.char '.' *&gt; P.some P.digitChar</span>
+<span class="lineno">   54 </span><span class="spaces">  </span><span class="istickedoff">case dec of</span>
+<span class="lineno">   55 </span><span class="spaces">    </span><span class="istickedoff">Nothing -&gt; pure $ LInt (read $ maybe [] pure sign &lt;&gt; int)</span>
+<span class="lineno">   56 </span><span class="spaces">    </span><span class="istickedoff">Just n -&gt; pure $ LFloat (read $ maybe [] pure sign &lt;&gt; int &lt;&gt; &quot;.&quot; &lt;&gt; n)</span></span>
+<span class="lineno">   57 </span>
+<span class="lineno">   58 </span>-- Utils
+<span class="lineno">   59 </span>
+<span class="lineno">   60 </span>getAnn :: Parser Ann
+<span class="lineno">   61 </span><span class="decl"><span class="nottickedoff">getAnn = P.getSourcePos</span></span>
+
+</pre>
+</body>
+</html>

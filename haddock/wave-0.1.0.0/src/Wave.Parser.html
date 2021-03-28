@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE OverloadedStrings #-}</span><span>
+</span><span id="line-2"></span><span>
+</span><span id="line-3"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Wave.Parser</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-4"></span><span>
+</span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Control.Arrow</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">left</span></span><span class="hs-special">)</span><span>
+</span><span id="line-6"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Control.Monad</span></span><span>
+</span><span id="line-7"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">T</span></span><span>
+</span><span id="line-8"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Void</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Void</span></span><span class="hs-special">)</span><span>
+</span><span id="line-9"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Text.Megaparsec</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-operator">(&lt;?&gt;)</span></span><span class="hs-special">)</span><span>
+</span><span id="line-10"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Text.Megaparsec</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">P</span></span><span>
+</span><span id="line-11"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Text.Megaparsec.Char</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">P</span></span><span>
+</span><span id="line-12"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Text.Megaparsec.Char.Lexer</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">L</span></span><span>
+</span><span id="line-13"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Wave.Ast.html"><span class="hs-identifier">Wave.Ast</span></a></span><span>
+</span><span id="line-14"></span><span>
+</span><span id="line-15"></span><span class="hs-keyword">type</span><span> </span><span id="Parser"><span class="annot"><a href="Wave.Parser.html#Parser"><span class="hs-identifier hs-var">Parser</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">P.Parsec</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Void</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span>
+</span><span id="line-16"></span><span>
+</span><span id="line-17"></span><span class="hs-keyword">type</span><span> </span><span id="Ann"><span class="annot"><a href="Wave.Parser.html#Ann"><span class="hs-identifier hs-var">Ann</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">P.SourcePos</span></span><span>
+</span><span id="line-18"></span><span>
+</span><span id="line-19"></span><span id="local-6989586621679050890"><span class="annot"><a href="Wave.Parser.html#runParser"><span class="hs-identifier hs-type">runParser</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Parser.html#Parser"><span class="hs-identifier hs-type">Parser</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679050890"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span> </span><span class="annot"><a href="#local-6989586621679050890"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-20"></span><span id="runParser"><span class="annot"><span class="annottext">runParser :: Parser a -&gt; FilePath -&gt; Text -&gt; Either Text a
+</span><a href="Wave.Parser.html#runParser"><span class="hs-identifier hs-var hs-var">runParser</span></a></span></span><span> </span><span id="local-6989586621679050888"><span class="annot"><span class="annottext">Parser a
+</span><a href="#local-6989586621679050888"><span class="hs-identifier hs-var">p</span></a></span></span><span> </span><span id="local-6989586621679050887"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679050887"><span class="hs-identifier hs-var">file</span></a></span></span><span> </span><span id="local-6989586621679050886"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679050886"><span class="hs-identifier hs-var">src</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-21"></span><span>  </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679050885"><span class="annot"><span class="annottext">withEof :: Parser a
+</span><a href="#local-6989586621679050885"><span class="hs-identifier hs-var hs-var">withEof</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Parser a
+</span><a href="#local-6989586621679050888"><span class="hs-identifier hs-var">p</span></a></span><span> </span><span class="annot"><span class="annottext">Parser a -&gt; ParsecT Void Text Identity () -&gt; Parser a
+forall (f :: * -&gt; *) a b. Applicative f =&gt; f a -&gt; f b -&gt; f a
+</span><span class="hs-operator hs-var">&lt;*</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity ()
+forall e s (m :: * -&gt; *). MonadParsec e s m =&gt; m ()
+</span><span class="hs-identifier hs-var">P.eof</span></span><span>
+</span><span id="line-22"></span><span>      </span><span id="local-6989586621679050882"><span class="annot"><span class="annottext">parsed :: Either (ParseErrorBundle Text Void) a
+</span><a href="#local-6989586621679050882"><span class="hs-identifier hs-var hs-var">parsed</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Parser a
+-&gt; FilePath -&gt; Text -&gt; Either (ParseErrorBundle Text Void) a
+forall e s a.
+Parsec e s a -&gt; FilePath -&gt; s -&gt; Either (ParseErrorBundle s e) a
+</span><span class="hs-identifier hs-var">P.runParser</span></span><span> </span><span class="annot"><span class="annottext">Parser a
+</span><a href="#local-6989586621679050885"><span class="hs-identifier hs-var">withEof</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679050887"><span class="hs-identifier hs-var">file</span></a></span><span> </span><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679050886"><span class="hs-identifier hs-var">src</span></a></span><span>
+</span><span id="line-23"></span><span>   </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">(ParseErrorBundle Text Void -&gt; Text)
+-&gt; Either (ParseErrorBundle Text Void) a -&gt; Either Text a
+forall (a :: * -&gt; * -&gt; *) b c d.
+ArrowChoice a =&gt;
+a b c -&gt; a (Either b d) (Either c d)
+</span><span class="hs-identifier hs-var">left</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Text
+</span><span class="hs-identifier hs-var">T.pack</span></span><span> </span><span class="annot"><span class="annottext">(FilePath -&gt; Text)
+-&gt; (ParseErrorBundle Text Void -&gt; FilePath)
+-&gt; ParseErrorBundle Text Void
+-&gt; Text
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">ParseErrorBundle Text Void -&gt; FilePath
+forall s e.
+(VisualStream s, TraversableStream s, ShowErrorComponent e) =&gt;
+ParseErrorBundle s e -&gt; FilePath
+</span><span class="hs-identifier hs-var">P.errorBundlePretty</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Either (ParseErrorBundle Text Void) a
+</span><a href="#local-6989586621679050882"><span class="hs-identifier hs-var">parsed</span></a></span><span>
+</span><span id="line-24"></span><span>
+</span><span id="line-25"></span><span class="annot"><a href="Wave.Parser.html#parseLit"><span class="hs-identifier hs-type">parseLit</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Parser.html#Parser"><span class="hs-identifier hs-type">Parser</span></a></span><span> </span><span class="annot"><a href="Wave.Ast.html#Lit"><span class="hs-identifier hs-type">Lit</span></a></span><span>
+</span><span id="line-26"></span><span id="parseLit"><span class="annot"><span class="annottext">parseLit :: Parser Lit
+</span><a href="Wave.Parser.html#parseLit"><span class="hs-identifier hs-var hs-var">parseLit</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-27"></span><span>  </span><span class="annot"><span class="annottext">[Parser Lit] -&gt; Parser Lit
+forall (f :: * -&gt; *) (m :: * -&gt; *) a.
+(Foldable f, Alternative m) =&gt;
+f (m a) -&gt; m a
+</span><span class="hs-identifier hs-var">P.choice</span></span><span>
+</span><span id="line-28"></span><span>    </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Lit
+</span><a href="Wave.Ast.html#LString"><span class="hs-identifier hs-var">LString</span></a></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Lit) -&gt; ParsecT Void Text Identity Text -&gt; Parser Lit
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text
+</span><a href="Wave.Parser.html#stringLiteral"><span class="hs-identifier hs-var">stringLiteral</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-29"></span><span>      </span><span class="annot"><span class="annottext">Parser Lit
+</span><a href="Wave.Parser.html#numberLiteral"><span class="hs-identifier hs-var">numberLiteral</span></a></span><span>
+</span><span id="line-30"></span><span>    </span><span class="hs-special">]</span><span>
+</span><span id="line-31"></span><span>
+</span><span id="line-32"></span><span class="annot"><a href="Wave.Parser.html#sc"><span class="hs-identifier hs-type">sc</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Parser.html#Parser"><span class="hs-identifier hs-type">Parser</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-33"></span><span id="sc"><span class="annot"><span class="annottext">sc :: ParsecT Void Text Identity ()
+</span><a href="Wave.Parser.html#sc"><span class="hs-identifier hs-var hs-var">sc</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-34"></span><span>  </span><span class="annot"><span class="annottext">ParsecT Void Text Identity ()
+-&gt; ParsecT Void Text Identity ()
+-&gt; ParsecT Void Text Identity ()
+-&gt; ParsecT Void Text Identity ()
+forall e s (m :: * -&gt; *).
+MonadParsec e s m =&gt;
+m () -&gt; m () -&gt; m () -&gt; m ()
+</span><span class="hs-identifier hs-var">L.space</span></span><span>
+</span><span id="line-35"></span><span>    </span><span class="annot"><span class="annottext">ParsecT Void Text Identity ()
+forall e s (m :: * -&gt; *).
+(MonadParsec e s m, Token s ~ Char) =&gt;
+m ()
+</span><span class="hs-identifier hs-var">P.hspace1</span></span><span>
+</span><span id="line-36"></span><span>    </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Tokens Text -&gt; ParsecT Void Text Identity ()
+forall e s (m :: * -&gt; *).
+(MonadParsec e s m, Token s ~ Char) =&gt;
+Tokens s -&gt; m ()
+</span><span class="hs-identifier hs-var">L.skipLineComment</span></span><span> </span><span class="annot"><span class="annottext">Tokens Text
+</span><span class="hs-string">&quot;//&quot;</span></span><span class="hs-special">)</span><span>
+</span><span id="line-37"></span><span>    </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Tokens Text -&gt; Tokens Text -&gt; ParsecT Void Text Identity ()
+forall e s (m :: * -&gt; *).
+(MonadParsec e s m, Token s ~ Char) =&gt;
+Tokens s -&gt; Tokens s -&gt; m ()
+</span><span class="hs-identifier hs-var">L.skipBlockCommentNested</span></span><span> </span><span class="annot"><span class="annottext">Tokens Text
+</span><span class="hs-string">&quot;/*&quot;</span></span><span> </span><span class="annot"><span class="annottext">Tokens Text
+</span><span class="hs-string">&quot;*/&quot;</span></span><span class="hs-special">)</span><span>
+</span><span id="line-38"></span><span>
+</span><span id="line-39"></span><span id="local-6989586621679050866"><span class="annot"><a href="Wave.Parser.html#lexeme"><span class="hs-identifier hs-type">lexeme</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Parser.html#Parser"><span class="hs-identifier hs-type">Parser</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679050866"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Wave.Parser.html#Parser"><span class="hs-identifier hs-type">Parser</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679050866"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-40"></span><span id="lexeme"><span class="annot"><span class="annottext">lexeme :: Parser a -&gt; Parser a
+</span><a href="Wave.Parser.html#lexeme"><span class="hs-identifier hs-var hs-var">lexeme</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity () -&gt; Parser a -&gt; Parser a
+forall e s (m :: * -&gt; *) a. MonadParsec e s m =&gt; m () -&gt; m a -&gt; m a
+</span><span class="hs-identifier hs-var">L.lexeme</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity ()
+</span><a href="Wave.Parser.html#sc"><span class="hs-identifier hs-var">sc</span></a></span><span>
+</span><span id="line-41"></span><span>
+</span><span id="line-42"></span><span class="annot"><a href="Wave.Parser.html#symbol"><span class="hs-identifier hs-type">symbol</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Wave.Parser.html#Parser"><span class="hs-identifier hs-type">Parser</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-43"></span><span id="symbol"><span class="annot"><span class="annottext">symbol :: Text -&gt; ParsecT Void Text Identity ()
+</span><a href="Wave.Parser.html#symbol"><span class="hs-identifier hs-var hs-var">symbol</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Text -&gt; ParsecT Void Text Identity ()
+forall (f :: * -&gt; *) a. Functor f =&gt; f a -&gt; f ()
+</span><span class="hs-identifier hs-var">void</span></span><span> </span><span class="annot"><span class="annottext">(ParsecT Void Text Identity Text -&gt; ParsecT Void Text Identity ())
+-&gt; (Text -&gt; ParsecT Void Text Identity Text)
+-&gt; Text
+-&gt; ParsecT Void Text Identity ()
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity ()
+-&gt; Tokens Text -&gt; ParsecT Void Text Identity (Tokens Text)
+forall e s (m :: * -&gt; *).
+MonadParsec e s m =&gt;
+m () -&gt; Tokens s -&gt; m (Tokens s)
+</span><span class="hs-identifier hs-var">L.symbol</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity ()
+</span><a href="Wave.Parser.html#sc"><span class="hs-identifier hs-var">sc</span></a></span><span>
+</span><span id="line-44"></span><span>
+</span><span id="line-45"></span><span class="annot"><a href="Wave.Parser.html#stringLiteral"><span class="hs-identifier hs-type">stringLiteral</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Parser.html#Parser"><span class="hs-identifier hs-type">Parser</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span>
+</span><span id="line-46"></span><span id="stringLiteral"><span class="annot"><span class="annottext">stringLiteral :: ParsecT Void Text Identity Text
+</span><a href="Wave.Parser.html#stringLiteral"><span class="hs-identifier hs-var hs-var">stringLiteral</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-47"></span><span>  </span><span class="annot"><span class="annottext">(FilePath -&gt; Text)
+-&gt; ParsecT Void Text Identity FilePath
+-&gt; ParsecT Void Text Identity Text
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; Text
+</span><span class="hs-identifier hs-var">T.pack</span></span><span> </span><span class="annot"><span class="annottext">(ParsecT Void Text Identity FilePath
+ -&gt; ParsecT Void Text Identity Text)
+-&gt; ParsecT Void Text Identity FilePath
+-&gt; ParsecT Void Text Identity Text
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Token Text -&gt; ParsecT Void Text Identity (Token Text)
+forall e s (m :: * -&gt; *).
+(MonadParsec e s m, Token s ~ Char) =&gt;
+Token s -&gt; m (Token s)
+</span><span class="hs-identifier hs-var">P.char</span></span><span> </span><span class="annot"><span class="annottext">Char
+Token Text
+</span><span class="hs-char">'\&quot;'</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Char
+-&gt; ParsecT Void Text Identity FilePath
+-&gt; ParsecT Void Text Identity FilePath
+forall (f :: * -&gt; *) a b. Applicative f =&gt; f a -&gt; f b -&gt; f b
+</span><span class="hs-operator hs-var">*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Char
+-&gt; ParsecT Void Text Identity Char
+-&gt; ParsecT Void Text Identity FilePath
+forall (m :: * -&gt; *) a end. MonadPlus m =&gt; m a -&gt; m end -&gt; m [a]
+</span><span class="hs-identifier hs-var">P.manyTill</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Char
+forall e s (m :: * -&gt; *).
+(MonadParsec e s m, Token s ~ Char) =&gt;
+m Char
+</span><span class="hs-identifier hs-var">L.charLiteral</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Token Text -&gt; ParsecT Void Text Identity (Token Text)
+forall e s (m :: * -&gt; *).
+(MonadParsec e s m, Token s ~ Char) =&gt;
+Token s -&gt; m (Token s)
+</span><span class="hs-identifier hs-var">P.char</span></span><span> </span><span class="annot"><span class="annottext">Char
+Token Text
+</span><span class="hs-char">'\&quot;'</span></span><span class="hs-special">)</span><span>
+</span><span id="line-48"></span><span>
+</span><span id="line-49"></span><span class="annot"><a href="Wave.Parser.html#numberLiteral"><span class="hs-identifier hs-type">numberLiteral</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Parser.html#Parser"><span class="hs-identifier hs-type">Parser</span></a></span><span> </span><span class="annot"><a href="Wave.Ast.html#Lit"><span class="hs-identifier hs-type">Lit</span></a></span><span>
+</span><span id="line-50"></span><span id="numberLiteral"><span class="annot"><span class="annottext">numberLiteral :: Parser Lit
+</span><a href="Wave.Parser.html#numberLiteral"><span class="hs-identifier hs-var hs-var">numberLiteral</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-51"></span><span>  </span><span id="local-6989586621679050857"><span class="annot"><span class="annottext">Maybe Char
+</span><a href="#local-6989586621679050857"><span class="hs-identifier hs-var">sign</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Char
+-&gt; ParsecT Void Text Identity (Maybe Char)
+forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f (Maybe a)
+</span><span class="hs-identifier hs-var">P.optional</span></span><span> </span><span class="annot"><span class="annottext">(ParsecT Void Text Identity Char
+ -&gt; ParsecT Void Text Identity (Maybe Char))
+-&gt; ParsecT Void Text Identity Char
+-&gt; ParsecT Void Text Identity (Maybe Char)
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Token Text -&gt; ParsecT Void Text Identity (Token Text)
+forall e s (m :: * -&gt; *).
+(MonadParsec e s m, Token s ~ Char) =&gt;
+Token s -&gt; m (Token s)
+</span><span class="hs-identifier hs-var">P.char</span></span><span> </span><span class="annot"><span class="annottext">Char
+Token Text
+</span><span class="hs-char">'-'</span></span><span>
+</span><span id="line-52"></span><span>  </span><span id="local-6989586621679050855"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679050855"><span class="hs-identifier hs-var">int</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Char
+-&gt; ParsecT Void Text Identity FilePath
+forall (m :: * -&gt; *) a. MonadPlus m =&gt; m a -&gt; m [a]
+</span><span class="hs-identifier hs-var">P.some</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Char
+forall e s (m :: * -&gt; *).
+(MonadParsec e s m, Token s ~ Char) =&gt;
+m (Token s)
+</span><span class="hs-identifier hs-var">P.digitChar</span></span><span>
+</span><span id="line-53"></span><span>  </span><span id="local-6989586621679050852"><span class="annot"><span class="annottext">Maybe FilePath
+</span><a href="#local-6989586621679050852"><span class="hs-identifier hs-var">dec</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity FilePath
+-&gt; ParsecT Void Text Identity (Maybe FilePath)
+forall (f :: * -&gt; *) a. Alternative f =&gt; f a -&gt; f (Maybe a)
+</span><span class="hs-identifier hs-var">P.optional</span></span><span> </span><span class="annot"><span class="annottext">(ParsecT Void Text Identity FilePath
+ -&gt; ParsecT Void Text Identity (Maybe FilePath))
+-&gt; ParsecT Void Text Identity FilePath
+-&gt; ParsecT Void Text Identity (Maybe FilePath)
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Token Text -&gt; ParsecT Void Text Identity (Token Text)
+forall e s (m :: * -&gt; *).
+(MonadParsec e s m, Token s ~ Char) =&gt;
+Token s -&gt; m (Token s)
+</span><span class="hs-identifier hs-var">P.char</span></span><span> </span><span class="annot"><span class="annottext">Char
+Token Text
+</span><span class="hs-char">'.'</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Char
+-&gt; ParsecT Void Text Identity FilePath
+-&gt; ParsecT Void Text Identity FilePath
+forall (f :: * -&gt; *) a b. Applicative f =&gt; f a -&gt; f b -&gt; f b
+</span><span class="hs-operator hs-var">*&gt;</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Char
+-&gt; ParsecT Void Text Identity FilePath
+forall (m :: * -&gt; *) a. MonadPlus m =&gt; m a -&gt; m [a]
+</span><span class="hs-identifier hs-var">P.some</span></span><span> </span><span class="annot"><span class="annottext">ParsecT Void Text Identity Char
+forall e s (m :: * -&gt; *).
+(MonadParsec e s m, Token s ~ Char) =&gt;
+m (Token s)
+</span><span class="hs-identifier hs-var">P.digitChar</span></span><span>
+</span><span id="line-54"></span><span>  </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">Maybe FilePath
+</span><a href="#local-6989586621679050852"><span class="hs-identifier hs-var">dec</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-55"></span><span>    </span><span class="annot"><span class="annottext">Maybe FilePath
+</span><span class="hs-identifier hs-var">Nothing</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Lit -&gt; Parser Lit
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Lit -&gt; Parser Lit) -&gt; Lit -&gt; Parser Lit
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Int -&gt; Lit
+</span><a href="Wave.Ast.html#LInt"><span class="hs-identifier hs-var">LInt</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Int
+forall a. Read a =&gt; FilePath -&gt; a
+</span><span class="hs-identifier hs-var">read</span></span><span> </span><span class="annot"><span class="annottext">(FilePath -&gt; Int) -&gt; FilePath -&gt; Int
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; (Char -&gt; FilePath) -&gt; Maybe Char -&gt; FilePath
+forall b a. b -&gt; (a -&gt; b) -&gt; Maybe a -&gt; b
+</span><span class="hs-identifier hs-var">maybe</span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">Char -&gt; FilePath
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">Maybe Char
+</span><a href="#local-6989586621679050857"><span class="hs-identifier hs-var">sign</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679050855"><span class="hs-identifier hs-var">int</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-56"></span><span>    </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679050848"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679050848"><span class="hs-identifier hs-var">n</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Lit -&gt; Parser Lit
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Lit -&gt; Parser Lit) -&gt; Lit -&gt; Parser Lit
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Float -&gt; Lit
+</span><a href="Wave.Ast.html#LFloat"><span class="hs-identifier hs-var">LFloat</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Float
+forall a. Read a =&gt; FilePath -&gt; a
+</span><span class="hs-identifier hs-var">read</span></span><span> </span><span class="annot"><span class="annottext">(FilePath -&gt; Float) -&gt; FilePath -&gt; Float
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; (Char -&gt; FilePath) -&gt; Maybe Char -&gt; FilePath
+forall b a. b -&gt; (a -&gt; b) -&gt; Maybe a -&gt; b
+</span><span class="hs-identifier hs-var">maybe</span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">Char -&gt; FilePath
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">Maybe Char
+</span><a href="#local-6989586621679050857"><span class="hs-identifier hs-var">sign</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679050855"><span class="hs-identifier hs-var">int</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><span class="hs-string">&quot;.&quot;</span></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679050848"><span class="hs-identifier hs-var">n</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-57"></span><span>
+</span><span id="line-58"></span><span class="hs-comment">-- Utils</span><span>
+</span><span id="line-59"></span><span>
+</span><span id="line-60"></span><span class="annot"><a href="Wave.Parser.html#getAnn"><span class="hs-identifier hs-type">getAnn</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Wave.Parser.html#Parser"><span class="hs-identifier hs-type">Parser</span></a></span><span> </span><span class="annot"><a href="Wave.Parser.html#Ann"><span class="hs-identifier hs-type">Ann</span></a></span><span>
+</span><span id="line-61"></span><span id="getAnn"><span class="annot"><span class="annottext">getAnn :: Parser Ann
+</span><a href="Wave.Parser.html#getAnn"><span class="hs-identifier hs-var hs-var">getAnn</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Parser Ann
+forall s e (m :: * -&gt; *).
+(TraversableStream s, MonadParsec e s m) =&gt;
+m Ann
+</span><span class="hs-identifier hs-var">P.getSourcePos</span></span></pre></body></html>

@@ -25,7 +25,7 @@ span.spaces    { background: white }
 <span class="lineno">    6 </span>import qualified Wave.Ast as Wave
 <span class="lineno">    7 </span>import Wave.Builtins
 <span class="lineno">    8 </span>
-<span class="lineno">    9 </span>compile :: Wave.File -&gt; T.Text
+<span class="lineno">    9 </span>compile :: Wave.File () -&gt; T.Text
 <span class="lineno">   10 </span><span class="decl"><span class="istickedoff">compile = render . ppFile . translate translateFile builtins</span></span>
 
 </pre>

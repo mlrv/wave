@@ -88,13 +88,13 @@ span.spaces    { background: white }
 <span class="lineno">   69 </span><span class="spaces">    </span><span class="istickedoff"><span class="nottickedoff">opInt = TypeFun [tBool] tBool</span></span></span>
 <span class="lineno">   70 </span>
 <span class="lineno">   71 </span>-- Builtin values
-<span class="lineno">   72 </span>unit :: Expr
+<span class="lineno">   72 </span>unit :: Expr ()
 <span class="lineno">   73 </span><span class="decl"><span class="nottickedoff">unit = ERecord M.empty</span></span>
 <span class="lineno">   74 </span>
-<span class="lineno">   75 </span>true :: Expr
+<span class="lineno">   75 </span>true :: Expr ()
 <span class="lineno">   76 </span><span class="decl"><span class="istickedoff">true = EVariant $ Variant &quot;True&quot; <span class="nottickedoff">unit</span></span></span>
 <span class="lineno">   77 </span>
-<span class="lineno">   78 </span>false :: Expr
+<span class="lineno">   78 </span>false :: Expr ()
 <span class="lineno">   79 </span><span class="decl"><span class="istickedoff">false = EVariant $ Variant &quot;False&quot; <span class="nottickedoff">unit</span></span></span>
 <span class="lineno">   80 </span>
 <span class="lineno">   81 </span>-- Builtin types
