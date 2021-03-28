@@ -164,7 +164,7 @@ expr = do
         (ppExpr' $ EFunCall (EVar "f") [])
         "f()"
 
-    it "function call with one arguments" $
+    it "function call with one argument" $
       shouldBe
         (ppExpr' $ EFunCall (EVar "f") [EVar "a"])
         "f(a)"
