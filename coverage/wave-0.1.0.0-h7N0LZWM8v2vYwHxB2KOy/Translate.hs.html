@@ -61,7 +61,7 @@ span.spaces    { background: white }
 <span class="lineno">   42 </span>translateFile :: Translate m =&gt; File () -&gt; m JS.File
 <span class="lineno">   43 </span><span class="decl"><span class="istickedoff">translateFile (File defs) = do</span>
 <span class="lineno">   44 </span><span class="spaces">  </span><span class="istickedoff">defs' &lt;- traverse translateDef termDefs</span>
-<span class="lineno">   45 </span><span class="spaces">  </span><span class="istickedoff">pure $ JS.File $ map JS.SDef defs' ++ [JS.SExpr $ JS.EFunCall (JS.EVar &quot;main&quot;) []]</span>
+<span class="lineno">   45 </span><span class="spaces">  </span><span class="istickedoff">pure $ JS.File $ map JS.SDef defs' ++ [JS.SExpr $ JS.EFunCall (JS.EVar &quot;main&quot;) []] -- fix this</span>
 <span class="lineno">   46 </span><span class="spaces">  </span><span class="istickedoff">where</span>
 <span class="lineno">   47 </span><span class="spaces">    </span><span class="istickedoff">termDefs = [d | (TermDef d) &lt;- defs]</span></span> -- datatype defs are not translated
 <span class="lineno">   48 </span>
@@ -167,18 +167,26 @@ span.spaces    { background: white }
 <span class="lineno">  148 </span><span class="spaces">        </span><span class="istickedoff">}</span></span>
 <span class="lineno">  149 </span>
 <span class="lineno">  150 </span>translateSub :: Translate m =&gt; Sub () -&gt; m JS.Sub
-<span class="lineno">  151 </span><span class="decl"><span class="istickedoff">translateSub = traverse translateStatement</span></span>
-<span class="lineno">  152 </span>
-<span class="lineno">  153 </span>translateStatement :: Translate m =&gt; Statement () -&gt; m JS.Statement
-<span class="lineno">  154 </span><span class="decl"><span class="istickedoff">translateStatement = \case</span>
-<span class="lineno">  155 </span><span class="spaces">  </span><span class="istickedoff">SExpr expr -&gt; JS.SExpr &lt;$&gt; translateExpr expr</span>
-<span class="lineno">  156 </span><span class="spaces">  </span><span class="istickedoff">SDef def -&gt; <span class="nottickedoff">JS.SDef &lt;$&gt; translateDef def</span></span></span>
-<span class="lineno">  157 </span>
-<span class="lineno">  158 </span>translateLit :: Lit -&gt; JS.Lit
-<span class="lineno">  159 </span><span class="decl"><span class="istickedoff">translateLit = \case</span>
-<span class="lineno">  160 </span><span class="spaces">  </span><span class="istickedoff">LInt int -&gt; JS.LInt int</span>
-<span class="lineno">  161 </span><span class="spaces">  </span><span class="istickedoff">LFloat float -&gt; JS.LFloat float</span>
-<span class="lineno">  162 </span><span class="spaces">  </span><span class="istickedoff">LString str -&gt; JS.LString str</span></span>
+<span class="lineno">  151 </span><span class="decl"><span class="istickedoff">translateSub stmts = case reverse stmts of</span>
+<span class="lineno">  152 </span><span class="spaces">  </span><span class="istickedoff">[] -&gt; <span class="nottickedoff">return []</span></span>
+<span class="lineno">  153 </span><span class="spaces">  </span><span class="istickedoff">SExpr expr : rest -&gt; do</span>
+<span class="lineno">  154 </span><span class="spaces">    </span><span class="istickedoff">ret &lt;- JS.SRet &lt;$&gt; translateExpr expr</span>
+<span class="lineno">  155 </span><span class="spaces">    </span><span class="istickedoff">rest' &lt;- translateSub' rest</span>
+<span class="lineno">  156 </span><span class="spaces">    </span><span class="istickedoff">return $ reverse (ret : rest')</span>
+<span class="lineno">  157 </span><span class="spaces">  </span><span class="istickedoff">_ -&gt; <span class="nottickedoff">translateSub' stmts</span></span>
+<span class="lineno">  158 </span><span class="spaces">  </span><span class="istickedoff">where</span>
+<span class="lineno">  159 </span><span class="spaces">    </span><span class="istickedoff">translateSub' = traverse <span class="nottickedoff">translateStatement</span></span></span>
+<span class="lineno">  160 </span>
+<span class="lineno">  161 </span>translateStatement :: Translate m =&gt; Statement () -&gt; m JS.Statement
+<span class="lineno">  162 </span><span class="decl"><span class="nottickedoff">translateStatement = \case</span>
+<span class="lineno">  163 </span><span class="spaces">  </span><span class="nottickedoff">SExpr expr -&gt; JS.SExpr &lt;$&gt; translateExpr expr</span>
+<span class="lineno">  164 </span><span class="spaces">  </span><span class="nottickedoff">SDef def -&gt; JS.SDef &lt;$&gt; translateDef def</span></span>
+<span class="lineno">  165 </span>
+<span class="lineno">  166 </span>translateLit :: Lit -&gt; JS.Lit
+<span class="lineno">  167 </span><span class="decl"><span class="istickedoff">translateLit = \case</span>
+<span class="lineno">  168 </span><span class="spaces">  </span><span class="istickedoff">LInt int -&gt; JS.LInt int</span>
+<span class="lineno">  169 </span><span class="spaces">  </span><span class="istickedoff">LFloat float -&gt; JS.LFloat float</span>
+<span class="lineno">  170 </span><span class="spaces">  </span><span class="istickedoff">LString str -&gt; JS.LString str</span></span>
 
 </pre>
 </body>
