@@ -42,7 +42,7 @@ genVar var = do
 translateFile :: Translate m => File () -> m JS.File
 translateFile (File defs) = do
   defs' <- traverse translateDef termDefs
-  pure $ JS.File $ map JS.SDef defs' ++ [JS.SExpr $ JS.EFunCall (JS.EVar "main") []]
+  pure $ JS.File $ map JS.SDef defs' ++ [JS.SExpr $ JS.EFunCall (JS.EVar "main") []] -- fix this
   where
     termDefs = [d | (TermDef d) <- defs] -- datatype defs are not translated
 
@@ -148,7 +148,15 @@ translatePattern expr = \case
         }
 
 translateSub :: Translate m => Sub () -> m JS.Sub
-translateSub = traverse translateStatement
+translateSub stmts = case reverse stmts of
+  [] -> return []
+  SExpr expr : rest -> do
+    ret <- JS.SRet <$> translateExpr expr
+    rest' <- translateSub' rest
+    return $ reverse (ret : rest')
+  _ -> translateSub' stmts
+  where
+    translateSub' = traverse translateStatement
 
 translateStatement :: Translate m => Statement () -> m JS.Statement
 translateStatement = \case
